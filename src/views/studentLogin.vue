@@ -1,5 +1,5 @@
 !<template>
-  Hello
+  Student Login Page
 </template>
 
 <script>

@@ -1,21 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from '@/views/Home.vue';
-import Register from '@/views/Register.vue';
-import SignIn from '@/views/SignIn.vue';
+import EmployerRegister from '@/views/EmployerRegister.vue';
+import StudentRegister from '@/views/StudentRegister.vue';
 import Feed from '@/views/Feed.vue';
+import LoginSuccess from '@/views/LoginSuccess.vue';
+import EmployerLogin from '@/views/employerLogin.vue';
+import StudentLogin from '@/views/studentLogin.vue';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: "/",
-      name: "Home",
-      component: Home
+      path: "/studentregister",
+      name: "StudentRegister",
+      component: StudentRegister
     },
     {
-      path: "/register",
-      name: "Register",
-      component: Register
+      path: "/employerregister",
+      name: "EmployerRegister",
+      component: EmployerRegister
     },
     {
       path: "/feed",
@@ -23,9 +25,29 @@ const router = createRouter({
       component: Feed
     },
     {
-      path: "/signin",
-      name: "SignIn",
-      component: SignIn
+      path: "/employerlogin",
+      name: "employerlogin",
+      component: EmployerLogin
+    },
+    {
+      path: "/studentlogin",
+      name: "studentlogin",
+      component: StudentLogin
+    },
+    {
+      path: "/LoginSuccess",
+      name: "LoginSuceess",
+      component: LoginSuccess
+    },
+    {
+      path: "/studentLogin",
+      name: "LoginSuceess",
+      component: LoginSuccess
+    },
+    {
+      path: "/LoginSuccess",
+      name: "LoginSuceess",
+      component: LoginSuccess
     },
   ],
 });

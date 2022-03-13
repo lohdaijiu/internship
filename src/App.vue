@@ -1,32 +1,35 @@
 <template>
-  <div>
-    <nav>
-      <router-link to="/"> Home </router-link> |
-      <router-link to="/feed"> Feed </router-link> |
-      <router-link to="/register"> Register </router-link> |
-      <router-link to="/sign-in"> Login </router-link> |
-    </nav>
-    <router-view />
-  </div>
+  <h1>Sail to startups with internSHIP</h1>
+
+  internSHIP provides a seamless way to connect with each other, and start your ideal career path early.
+
+  <p><button @click="studentsLogin">Students</button></p>
+  <p><button @click="employerLogin">Startups</button></p>
+
 </template>
 
 <script>
+  import {useRouter} from 'vue-router';
+  const router = useRouter();
 
 export default {
+  
   name: 'App',
   components: {
     
+  },
+  methods: {
+    studentsLogin() {
+      router.push('./views/studentlogin')
+    },
+    employerLogin() {
+      router.push('/employerlogin')
+    }
   }
 }
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
