@@ -6,6 +6,7 @@ import LoginSuccess from '@/views/LoginSuccess.vue';
 import EmployerLogin from '@/views/employerLogin.vue';
 import StudentLogin from '@/views/studentLogin.vue';
 import LandingPage from '@/views/LandingPage.vue';
+import StudentProfile from '@/views/StudentProfile.vue';
 
 const router = createRouter({
   history: createWebHistory(),
