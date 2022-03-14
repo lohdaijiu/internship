@@ -55,6 +55,11 @@ const router = createRouter({
       name: "LandingPage",
       component: LandingPage
     },
+    {   
+      path: '/StudentProfile',
+      name: 'StudentProfile',
+      component: StudentProfile,
+  },
   ],
 });
 
