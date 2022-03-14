@@ -61,7 +61,7 @@ const router = createRouter({
       component: LandingPage
     },
     {   
-      path: '/StudentProfile',
+      path: '/studentprofile',
       name: 'StudentProfile',
       component: StudentProfile,
   },
