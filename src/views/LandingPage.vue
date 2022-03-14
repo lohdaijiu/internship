@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     redirectToStudentLogin() {
-      this.$router.push({ path: "studentlogin/" });
+      this.$router.push({ path: "/studentlogin" });
     },
     redirectToEmployerLogin() {
       this.$router.push({ path: "/employerlogin" });
