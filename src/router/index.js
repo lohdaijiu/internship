@@ -5,6 +5,7 @@ import Feed from '@/views/Feed.vue';
 import LoginSuccess from '@/views/LoginSuccess.vue';
 import EmployerLogin from '@/views/employerLogin.vue';
 import StudentLogin from '@/views/studentLogin.vue';
+import LandingPage from '@/views/LandingPage.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -40,7 +41,7 @@ const router = createRouter({
       component: LoginSuccess
     },
     {
-      path: "/studentLogin",
+      path: "/studentlogin",
       name: "LoginSuceess",
       component: LoginSuccess
     },
@@ -48,6 +49,11 @@ const router = createRouter({
       path: "/LoginSuccess",
       name: "LoginSuceess",
       component: LoginSuccess
+    },
+    {
+      path: "/",
+      name: "LandingPage",
+      component: LandingPage
     },
   ],
 });
