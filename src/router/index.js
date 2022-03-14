@@ -10,6 +10,7 @@ import StudentProfileCreation from '@/views/Student/StudentProfileCreation.vue';
 import StudentHome from '@/views/Student/StudentHome.vue'
 
 import LandingPage from '@/views/LandingPage.vue';
+import StudentProfile from '@/views/StudentProfile.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -59,6 +60,11 @@ const router = createRouter({
       name: "LandingPage",
       component: LandingPage
     },
+    {   
+      path: '/StudentProfile',
+      name: 'StudentProfile',
+      component: StudentProfile,
+  },
   ],
 });
 
