@@ -20,7 +20,7 @@ export default {
     methods: {
         register() {
             createUserWithEmailAndPassword(getAuth(), this.email, this.password)
-            .then(()=>{this.$router.push('/employerlogin')})
+            .then(()=>{this.$router.push('/employerhome')})
         },
         back() {
             this.$router.push('/employerlogin')

@@ -1,6 +1,5 @@
 
 <template>
-   <BackButton />
   <h1>Create an Account for Students</h1>
   <p><input type="email" placeholder="Email" v-model="email" /></p>
   <p><input type="password" placeholder="Password" v-model="password" /></p>
@@ -9,8 +8,6 @@
 
 <script>
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
-import BackButton from "@/components/GoBack.vue"
-
 
 export default {
     data() {
@@ -23,7 +20,7 @@ export default {
     methods: {
         register() {
             createUserWithEmailAndPassword(getAuth(), this.email, this.password)
-            .then(()=>{this.$router.push('/studentlogin')})
+            .then(()=>{this.$router.push('/studentprofilecreation')})
         },
     }
 }

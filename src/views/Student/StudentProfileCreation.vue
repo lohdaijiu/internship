@@ -1,22 +1,24 @@
 !<template>
-  
+  Student Profile Creation
 </template>
 
 <script>
-import { getAuth, updateProfile } from "firebase/auth";
-const auth = getAuth();
+// import { getAuth, updateProfile } from "firebase/auth";
+// const auth = getAuth();
 
 export default {
     methods : {
-        proceed() {
-            updateProfile(auth.currentUser, {
-                displayName: "Jane Q. User", photoURL: "https://example.com/jane-q-user/profile.jpg"
-                }).then(() => {
+        // proceed() {
+        //     updateProfile(auth.currentUser, {
+        //         displayName: "Jane Q. User",
+        //         photoURL: "https://example.com/jane-q-user/profile.jpg",
+                
+        //         }).then(() => {
 
-                }).catch((error) => {
-                    alert(error)
-                });
-        }
+        //         }).catch((error) => {
+        //             alert(error)
+        //         });
+        // }
     }
 }
 </script>

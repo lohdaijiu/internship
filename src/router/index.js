@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import EmployerRegister from '@/views/EmployerRegister.vue';
-import StudentRegister from '@/views/StudentRegister.vue';
-import Feed from '@/views/Feed.vue';
-import LoginSuccess from '@/views/LoginSuccess.vue';
-import EmployerLogin from '@/views/employerLogin.vue';
-import StudentLogin from '@/views/studentLogin.vue';
+import EmployerRegister from '@/views/Employer/EmployerRegister.vue';
+import EmployerLogin from '@/views/Employer/EmployerLogin.vue';
+import EmployerProfileCreation from '@/views/Employer/EmployerProfileCreation.vue';
+import EmployerHome from '@/views/Employer/EmployerHome.vue'
+
+import StudentRegister from '@/views/Student/StudentRegister1.vue';
+import StudentLogin from '@/views/Student/studentLogin.vue';
+import StudentProfileCreation from '@/views/Student/StudentProfileCreation.vue';
+import StudentHome from '@/views/Student/StudentHome.vue'
+
 import LandingPage from '@/views/LandingPage.vue';
 
 const router = createRouter({
@@ -21,9 +25,9 @@ const router = createRouter({
       component: EmployerRegister
     },
     {
-      path: "/feed",
-      name: "Feed",
-      component: Feed
+      path: "/employerprofilecreation",
+      name: "employerprofilecreation",
+      component: EmployerProfileCreation
     },
     {
       path: "/employerlogin",
@@ -36,19 +40,19 @@ const router = createRouter({
       component: StudentLogin
     },
     {
-      path: "/LoginSuccess",
-      name: "LoginSuceess",
-      component: LoginSuccess
+      path: "/employerhome",
+      name: "employerhome",
+      component: EmployerHome
     },
     {
-      path: "/studentlogin",
-      name: "LoginSuceess",
-      component: LoginSuccess
+      path: "/studentprofilecreation",
+      name: "studentprofilecreation",
+      component: StudentProfileCreation
     },
     {
-      path: "/LoginSuccess",
-      name: "LoginSuceess",
-      component: LoginSuccess
+      path: "/studenthome",
+      name: "studenthome",
+      component: StudentHome
     },
     {
       path: "/",
