@@ -10,7 +10,7 @@ import StudentProfileCreation from '@/views/Student/StudentProfileCreation.vue';
 import StudentHome from '@/views/Student/StudentHome.vue'
 
 import LandingPage from '@/views/LandingPage.vue';
-import StudentProfile from '@/views/StudentProfile.vue';
+import StudentProfile from '@/views/Student/StudentProfile.vue';
 
 const router = createRouter({
   history: createWebHistory(),
