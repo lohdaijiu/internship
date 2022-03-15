@@ -6,7 +6,7 @@
         </div>
         <router-link class ='routerlink' to="/HomePage">Home </router-link> 
         <router-link class ='routerlink' to="">Resources</router-link> 
-        <router-link class ='routerlink' to="">Find Internships</router-link> 
+        <router-link class ='routerlink' to="/StudentJobBoard">Find Internships</router-link> 
         <router-link class ='routerlink' to="">My Applications</router-link> 
         <router-link class ='routerlink' to="/StudentProfile">Profile</router-link> 
         <button id = 'signButton' >Sign out</button>

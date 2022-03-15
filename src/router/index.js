@@ -12,6 +12,8 @@ import StudentHome from '@/views/Student/StudentHome.vue'
 import LandingPage from '@/views/LandingPage.vue';
 import StudentProfile from '@/views/Student/StudentProfile.vue';
 
+import StudentJobBoard from '@/views/Student/StudentJobBoard.vue';
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -63,8 +65,13 @@ const router = createRouter({
     {   
       path: '/studentprofile',
       name: 'StudentProfile',
-      component: StudentProfile,
-  },
+      component: StudentProfile
+    },
+    {
+      path: '/studentjobboard',
+      name: 'StudentJobBoard',
+      component: StudentJobBoard
+    }
   ],
 });
 

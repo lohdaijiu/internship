@@ -4,6 +4,8 @@ import router from './router/index.js';
 import { initializeApp } from 'firebase/app';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+// import "bootstrap/dist/css/bootstrap.min.css"
+// import "bootstrap"
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB9kuUTDuvy3-S49MPlF22y9NNvFrtDLJg',
