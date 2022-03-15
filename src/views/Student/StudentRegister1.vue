@@ -13,11 +13,14 @@
   <p><input type="password" placeholder="Password" v-model="password"/></p>
   Confirm Password
     <p><input type="password" placeholder="Password" v-model="password1"  /></p>
-  <p><button @click="register">Submit</button></p>
+  <p><button v-on:click="register()">Submit</button></p>
 </template>
 
 <script>
-import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth"
+import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
+import firebaseApp from '../../main.js'
+import { getFirestore } from "firebase/firestore"
+import {doc, setDoc } from "firebase/firestore"
 
 
 
@@ -34,7 +37,7 @@ export default {
         };
     },
     methods: {
-        register() {
+        async register() {
             if (this.password != this.password1) {
               alert("Password is different")
               return;
@@ -46,17 +49,22 @@ export default {
             }
 
             const auth = getAuth();
+            const db = getFirestore(firebaseApp);
             
             createUserWithEmailAndPassword(auth, this.email, this.password)
             .then()
             .catch((error) => {alert(error.message)} )
-            .then((userCred) => {
-            updateProfile(userCred.user, {
-              Name: this.name,
-              Major: this.major,
-              PlaceOfStudy: this.pos,
-              Employer: false,
-            })}).then(()=>{console.log("success")})
+            
+            const uid = auth.currentUser.uid
+
+            try {
+              const docRef = await setDoc(doc(db, "User", uid), {
+                Email: this.email, Major: this.major, Name: this.name, PlaceOfStudy: this.pos, Employer: false
+            })
+            console.log(docRef)
+            } catch (error) {
+              console.error(error);
+            }
         },
     }
 }
