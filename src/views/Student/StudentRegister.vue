@@ -9,6 +9,8 @@
 <script>
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
 
+
+
 export default {
     data() {
         return {
@@ -20,7 +22,7 @@ export default {
     methods: {
         register() {
             createUserWithEmailAndPassword(getAuth(), this.email, this.password)
-            .then(()=>{this.$router.push('/studentprofilecreation')})
+            .then(()=>{this.$router.push('/studentlogin')})
         },
     }
 }

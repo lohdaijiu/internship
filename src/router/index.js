@@ -8,6 +8,7 @@ import StudentRegister from '@/views/Student/StudentRegister1.vue';
 import StudentLogin from '@/views/Student/studentLogin.vue';
 import StudentProfileCreation from '@/views/Student/StudentProfileCreation.vue';
 import StudentHome from '@/views/Student/StudentHome.vue'
+import ProfileUpdate from '@/views/Student/ProfileUpdate.vue'
 
 import LandingPage from '@/views/LandingPage.vue';
 import StudentProfile from '@/views/Student/StudentProfile.vue';
@@ -15,6 +16,11 @@ import StudentProfile from '@/views/Student/StudentProfile.vue';
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: "/test",
+      name: "test",
+      component: ProfileUpdate
+    },
     {
       path: "/studentregister",
       name: "StudentRegister",

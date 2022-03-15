@@ -1,8 +1,6 @@
 !<template>
   Student Login
 
-  
-
   <div>
       <router-link to="/studentregister"> Create an account here </router-link>
   </div> <br><br>
@@ -28,8 +26,11 @@ export default {
 
   methods: {
     login() {
-      signInWithEmailAndPassword(getAuth(), this.email, this.password)
-      .then(console.log("Login Success"))
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.email, this.password)
+      .then(console.log(auth.currentUser.uid))
+      .catch((error) => alert(error.message))
+     
   }, 
   }
 }
