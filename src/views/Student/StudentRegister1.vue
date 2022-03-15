@@ -52,19 +52,21 @@ export default {
             const db = getFirestore(firebaseApp);
             
             createUserWithEmailAndPassword(auth, this.email, this.password)
-            .then()
-            .catch((error) => {alert(error.message)} )
-            
-            const uid = auth.currentUser.uid
-
+            .then(() => {const uid = auth.currentUser.uid;
             try {
-              const docRef = await setDoc(doc(db, "User", uid), {
+              const docRef = setDoc(doc(db, "User", uid), {
                 Email: this.email, Major: this.major, Name: this.name, PlaceOfStudy: this.pos, Employer: false
             })
             console.log(docRef)
             } catch (error) {
               console.error(error);
-            }
+            }})
+            .catch((error) => {alert(error.message)} )
+
+
+            
+
+            this.$router.push("/studentlogin");
         },
     }
 }
