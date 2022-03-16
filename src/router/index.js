@@ -14,6 +14,8 @@ import StudentProfile from '@/views/Student/StudentProfile.vue';
 
 import StudentJobBoard from '@/views/Student/StudentJobBoard.vue';
 
+import EditStudentProfile from '@/views/Student/EditStudentProfile.vue';
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -71,7 +73,12 @@ const router = createRouter({
       path: '/studentjobboard',
       name: 'StudentJobBoard',
       component: StudentJobBoard
-    }
+    },
+    {
+        path: '/EditStudentProfile',
+        name: 'Edit Profile',
+        component: EditStudentProfile,
+    },
   ],
 });
 
