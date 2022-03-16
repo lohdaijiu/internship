@@ -1,30 +1,66 @@
+
 <template>
-    <p><button @click="back">Go Back</button></p>
-  <h1>Create an Account for Employers</h1>
-  <p><input type="email" placeholder="Email" v-model="email" /></p>
-  <p><input type="password" placeholder="Password" v-model="password" /></p>
-  <p><button @click="register">Submit</button></p>
+  <h1>Create an Account for Employer</h1>
+  Company name
+  <p><input type="text"  v-model="companyName"/></p>
+  Email Address
+  <p><input type="email" placeholder="Email" v-model="email"/></p>
+  Password
+  <p><input type="password" placeholder="Password" v-model="password"/></p>
+  Confirm Password
+  <p><input type="password" placeholder="Password" v-model="password1"  /></p>
+  <p><button v-on:click="register()">Submit</button></p>
 </template>
 
 <script>
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth"
+import firebaseApp from '../../main.js'
+import { getFirestore } from "firebase/firestore"
+import {doc, setDoc } from "firebase/firestore"
+
+
 
 export default {
     data() {
         return {
             email: "",
             password: "",
-            error: ""
+            password1: "",
+            companyName: ""
         };
     },
     methods: {
-        register() {
-            createUserWithEmailAndPassword(getAuth(), this.email, this.password)
-            .then(()=>{this.$router.push('/employerhome')})
+        async register() {
+            if (this.password != this.password1) {
+              alert("Password is different")
+              return;
+            } 
+
+            if (this.companyName == "" || this.password == "" || this.password1 == "" || this.email == "") {
+              alert("Please fill in all the blanks");
+              return;
+            }
+
+            const auth = getAuth();
+            const db = getFirestore(firebaseApp);
+            
+            createUserWithEmailAndPassword(auth, this.email, this.password)
+            .then(() => {const uid = auth.currentUser.uid;
+            try {
+              const docRef = setDoc(doc(db, "User", uid), {
+                Email: this.email, CompanyName: this.companyName, Employer: true
+            })
+            console.log(docRef)
+            } catch (error) {
+              console.error(error);
+            }})
+            .catch((error) => {alert(error.message)} )
+
+
+            
+
+            this.$router.push("/employerlogin");
         },
-        back() {
-            this.$router.push('/employerlogin')
-        }
     }
 }
 

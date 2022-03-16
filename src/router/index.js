@@ -4,7 +4,7 @@ import EmployerLogin from '@/views/Employer/EmployerLogin.vue';
 import EmployerProfileCreation from '@/views/Employer/EmployerProfileCreation.vue';
 import EmployerHome from '@/views/Employer/EmployerHome.vue'
 
-import StudentRegister from '@/views/Student/StudentRegister1.vue';
+import StudentRegister from '@/views/Student/StudentRegister.vue';
 import StudentLogin from '@/views/Student/studentLogin.vue';
 import StudentProfileCreation from '@/views/Student/StudentProfileCreation.vue';
 import StudentHome from '@/views/Student/StudentHome.vue'
