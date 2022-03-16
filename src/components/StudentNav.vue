@@ -4,7 +4,7 @@
             <h2 class = 'projectName'>internSHIP</h2>
             <img src="../assets/boat.png" id = 'icon'>
         </div>
-        <router-link class ='routerlink' to="/HomePage">Home </router-link> 
+        <router-link class ='routerlink' to="/StudentHome">Home </router-link> 
         <router-link class ='routerlink' to="">Resources</router-link> 
         <router-link class ='routerlink' to="/StudentJobBoard">Find Internships</router-link> 
         <router-link class ='routerlink' to="">My Applications</router-link> 
