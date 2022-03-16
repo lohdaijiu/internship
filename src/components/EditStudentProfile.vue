@@ -3,10 +3,17 @@
     <div id = 'mainContainer'>
         <div id = 'uploadContainer'>
             <div id ='picture'>
-                <img :src="image">
+                <h2>My Profile</h2>
+                <img :src='image'>
                 <br>
                 <button id = 'uploadButton' @click="onPickFile">Upload Image</button>
                 <input type="file" ref= "fileInput" style="display: none" accept="image/*" @change="onFilePicked">
+                <br>
+                <h2>Update Documents</h2>
+                <button id = 'uploadButton' @click="onPickResume">Upload Resume</button>
+                <input type="file" ref= "resumeInput" style="display: none" accept="pdf/*" @change="onFileResumePicked">
+                
+                
                 
             </div>
         </div>
@@ -55,6 +62,7 @@ export default {
                 writeup: ""
             }],
             image: '',
+            resumeURL: '',
 
         }
     },
@@ -103,7 +111,8 @@ export default {
 
             updateDoc(docRef, {
                 ProfileData: array,
-                photoURL: this.image
+                photoURL: this.image,
+                resumeURL: this.resumeURL
             })
         },
 
@@ -120,11 +129,46 @@ export default {
         onPickFile() {
             this.$refs.fileInput.click()
         },
+        onPickResume() {
+            this.$refs.resumeInput.click()
+        },
 
-        async onFilePicked(event) {
+
+        onFilePicked(event) {
+            const auth = getAuth();
+            const uid = auth.currentUser.uid;
             const file = event.target.files[0];
             const storage = getStorage();
-            const storageRef = ref(storage,  'profile/' + file.name);
+            const storageRef = ref(storage, ''+ uid + '/profile/' + file.name);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            uploadTask.on('state_changed', 
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        console.log(snapshot.state)
+                        switch (snapshot.state) {
+                            case 'paused':
+                                console.log('Upload is paused');
+                                break;
+                            case 'running':
+                                console.log('Upload is running');
+                                break;
+                        }
+                        if (progress == 100) {
+                            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                                this.image = downloadURL
+                            })
+                        }
+                    })        
+        },
+
+        onFileResumePicked(event) {
+            const auth = getAuth();
+            const uid = auth.currentUser.uid;
+            const file = event.target.files[0];
+            const storage = getStorage();
+            const storageRef = ref(storage, ''+ uid + '/documents/' + file.name);
             const uploadTask = uploadBytesResumable(storageRef, file);
 
             uploadTask.on('state_changed', 
@@ -139,12 +183,13 @@ export default {
                                 console.log('Upload is running');
                                 break;
                         }
+                        if (progress == 100) {
+                            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                                this.resumeURL = downloadURL
+                            })
+                        }
                     })
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                this.image = downloadURL
-            })
-            
-        } 
+        }
     }
 }
 </script>
@@ -152,6 +197,10 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
+h2, h3, h4 {
+    font-family: "Poppins";
+    text-align: center;
+}
 #buttonContainer {
     display: flex;
     flex-direction: row;
@@ -184,13 +233,7 @@ export default {
 #addButton:active {
     transform: translateY(1px);
 }
-body, html {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  min-height: 100vh;
-  background-color: rgb(230, 240, 248) ;
-}
+
 .newContainer {
     border-style: solid;
     display: flex;
@@ -204,9 +247,9 @@ body, html {
     
     background-size: 30px 30px;
     margin-top: 25%;
-    padding-left: 10%;
+    padding-left: 20%;
     width: 3%;
-    min-width: 60%;
+    min-width: 70%;
     min-height: 300px;
     
 }
@@ -222,9 +265,9 @@ span {
     text-align: center;
 }
 #uploadButton {
-    border-radius: 10px;
-    padding-top: 10%;
-    padding-bottom: 10%;
+    border-radius: 5px;
+    padding-top: 5%;
+    padding-bottom: 5%;
     text-align: center;
     font-size: 16px;
     font-weight: bold;
