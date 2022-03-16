@@ -97,6 +97,7 @@ export default {
       major: "",
       name: "",
       pos: "",
+      resumeURL: "",
       photoURL:
         "https://firebasestorage.googleapis.com/v0/b/internship-433c3.appspot.com/o/profile%2Fblank-pic.jpg?alt=media&token=730520eb-c8c6-4345-83d5-807015471610",
       profileData: [
@@ -143,6 +144,7 @@ export default {
               Name: this.form.name,
               PlaceOfStudy: this.form.pos,
               photoURL: this.photoURL,
+              resumeURL: this.resumeURL,
               ProfileData: this.profileData,
               Employer: false,
             });
