@@ -12,7 +12,7 @@
         ></el-row>
         <el-image
           class="left-container"
-          style="width: 100%"
+          style="width: 90%"
           :src="require('../../assets/' + url)"
           :fit="fit"
       /></el-col>
