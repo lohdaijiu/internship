@@ -62,7 +62,11 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
 .writeupfont {
+    font-family: "Poppins", sans-serif;
+  
     font-weight: 300;
     color: #1f1d2a;
     font-size: 20px;
@@ -88,7 +92,7 @@ body, html {
 
 h2{
     min-width: 200px;
-    
+    font-family: "Poppins", sans-serif;
     font-weight: 600;
     color: #1f1d2a;
     font-size: 26px;
@@ -160,7 +164,7 @@ h2{
 
 #editButton {
     border-radius: 10px;
-    margin-left: 72.5%;
+    margin-left: 82%;
     margin-top: 1%;
     padding-left: 1.5%;
     padding-right: 1.5%;
