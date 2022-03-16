@@ -140,7 +140,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   /* color: #1f1d2a !important; */
-  font-size: 20px;
+  font-size: 15px;
   text-decoration: underline;
 }
 .text-center {
