@@ -25,10 +25,14 @@ export default {
 
 
   methods: {
-    login() {
-      signInWithEmailAndPassword(getAuth(), this.email, this.password)
+    async login() {
+      try {
+      await signInWithEmailAndPassword(getAuth(), this.email, this.password)
       .then(this.$router.push('/employerhome'))
       .catch((error) => {alert(error.message)})
+      } catch {
+        (error) => {alert(error.message)}
+      }
   }
   }
 }

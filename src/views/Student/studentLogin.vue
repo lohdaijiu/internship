@@ -100,9 +100,9 @@ export default {
   },
 
   methods: {
-    login() {
+    async login() {
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.form.email, this.form.pass)
+      await signInWithEmailAndPassword(auth, this.form.email, this.form.pass)
         .then(this.$router.push("/studenthome"))
         .catch((error) => alert(error.message));
     },
