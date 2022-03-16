@@ -1,5 +1,6 @@
 <template>
-    <StudentNav/>
+      <StudentNav/>
+
 </template>
 
 <script>
@@ -10,5 +11,12 @@ export default {
     components:{
         StudentNav
     }
+
+    
+
 }
 </script>
+
+<style>
+
+</style>

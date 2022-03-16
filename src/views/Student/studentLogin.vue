@@ -1,10 +1,18 @@
 <template>
   <el-container class="container">
     <el-row class="tags">
-      <el-col :span="12"
-        ><el-image
+      <el-col :span="12">
+        <el-row style="height: 50px"
+          ><el-col :span="1"></el-col
+          ><el-col :span="23"
+            ><el-image
+              style="margin-top: 20px; height: 30px"
+              :src="require('../../assets/' + brand_url)"
+              :fit="fit" /></el-col
+        ></el-row>
+        <el-image
           class="left-container"
-          style="width: 100%"
+          style="width: 90%"
           :src="require('../../assets/' + url)"
           :fit="fit"
       /></el-col>
@@ -92,6 +100,7 @@ export default {
         "margin-botton": "20px",
       },
       url: "student-login-pic.png",
+      brand_url: "brand-black.png",
       form: reactive({
         email: "",
         pass: "",
@@ -100,9 +109,9 @@ export default {
   },
 
   methods: {
-    login() {
+    async login() {
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.form.email, this.form.pass)
+      await signInWithEmailAndPassword(auth, this.form.email, this.form.pass)
         .then(this.$router.push("/studenthome"))
         .catch((error) => alert(error.message));
     },
@@ -131,7 +140,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   /* color: #1f1d2a !important; */
-  font-size: 20px;
+  font-size: 15px;
   text-decoration: underline;
 }
 .text-center {
@@ -147,6 +156,7 @@ body {
 .btn-text {
   color: #1f1d2a;
   font-weight: 600;
+  font-size: 15px;
 }
 .login-btns {
   width: 100%;
@@ -179,12 +189,7 @@ body {
   color: #9b948e;
   font-size: 18px;
 }
-.el-row {
-  margin-bottom: 20px;
-}
-.el-row:last-child {
-  margin-bottom: 0;
-}
+
 .el-col {
   border-radius: 4px;
 }
@@ -204,5 +209,13 @@ body {
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
+}
+</style>
+<style scoped>
+.el-row {
+  margin-bottom: 20px;
+}
+.el-row:last-child {
+  margin-bottom: 0;
 }
 </style>

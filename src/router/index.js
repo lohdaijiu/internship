@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import {getAuth, onAuthStateChanged} from "firebase/auth"
+
 import EmployerRegister from '@/views/Employer/EmployerRegister.vue';
 import EmployerLogin from '@/views/Employer/EmployerLogin.vue';
 import EmployerProfileCreation from '@/views/Employer/EmployerProfileCreation.vue';
@@ -37,7 +39,10 @@ const router = createRouter({
     {
       path: "/employerlogin",
       name: "employerlogin",
-      component: EmployerLogin
+      component: EmployerLogin,
+      meta : {
+        acceptable : true
+      }
     },
     {
       path: "/studentlogin",
@@ -47,7 +52,10 @@ const router = createRouter({
     {
       path: "/employerhome",
       name: "employerhome",
-      component: EmployerHome
+      component: EmployerHome,
+      meta : {
+        requiresAuth : true
+      }
     },
     {
       path: "/studentprofilecreation",
@@ -82,4 +90,26 @@ const router = createRouter({
   ],
 });
 
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(getAuth(), resolve, reject)
+  });
+};
+
+router.beforeEach(async (to, from, next) => {
+  const isAuth = await getCurrentUser()
+
+  if (from.matched.some(record => record.meta.acceptable)) {
+    next();
+  }
+  else if (to.matched.some(record => record.meta.requiresAuth) && !isAuth) {
+    alert("Not Authorised");
+    next('/');
+  } else {
+    next()
+  }
+})
+
+
 export default router;
+
