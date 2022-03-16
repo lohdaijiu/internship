@@ -9,12 +9,18 @@
         <router-link class ='routerlink' to="/StudentJobBoard">Find Internships</router-link> 
         <router-link class ='routerlink' to="">My Applications</router-link> 
         <router-link class ='routerlink' to="/StudentProfile">Profile</router-link> 
-        <button id = 'signButton' >Sign out</button>
+        <LogOutButton id = "signButton"/>
     </div>
     
 </template>
 <script>
+import LogOutButton from '../components/LogOut.vue'
 
+export default {
+    components : {
+        LogOutButton
+    }
+}
 
 </script>
 

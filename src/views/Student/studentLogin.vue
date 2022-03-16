@@ -28,7 +28,7 @@ export default {
     login() {
       const auth = getAuth();
       signInWithEmailAndPassword(auth, this.email, this.password)
-      .then(console.log(auth.currentUser.uid))
+      .then(this.$router.push('/studenthome'))
       .catch((error) => alert(error.message))
      
   }, 

@@ -1,6 +1,6 @@
 !<template>
   Employer Login
-
+  
   <div>
       <router-link to="/employerregister"> Create an account here </router-link>
   </div> <br><br>
@@ -27,7 +27,8 @@ export default {
   methods: {
     login() {
       signInWithEmailAndPassword(getAuth(), this.email, this.password)
-      .then(console.log("Login Success"))
+      .then(this.$router.push('/employerhome'))
+      .catch((error) => {alert(error.message)})
   }
   }
 }

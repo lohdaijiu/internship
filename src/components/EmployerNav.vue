@@ -8,12 +8,18 @@
         <router-link class ='routerlink' to="">Create Listing</router-link> 
         <router-link class ='routerlink' to="">Application Management</router-link> 
         <router-link class ='routerlink' to="/EmployerHome">Profile</router-link> 
-        <button id = 'signButton' >Sign out</button>
+        <LogOutButton id = 'signButton' />
     </div>
     
 </template>
 <script>
+import LogOutButton from '../LogOut.vue'
 
+export default {
+    components : {
+        LogOutButton
+    }
+}
 
 </script>
 
