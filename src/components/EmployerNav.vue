@@ -8,16 +8,22 @@
         <router-link class ='routerlink' to="">Create Listing</router-link> 
         <router-link class ='routerlink' to="">Application Management</router-link> 
         <router-link class ='routerlink' to="/EmployerHome">Profile</router-link> 
-        <LogOutButton id = 'signButton' />
+        <button id = "signButton" @click ="logout">Log out </button>
     </div>
     
 </template>
 <script>
-import LogOutButton from '../components/LogOut.vue'
+import { getAuth, signOut } from "firebase/auth";
 
 export default {
-    components : {
-        LogOutButton
+    methods : {
+        logout() {
+
+            signOut(getAuth())
+            .then(() => {console.log("SignOut Successful");
+            this.$router.push('/')})
+            .catch((error) => {alert(error.message)})
+        }
     }
 }
 
