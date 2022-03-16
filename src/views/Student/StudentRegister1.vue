@@ -33,7 +33,9 @@ export default {
             error: "",
             major: "",
             name: "",
-            pos: ""
+            pos: "",
+            photoURL: "https://firebasestorage.googleapis.com/v0/b/internship-433c3.appspot.com/o/profile%2Fblank-pic.jpg?alt=media&token=730520eb-c8c6-4345-83d5-807015471610",
+            profileData: [{"About" : ""}, {"Work Experience" : ""}, {"Skills and Competencies" : ""}, {"Career Interests" : ""}, {"Projects" : ""}]
         };
     },
     methods: {
@@ -55,7 +57,13 @@ export default {
             .then(() => {const uid = auth.currentUser.uid;
             try {
               const docRef = setDoc(doc(db, "User", uid), {
-                Email: this.email, Major: this.major, Name: this.name, PlaceOfStudy: this.pos, Employer: false
+                Email: this.email, 
+                Major: this.major, 
+                Name: this.name, 
+                PlaceOfStudy: this.pos,
+                photoURL: this.photoURL, 
+                ProfileData: this.profileData,
+                Employer: false
             })
             console.log(docRef)
             } catch (error) {
