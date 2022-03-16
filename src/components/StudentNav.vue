@@ -74,6 +74,10 @@ body, html {
     height:30px;
     border-bottom: solid 10px;
     border-bottom-color: #96C67F;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    color: #1f1d2a;
+    font-size: 16px;
 }
 #nav1 button:last-child {
     margin-left:auto;
