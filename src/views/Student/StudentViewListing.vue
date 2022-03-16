@@ -16,6 +16,8 @@
                 <el-table-column prop="loc" label="Remote/On-site" />
                 <el-table-column prop="pay" label="Compensation Range" />
             </el-table>
+            <br>
+            <br>
 
         </div>
             

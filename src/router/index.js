@@ -16,6 +16,8 @@ import StudentProfile from '@/views/Student/StudentProfile.vue';
 
 import StudentJobBoard from '@/views/Student/StudentJobBoard.vue';
 import StudentViewListing from '@/views/Student/StudentViewListing.vue';
+import EmployerViewListing from '@/views/Employer/EmployerViewListing.vue';
+
 
 import EditStudentProfile from '@/views/Student/EditStudentProfile.vue';
 
@@ -92,6 +94,11 @@ const router = createRouter({
         path: '/EditStudentProfile',
         name: 'Edit Profile',
         component: EditStudentProfile,
+    },
+    {
+      path: '/viewpostedlisting',
+      name: 'EmployerViewListing',
+      component: EmployerViewListing
     },
   ],
 });
