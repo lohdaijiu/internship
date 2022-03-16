@@ -13,7 +13,7 @@
     
 </template>
 <script>
-import LogOutButton from '../LogOut.vue'
+import LogOutButton from '../components/LogOut.vue'
 
 export default {
     components : {

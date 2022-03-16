@@ -146,12 +146,14 @@ export default {
           } catch (error) {
             console.error(error);
           }
+          this.$router.push("/studentlogin");
         })
         .catch((error) => {
           alert(error.message);
+          return;
         });
 
-      this.$router.push("/studentlogin");
+      
     },
   },
 };

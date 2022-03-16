@@ -1,29 +1,26 @@
 !<template>
-  EHOME
-  <p><button @click="LogOut">Log Out</button></p>
+  <EmployerNav/>
+
+  Hello Company Name
 </template>
 
 <script>
-import { getAuth, signOut } from "firebase/auth";
-
+import EmployerNav from "../../components/EmployerNav.vue"
 
 
 export default {
     
 
     mounted() {
-        const auth = getAuth();
-        console.log(auth.currentUser.email);
-        if (auth.currentUser == null) {
-          alert("Please Login")
-          this.$router.push('/')
-        }
+        
     },
 
     methods: {
-      LogOut() {
-        signOut(getAuth()).then(() => {this.$router.push('/')})
-      }
+
+    },
+
+    components: {
+      EmployerNav
     }
 }
 </script>
