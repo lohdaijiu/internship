@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import {getAuth, onAuthStateChanged} from "firebase/auth"
+import { doc, getDoc, getFirestore} from "firebase/firestore";
+import firebaseApp from "../main.js" 
 
 import EmployerRegister from '@/views/Employer/EmployerRegister.vue';
 import EmployerLogin from '@/views/Employer/EmployerLogin.vue';
@@ -34,7 +36,11 @@ const router = createRouter({
     {
       path: "/employerprofilecreation",
       name: "employerprofilecreation",
-      component: EmployerProfileCreation
+      component: EmployerProfileCreation,
+      meta : {
+        requiresAuth : true,
+        employer: true
+      }
     },
     {
       path: "/employerlogin",
@@ -47,25 +53,37 @@ const router = createRouter({
     {
       path: "/studentlogin",
       name: "studentlogin",
-      component: StudentLogin
+      component: StudentLogin,
+      meta : {
+        acceptable : true
+      }
     },
     {
       path: "/employerhome",
       name: "employerhome",
       component: EmployerHome,
       meta : {
-        requiresAuth : true
+        requiresAuth : true,
+        employer: true
       }
     },
     {
       path: "/studentprofilecreation",
       name: "studentprofilecreation",
-      component: StudentProfileCreation
+      component: StudentProfileCreation,
+      meta : {
+        requiresAuth : true,
+        employer: false
+      }
     },
     {
       path: "/studenthome",
       name: "studenthome",
-      component: StudentHome
+      component: StudentHome,
+      meta : {
+        requiresAuth : true,
+        employer: false
+      }
     },
     {
       path: "/",
@@ -75,17 +93,27 @@ const router = createRouter({
     {   
       path: '/studentprofile',
       name: 'StudentProfile',
-      component: StudentProfile
+      component: StudentProfile,
+      meta : {
+        requiresAuth : true,
+        employer: false
+      }
     },
     {
       path: '/studentjobboard',
       name: 'StudentJobBoard',
-      component: StudentJobBoard
+      component: StudentJobBoard,
+      meta : {
+        requiresAuth : true
+      }
     },
     {
         path: '/EditStudentProfile',
         name: 'Edit Profile',
         component: EditStudentProfile,
+        meta : {
+          requiresAuth : true
+        }
     },
   ],
 });
@@ -96,19 +124,42 @@ const getCurrentUser = () => {
   });
 };
 
+
+
+
+// const isEmployer = () => {
+//   await
+// }
+
 router.beforeEach(async (to, from, next) => {
   const isAuth = await getCurrentUser()
-
-  if (from.matched.some(record => record.meta.acceptable)) {
+  const employer = await getEmployer();
+  if (from.matched.some(record => record.meta.acceptable)) { //login exception
     next();
+    console.log(1)
   }
   else if (to.matched.some(record => record.meta.requiresAuth) && !isAuth) {
     alert("Not Authorised");
     next('/');
-  } else {
+    console.log(2)
+  } else { //Authenticated and correct type
     next()
+    console.log(employer)
   }
 })
+
+async function getEmployer() {
+  const db = getFirestore(firebaseApp);
+  const docRef = doc(db, "Users", getAuth().currentUser.uid);
+  const docSnap = await getDoc(docRef);
+
+  try {
+    return docSnap.data()
+  } catch {
+    console.log("error")
+  }
+}
+
 
 
 export default router;
