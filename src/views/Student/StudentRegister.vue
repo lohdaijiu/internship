@@ -43,10 +43,14 @@
               <el-input v-model="form.email" />
             </el-form-item>
             <el-form-item label="Password" class="input-labels">
-              <el-input v-model="form.password" />
+              <el-input v-model="form.password" type="password" show-password />
             </el-form-item>
             <el-form-item label="Confirm Password" class="input-labels">
-              <el-input v-model="form.password1" />
+              <el-input
+                v-model="form.password1"
+                type="password"
+                show-password
+              />
             </el-form-item>
             <el-row>
               <el-col :span="8"></el-col>
