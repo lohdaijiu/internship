@@ -123,7 +123,7 @@ export default {
       }
     },
     redirectToStudentRegister() {
-      this.$router.push({ path: "/studentregister" });
+      this.$router.push({ path: "/employerregister" });
     },
   },
 };
