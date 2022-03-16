@@ -176,6 +176,14 @@ export default {
     border-style: solid;
     border-color: #96C67F;
 }
+
+#addButton:hover {
+    background-color: #50e655;
+
+}
+#addButton:active {
+    transform: translateY(1px);
+}
 body, html {
   padding: 0;
   margin: 0;
@@ -267,6 +275,14 @@ span {
 
 }
 #applyButton:active {
+    transform: translateY(1px);
+}
+
+#cancelButton:hover {
+    background-color: #50e655;
+
+}
+#cancelButton:active {
     transform: translateY(1px);
 }
 input {
