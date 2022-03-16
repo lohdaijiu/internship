@@ -2,17 +2,16 @@
   <!-- <el-row>
     <el-col :span="24"><div class="grid-content bg-purple" /></el-col>
   </el-row> -->
-
   <el-row>
     <el-col :span="2"><div class="grid-content" /></el-col>
     <el-col :span="10">
-      <h1 class="text-tag">Sail to startups with internSHIP</h1>
+      <p class="text-tag">Sail to startups with internSHIP</p>
       <el-row
         ><el-col :span="18"
-          ><h1 class="text-tag2">
+          ><p class="text-tag2">
             internSHIP provides a seamless way to connect with each other, and
             start your ideal career path early.
-          </h1></el-col
+          </p></el-col
         >
         <el-col :span="6"><div class="grid-content" /></el-col
       ></el-row>
@@ -57,6 +56,7 @@ export default {
     return {
       fit: "fill",
       url: "business-deal.png",
+      boat_url: "boat.png",
     };
   },
   methods: {
@@ -71,7 +71,13 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #fafafa;
+}
 .btn-text {
   color: #1f1d2a;
   font-weight: 600;
@@ -85,12 +91,21 @@ export default {
   color: #1f1d2a;
   font-size: 42px;
   margin-top: 100px;
+  text-align: left;
+}
+.header-brand {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  color: #1f1d2a;
+  margin: 0;
+  font-size: ;
 }
 .text-tag2 {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   color: #9b948e;
   font-size: 18px;
+  text-align: left;
 }
 .el-row {
   margin-bottom: 20px;
