@@ -156,8 +156,6 @@ export default {
           alert(error.message);
           return;
         });
-
-      
     },
   },
 };

@@ -147,6 +147,7 @@ body {
 .btn-text {
   color: #1f1d2a;
   font-weight: 600;
+  font-size: 15px;
 }
 .login-btns {
   width: 100%;
