@@ -1,8 +1,16 @@
 <template>
   <el-container class="container">
     <el-row class="tags">
-      <el-col :span="12"
-        ><el-image
+      <el-col :span="12">
+        <el-row style="height: 50px"
+          ><el-col :span="1"></el-col
+          ><el-col :span="23"
+            ><el-image
+              style="margin-top: 20px; height: 30px"
+              :src="require('../../assets/' + brand_url)"
+              :fit="fit" /></el-col
+        ></el-row>
+        <el-image
           class="left-container"
           style="width: 100%"
           :src="require('../../assets/' + url)"
@@ -92,6 +100,7 @@ export default {
         "margin-botton": "20px",
       },
       url: "student-login-pic.png",
+      brand_url: "brand-black.png",
       form: reactive({
         email: "",
         pass: "",
@@ -180,12 +189,7 @@ body {
   color: #9b948e;
   font-size: 18px;
 }
-.el-row {
-  margin-bottom: 20px;
-}
-.el-row:last-child {
-  margin-bottom: 0;
-}
+
 .el-col {
   border-radius: 4px;
 }
@@ -205,5 +209,13 @@ body {
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
+}
+</style>
+<style scoped>
+.el-row {
+  margin-bottom: 20px;
+}
+.el-row:last-child {
+  margin-bottom: 0;
 }
 </style>
