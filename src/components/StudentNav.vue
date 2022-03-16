@@ -4,21 +4,28 @@
             <h2 class = 'projectName'>internSHIP</h2>
             <img src="../assets/boat.png" id = 'icon'>
         </div>
-        <router-link class ='routerlink' to="/HomePage">Home </router-link> 
+        <router-link class ='routerlink' to="/studenthome">Home </router-link> 
         <router-link class ='routerlink' to="">Resources</router-link> 
         <router-link class ='routerlink' to="/StudentJobBoard">Find Internships</router-link> 
         <router-link class ='routerlink' to="">My Applications</router-link> 
         <router-link class ='routerlink' to="/StudentProfile">Profile</router-link> 
-        <LogOutButton id = "signButton"/>
+        <button id = "signButton" @click ="logout">Log out </button>
+
     </div>
     
 </template>
 <script>
-import LogOutButton from '../components/LogOut.vue'
+import { getAuth, signOut } from "firebase/auth";
 
 export default {
-    components : {
-        LogOutButton
+    methods : {
+        logout() {
+
+            signOut(getAuth())
+            .then(() => {console.log("SignOut Successful");
+            this.$router.push('/')})
+            .catch((error) => {alert(error.message)})
+        }
     }
 }
 
