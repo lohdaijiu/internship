@@ -150,11 +150,11 @@ router.beforeEach(async (to, from, next) => {
 
 async function getEmployer() {
   const db = getFirestore(firebaseApp);
-  const docRef = doc(db, "Users", getAuth().currentUser.uid);
+  const docRef = doc(db, "User", getAuth().currentUser.uid);
   const docSnap = await getDoc(docRef);
 
   try {
-    return docSnap.data()
+    return docSnap.data().Employer
   } catch {
     console.log("error")
   }
