@@ -72,13 +72,7 @@ export default {
     font-size: 20px;
 }
 
-body, html {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  min-height: 100vh;
-  background-color: rgb(230, 240, 248) ;
-}
+
 
 #picture {
     display: flex;

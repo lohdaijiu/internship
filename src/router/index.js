@@ -17,6 +17,9 @@ import LandingPage from '@/views/LandingPage.vue';
 import StudentProfile from '@/views/Student/StudentProfile.vue';
 
 import StudentJobBoard from '@/views/Student/StudentJobBoard.vue';
+import StudentViewListing from '@/views/Student/StudentViewListing.vue';
+import EmployerViewListing from '@/views/Employer/EmployerViewListing.vue';
+
 
 import EditStudentProfile from '@/views/Student/EditStudentProfile.vue';
 
@@ -108,12 +111,22 @@ const router = createRouter({
       }
     },
     {
+      path: '/viewjoblisting',
+      name: 'StudentViewListing',
+      component: StudentViewListing
+    },
+    {
         path: '/EditStudentProfile',
         name: 'Edit Profile',
         component: EditStudentProfile,
         meta : {
           requiresAuth : true
         }
+    },
+    {
+      path: '/viewpostedlisting',
+      name: 'EmployerViewListing',
+      component: EmployerViewListing
     },
   ],
 });
