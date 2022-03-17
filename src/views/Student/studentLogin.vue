@@ -85,8 +85,10 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { reactive } from "vue";
+import { doc, getDoc, getFirestore} from "firebase/firestore";
+import firebaseApp from "../../main.js" 
 export default {
   data() {
     return {
@@ -110,10 +112,34 @@ export default {
 
   methods: {
     async login() {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, this.form.email, this.form.pass)
-        .then(this.$router.push("/studenthome"))
-        .catch((error) => alert(error.message));
+
+         
+
+      try {
+        await signInWithEmailAndPassword(getAuth(), this.form.email, this.form.pass)
+        //.then(this.$router.push("/employerhome"))
+        .catch((error) => {
+        alert(error.message);
+        });
+
+        const db = getFirestore(firebaseApp);
+        const docRef = doc(db, "User", getAuth().currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        const status = docSnap.data().Employer
+
+        if (!status) {
+          this.$router.push('/studenthome')
+        } else {
+          alert("No such student account found")
+          signOut(getAuth())
+        }
+        
+      } catch {
+        (error) => {
+          alert(error.message);
+          
+        };
+      }
     },
     redirectToStudentRegister() {
       this.$router.push({ path: "/studentregister" });

@@ -85,8 +85,10 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { reactive } from "vue";
+import { doc, getDoc, getFirestore} from "firebase/firestore";
+import firebaseApp from "../../main.js" 
 export default {
   data() {
     return {
@@ -109,22 +111,41 @@ export default {
   },
 
   methods: {
+    
     async login() {
+
+         
+
       try {
-        await signInWithEmailAndPassword(getAuth(), this.email, this.password)
-          .then(this.$router.push("/employerhome"))
-          .catch((error) => {
-            alert(error.message);
-          });
+        await signInWithEmailAndPassword(getAuth(), this.form.email, this.form.pass)
+        //.then(this.$router.push("/employerhome"))
+        .catch((error) => {
+        alert(error.message);
+        });
+
+        const db = getFirestore(firebaseApp);
+        const docRef = doc(db, "User", getAuth().currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        const status = docSnap.data().Employer
+
+        if (status) {
+          this.$router.push('/employerhome')
+        } else {
+          alert("No such employer account found")
+          signOut(getAuth())
+        }
+        
       } catch {
         (error) => {
           alert(error.message);
+          
         };
       }
     },
     redirectToStudentRegister() {
       this.$router.push({ path: "/employerregister" });
     },
+    
   },
 };
 </script>

@@ -29,12 +29,18 @@ const router = createRouter({
     {
       path: "/studentregister",
       name: "StudentRegister",
-      component: StudentRegister
+      component: StudentRegister,
+      meta : {
+        requiresAuth : false,
+      }
     },
     {
       path: "/employerregister",
       name: "EmployerRegister",
-      component: EmployerRegister
+      component: EmployerRegister,
+      meta : {
+        requiresAuth : false,
+      }
     },
     {
       path: "/employerprofilecreation",
@@ -91,7 +97,10 @@ const router = createRouter({
     {
       path: "/",
       name: "LandingPage",
-      component: LandingPage
+      component: LandingPage,
+      meta : {
+        requiresAuth : false,
+      }
     },
     {   
       path: '/studentprofile',
@@ -107,26 +116,36 @@ const router = createRouter({
       name: 'StudentJobBoard',
       component: StudentJobBoard,
       meta : {
-        requiresAuth : true
+        requiresAuth : true,
+        employer: false
       }
     },
     {
       path: '/viewjoblisting',
       name: 'StudentViewListing',
-      component: StudentViewListing
+      component: StudentViewListing,
+      meta : {
+        requiresAuth : true,
+        employer: false
+      }
     },
     {
         path: '/EditStudentProfile',
         name: 'Edit Profile',
         component: EditStudentProfile,
         meta : {
-          requiresAuth : true
+          requiresAuth : true,
+          employer:false
         }
     },
     {
       path: '/viewpostedlisting',
       name: 'EmployerViewListing',
-      component: EmployerViewListing
+      component: EmployerViewListing,
+      meta : {
+        requiresAuth : true,
+        employer: true
+      }
     },
   ],
 });
@@ -150,11 +169,19 @@ router.beforeEach(async (to, from, next) => {
   if (from.matched.some(record => record.meta.acceptable)) { //login exception
     next();
     console.log(1)
+  } else if (!to.matched.some(record => record.meta.requiresAuth)) {//do not require log in
+    next();
   }
-  else if (to.matched.some(record => record.meta.requiresAuth) && !isAuth) {
+  else if (to.matched.some(record => record.meta.requiresAuth) && !isAuth) { //not logged in
     alert("Not Authorised");
     next('/');
     console.log(2)
+  } else if (isAuth && to.matched.some(record => record.meta.employer) && !employer) { //Student logged in but go to employer page 
+    alert('You have no access to employer features');
+    next('/studenthome')
+  } else if (isAuth && !to.matched.some(record => record.meta.employer) && employer) { //Employer logged in but go to student page 
+    alert('You have no access to student features');
+    next('/employerhome')
   } else { //Authenticated and correct type
     next()
     console.log(employer)
@@ -163,6 +190,9 @@ router.beforeEach(async (to, from, next) => {
 
 async function getEmployer() {
   const db = getFirestore(firebaseApp);
+  if (getAuth().currentUser == null) {
+    return null;
+  }
   const docRef = doc(db, "User", getAuth().currentUser.uid);
   const docSnap = await getDoc(docRef);
 
