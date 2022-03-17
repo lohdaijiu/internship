@@ -12,6 +12,9 @@
                 <h2>Update Documents</h2>
                 <button id = 'uploadButton' @click="onPickResume">Upload Resume</button>
                 <input type="file" ref= "resumeInput" style="display: none" accept="pdf/*" @change="onFileResumePicked">
+                <br>
+                <h2>Update Documents</h2>
+                <button id = 'uploadButton' @click="resumeDownload">Download Resume</button>
                 
                 
                 
@@ -133,6 +136,18 @@ export default {
             this.$refs.resumeInput.click()
         },
 
+        async resumeDownload() {
+            const db = getFirestore(firebaseApp);
+            const auth = getAuth();
+            const uid = auth.currentUser.uid;
+            const docRef = doc(db, "User", "" + uid);
+            const docSnap = await getDoc(docRef);
+            let resumeURL = docSnap.data().resumeURL;
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.open('GET', resumeURL);
+            xhr.send();
+        },
 
         onFilePicked(event) {
             const auth = getAuth();
