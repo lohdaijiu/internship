@@ -13,6 +13,12 @@
                 <h2> {{section}} </h2> 
                 <div class ='writeupfont'> {{writeup}} </div>
             </div>
+            <div>
+                <h2> Support Documents:</h2>
+                <a :href="resumeURL" target="_blank" id ='resumeLink' >Resume Document</a>
+
+
+            </div>
         </div>
         <div  id = 'subContainer' v-for="(data,index) in this.profileData" :key="index">
             <template v-for="(writeup, section) in data" :key ="section">
@@ -39,6 +45,7 @@ export default {
             about: '',
             image: '',
             name: '',
+            resumeURL:'',
         }
     },
     async created() {
@@ -52,6 +59,8 @@ export default {
             this.name = docSnap.data().Name
             this.profileData = newData.slice(1)
             this.image = docSnap.data().photoURL
+            this.resumeURL = docSnap.data().resumeURL
+
     },
 
     methods: {
@@ -64,6 +73,21 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
+#resumeLink {
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+  
+    font-weight: 300;
+    color: #1f1d2a;
+    font-size: 18px;
+}
+
+a:hover {
+    
+    border-bottom: solid 1px #1f1d2a;
+    
+    
+}
 .writeupfont {
     font-family: "Poppins", sans-serif;
   
