@@ -4,10 +4,10 @@
             <h2 class = 'projectName'>internSHIP</h2>
             <img src="../assets/boat.png" id = 'icon'>
         </div>
-        <router-link class ='routerlink' to="">Home </router-link> 
+        <router-link class ='routerlink' to="/EmployerHome">Home </router-link> 
         <router-link class ='routerlink' to="">Create Listing</router-link> 
         <router-link class ='routerlink' to="">Application Management</router-link> 
-        <router-link class ='routerlink' to="/EmployerHome">Profile</router-link> 
+        <router-link class ='routerlink' to="/EmployerProfile">Profile</router-link> 
         <button id = "signButton" @click ="logout">Log out </button>
     </div>
     
@@ -36,7 +36,7 @@ export default {
     width: 5.5%;
     background-color: white;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #A5A6F6;
 }
 
 #project {
@@ -45,7 +45,7 @@ export default {
     align-items: center;  
 }
 .projectName {
-    color: #96C67F;
+    color: #A5A6F6;
 }
 
 #nav1 {
@@ -56,7 +56,11 @@ export default {
     padding:15px;
     height:30px;
     border-bottom: solid 10px;
-    border-bottom-color: #96C67F;
+    border-bottom-color: #A5A6F6;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    color: #1f1d2a;
+    font-size: 16px;
 }
 #nav1 button:last-child {
     margin-left:auto;
@@ -70,6 +74,6 @@ export default {
 }
 
 .routerlink:hover {
-    border-bottom: 2px solid #96C67F;
+    border-bottom: 2px solid #A5A6F6;
 }
 </style>

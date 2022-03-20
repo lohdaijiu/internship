@@ -6,21 +6,15 @@
                 <br>
                 <img :src="image">
                 <br>
-                <h2>{{name}}</h2>
+                <h2>{{companyName}}</h2>
             </div>
 
-            <div id= 'about' v-for="(writeup, section) in this.about" :key="section"> 
+            <div id= 'about' v-for="(writeup, section) in this.aboutCompany" :key="section"> 
                 <h2> {{section}} </h2> 
                 <div class ='writeupfont'> {{writeup}} </div>
             </div>
-            <div>
-                <h2> Support Documents:</h2>
-                <a :href="resumeURL" target="_blank" id ='resumeLink' >Resume Document</a>
-
-
-            </div>
         </div>
-        <div  id = 'subContainer' v-for="(data,index) in this.profileData" :key="index">
+        <div  id = 'subContainer' v-for="(data,index) in this.companyProfileData" :key="index">
             <template v-for="(writeup, section) in data" :key ="section">
                 <h2> {{ section }} </h2> 
                 <div class ='writeupfont'> {{ writeup}} </div>
@@ -41,11 +35,10 @@ import { getAuth } from "firebase/auth";
 export default {
     data() {
         return {
-            profileData: [],
-            about: '',
+            companyProfileData: [],
+            aboutCompany: '',
             image: '',
-            name: '',
-            resumeURL:'',
+            companyName: '',
         }
     },
     async created() {
@@ -54,18 +47,18 @@ export default {
             const uid = auth.currentUser.uid
             const docRef = doc(db, "User", "" + uid);
             const docSnap = await getDoc(docRef);
-            let newData = docSnap.data().ProfileData
-            this.about = newData.slice(0,1)[0]
-            this.name = docSnap.data().Name
-            this.profileData = newData.slice(1)
+            let newData = docSnap.data().companyProfileData
+            this.aboutCompany = newData.slice(0,1)[0]
+            console.log(newData.slice(0,1)[0])
+            this.companyName = docSnap.data().CompanyName
+            this.companyProfileData = newData.slice(1)
             this.image = docSnap.data().photoURL
-            this.resumeURL = docSnap.data().resumeURL
 
     },
 
     methods: {
         goToEditProfile() {
-                this.$router.push({ path: "/EditStudentProfile" });
+                this.$router.push({ path: "/EditEmployerProfile" });
 
         }
         
@@ -97,7 +90,7 @@ a:hover {
   
     font-weight: 300;
     color: #1f1d2a;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 
@@ -195,13 +188,13 @@ h2{
     padding-bottom: 0.5%;
     margin-bottom: 5%;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #A5A6F6;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #A5A6F6;
 }
 
 #editButton:hover {
-    background-color: #50e655;
+    background-color: #9698f5;
 
 }
 

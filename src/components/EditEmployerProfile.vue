@@ -9,15 +9,6 @@
                 <button id = 'uploadButton' @click="onPickFile">Upload Image</button>
                 <input type="file" ref= "fileInput" style="display: none" accept="image/*" @change="onFilePicked">
                 <br>
-                <h2>Update Documents</h2>
-                <button id = 'uploadButton' @click="onPickResume">Upload Resume</button>
-                <input type="file" ref= "resumeInput" style="display: none" accept="pdf/*" @change="onFileResumePicked">
-                <br>
-                <h2>Update Documents</h2>
-                <button id = 'uploadButton' @click="resumeDownload">Download Resume</button>
-                
-                
-                
             </div>
         </div>
         <div id = 'contentContainer'>
@@ -41,8 +32,8 @@
         
     </div>
     <div id = 'buttonContainer'>
-        <router-link to="/StudentProfile"> <button id ='applyButton' @click="apply" >Apply</button></router-link>
-        <router-link to="/StudentProfile"> <button id ='cancelButton' >Cancel</button></router-link>
+        <router-link to="/EmployerProfile"> <button id ='applyButton' @click="apply" >Apply</button></router-link>
+        <router-link to="/EmployerProfile"> <button id ='cancelButton' >Cancel</button></router-link>
     </div>
 </body>
 </template>
@@ -66,7 +57,6 @@ export default {
                 writeup: ""
             }],
             image: '',
-            resumeURL: '',
 
         }
     },
@@ -77,7 +67,7 @@ export default {
             const uid = auth.currentUser.uid;
             const docRef = doc(db, "User", "" + uid);
             const docSnap = await getDoc(docRef);
-            let arrayData = docSnap.data().ProfileData;
+            let arrayData = docSnap.data().companyProfileData;
             for (let i = 0; i< arrayData.length; i++) {
                 let val = arrayData[i];
                 for  (const [key,value] of Object.entries(val)) {
@@ -114,9 +104,8 @@ export default {
             }
 
             updateDoc(docRef, {
-                ProfileData: array,
+                companyProfileData: array,
                 photoURL: this.image,
-                resumeURL: this.resumeURL
             })
         },
 
@@ -142,22 +131,8 @@ export default {
         onPickFile() {
             this.$refs.fileInput.click()
         },
-        onPickResume() {
-            this.$refs.resumeInput.click()
-        },
-
-        async resumeDownload() {
-            const db = getFirestore(firebaseApp);
-            const auth = getAuth();
-            const uid = auth.currentUser.uid;
-            const docRef = doc(db, "User", "" + uid);
-            const docSnap = await getDoc(docRef);
-            let resumeURL = docSnap.data().resumeURL;
-            const xhr = new XMLHttpRequest();
-            xhr.responseType = 'blob';
-            xhr.open('GET', resumeURL);
-            xhr.send();
-        },
+        
+        
 
         onFilePicked(event) {
             const auth = getAuth();
@@ -187,34 +162,6 @@ export default {
                         }
                     })        
         },
-
-        onFileResumePicked(event) {
-            const auth = getAuth();
-            const uid = auth.currentUser.uid;
-            const file = event.target.files[0];
-            const storage = getStorage();
-            const storageRef = ref(storage, ''+ uid + '/documents/' + file.name);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-
-            uploadTask.on('state_changed', 
-                    (snapshot) => {
-                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                        switch (snapshot.state) {
-                            case 'paused':
-                                console.log('Upload is paused');
-                                break;
-                            case 'running':
-                                console.log('Upload is running');
-                                break;
-                        }
-                        if (progress == 100) {
-                            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                                this.resumeURL = downloadURL
-                            })
-                        }
-                    })
-        }
     }
 }
 </script>
@@ -246,24 +193,20 @@ h2 {
     padding-bottom: 0.5%;
     margin-top: 2%;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #A5A6F6;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #A5A6F6;
 }
 
 #addButton:hover {
-    background-color: #50e655;
+    background-color: #a9abfa;
 
 }
 #addButton:active {
     transform: translateY(1px);
 }
 
-.newContainer {
-    border-style: solid;
-    display: flex;
-    align-items: left;
-}
+
 
 #picture {
     display: flex;
@@ -276,6 +219,7 @@ h2 {
     width: 5%;
     min-width: 80%;
     min-height: 300px;
+    
     
 }
 
@@ -294,15 +238,18 @@ span {
     padding-top: 5%;
     padding-bottom: 5%;
     text-align: center;
-    font-size: 16px;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #A5A6F6;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #A5A6F6;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: #1f1d2a;
+    font-size: 16px;
 }
 
 #uploadButton:hover {
-    background-color: #50e655;
+    background-color: #a9abfa;
 
 }
 
@@ -320,9 +267,9 @@ span {
     text-align: center;
 
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #A5A6F6;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #A5A6F6;
 }
 
 #cancelButton {
@@ -335,12 +282,12 @@ span {
     padding-bottom: 20%;
     text-align: center;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #A5A6F6;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #A5A6F6;
 }
 #applyButton:hover {
-    background-color: #50e655;
+    background-color: #a9abfa;
 
 }
 #applyButton:active {
@@ -348,7 +295,7 @@ span {
 }
 
 #cancelButton:hover {
-    background-color: #50e655;
+    background-color: #a9abfa;
 
 }
 #cancelButton:active {
@@ -361,7 +308,7 @@ input {
     font-family: "Poppins", sans-serif;
     font-weight: 600;
     color: #1f1d2a;
-    font-size: 16px;    
+    font-size: 16px;
     border-radius: 15px;
     max-width: 30%;
 }
