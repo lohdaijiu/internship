@@ -162,12 +162,23 @@ export default {
                                 console.log('Upload is running');
                                 break;
                         }
-                        if (progress == 100) {
+                    },
+                     (error) => {
+                        switch (error.code) {
+                            case 'storage/unauthorized':
+                                // User doesn't have permission to access the object
+                                break;
+                            case 'storage/canceled':
+                                // User canceled the upload
+                                break;                    
+                        }
+                    },
+                    () => {
                             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                                 this.image = downloadURL
-                            })
-                        }
-                    })        
+                        });
+                    }
+                );      
         },
 
         onFileResumePicked(event) {
@@ -190,12 +201,25 @@ export default {
                                 console.log('Upload is running');
                                 break;
                         }
-                        if (progress == 100) {
+                    },
+                    (error) => {
+                        switch (error.code) {
+                            case 'storage/unauthorized':
+                                // User doesn't have permission to access the object
+                                break;
+                            case 'storage/canceled':
+                                // User canceled the upload
+                                break;                    
+                        }
+                    },
+                    () => {
                             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                                 this.resumeURL = downloadURL
-                            })
-                        }
-                    })
+                        });
+                    }
+                    
+            );
+                    
         }
     }
 }
