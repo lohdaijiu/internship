@@ -133,10 +133,16 @@ export default {
 
       const auth = getAuth();
       const db = getFirestore(firebaseApp);
+      let status = true;
 
-      createUserWithEmailAndPassword(auth, this.form.email, this.form.password)
-        .then(() => {
-          const uid = auth.currentUser.uid;
+      await createUserWithEmailAndPassword(auth, this.form.email, this.form.password)
+        .catch((error) => {
+          alert(error.message);
+          status = false;
+        });
+
+      if (status) {
+        const uid = auth.currentUser.uid;
           try {
             const docRef = setDoc(doc(db, "User", uid), {
               Email: this.form.email,
@@ -153,11 +159,7 @@ export default {
             console.error(error);
           }
           this.$router.push("/studentlogin");
-        })
-        .catch((error) => {
-          alert(error.message);
-          return;
-        });
+      }
     },
   },
 };

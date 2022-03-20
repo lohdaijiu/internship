@@ -49,24 +49,34 @@ export default {
 
             const auth = getAuth();
             const db = getFirestore(firebaseApp);
+            let status = true;
+
             
-            createUserWithEmailAndPassword(auth, this.email, this.password)
-            .then(() => {const uid = auth.currentUser.uid;
+            await createUserWithEmailAndPassword(auth, this.email, this.password)
+            .catch((error) => {alert(error.message); status = false} )
+            console.log(status)
+            if (status) {
+            const uid = auth.currentUser.uid;
             try {
               const docRef = setDoc(doc(db, "User", uid), {
                 Email: this.email, CompanyName: this.companyName, photoURL: this.photoURL,
             companyProfileData: this.companyProfileData, Employer: true
             })
             console.log(docRef)
+            this.$router.push("/employerlogin");
             } catch (error) {
               console.error(error);
-            }})
-            .catch((error) => {alert(error.message)} )
+            }
+            } 
+
+
+            
+           
 
 
             
 
-            this.$router.push("/employerlogin");
+            
         },
     }
 }
