@@ -1,13 +1,13 @@
 <template>
-    <!-- <div style="text-align:center;" v-if="user"> -->
+    <body>
         <StudentNav/>
 
         <div id="general_info">
 
-            <h3> Software Engineer </h3>
+            <h3> {{job_title}}</h3>
             <el-image
                 class="company-profile"
-                :src="require('../../assets/' + url)"
+                :src="img"
             />
 
             <el-table id = "eltable" :data= "tableData">
@@ -28,37 +28,39 @@
                 <el-tabs :tab-position= "top" >
                     <!-- TODO data from firebase -->
                     <el-tab-pane label="Job Description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…
+                        {{job_descr}}
                     </el-tab-pane>
                     <el-tab-pane label="Technical Competencies">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…
-                        Technical Competencies
+                        {{tech_compet}}
                     </el-tab-pane>
                     <el-tab-pane label="Soft Competencies">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…                        
-                        Soft Competencies
+                        {{soft_compet}}
                     </el-tab-pane>
                     <el-tab-pane label="Location">
-                        Location
+                        {{location}}
                     </el-tab-pane>
                 </el-tabs>
 
             </div>
         </div>
 
+        <!--  APPLY  -->
+        <el-button id ='applyBtn' type="success" @click='apply'>Apply</el-button>
 
+
+
+
+    </body>
     <!-- </div> -->
 </template>
 
 
 <script>
 import StudentNav from '../../components/StudentNav.vue'
+import firebaseApp from '../main.js'
+import { getFirestore} from "firebase/firestore";
+import { doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const tableData = [{
     yr: '2',
@@ -78,9 +80,42 @@ export default {
         return {
             url: "employer-login-pic.png",
             //to get from firebase lateron
-            tableData
+            tableData,
+            img: require('../../assets/'),
+            job_title: "Software Engineer",
+            job_descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
+                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…",
+            tech_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
+                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…TECH COMPETENCY",
+            soft_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
+                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu… SOFT COMPETENCY",
+            location: "location"
+            
+            
+
         }
-    }
+    },
+
+    methods: {
+        apply() {
+            // send resume
+        }
+        
+    },
+
+    async created() {
+        const db = getFirestore(firebaseApp);
+        const auth = getAuth()
+        const uid = auth.currentUser.uid
+        const docRef = doc(db, "User", "" + uid);
+        console.log(docRef);
+        // TODO
+
+
+    },
 }
 
     
