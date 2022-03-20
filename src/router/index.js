@@ -18,10 +18,13 @@ import StudentProfile from '@/views/Student/StudentProfile.vue';
 
 import StudentJobBoard from '@/views/Student/StudentJobBoard.vue';
 import StudentViewListing from '@/views/Student/StudentViewListing.vue';
-import EmployerViewListing from '@/views/Employer/EmployerViewListing.vue';
 
+import EmployerViewListing from '@/views/Employer/EmployerViewListing.vue';
+import EmployerProfile from '@/views/Employer/EmployerProfile.vue';
 
 import EditStudentProfile from '@/views/Student/EditStudentProfile.vue';
+import EditEmployerProfile from '@/views/Employer/EditEmployerProfile.vue';
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -131,7 +134,7 @@ const router = createRouter({
     },
     {
         path: '/EditStudentProfile',
-        name: 'Edit Profile',
+        name: 'EditStudentProfile',
         component: EditStudentProfile,
         meta : {
           requiresAuth : true,
@@ -147,6 +150,24 @@ const router = createRouter({
         employer: true
       }
     },
+    {   
+      path: '/employerprofile',
+      name: 'EmployerProfile',
+      component: EmployerProfile,
+      meta : {
+        requiresAuth : true,
+        employer: true
+      }
+    },
+    {
+      path: '/EditEmployerProfile',
+      name: 'EditEmployerProfile',
+      component: EditEmployerProfile,
+      meta : {
+        requiresAuth : true,
+        employer: true
+      }
+  },
   ],
 });
 

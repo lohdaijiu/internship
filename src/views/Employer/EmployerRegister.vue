@@ -26,7 +26,13 @@ export default {
             email: "",
             password: "",
             password1: "",
-            companyName: ""
+            companyName: "",
+            photoURL: "https://firebasestorage.googleapis.com/v0/b/internship-433c3.appspot.com/o/profile%2Fblank-pic.jpg?alt=media&token=730520eb-c8c6-4345-83d5-807015471610",
+            companyProfileData: [
+              {"About your company" : ''},
+              {'Company Culture': ''},
+              {'Company Vision' : ''},
+            ],
         };
     },
     methods: {
@@ -48,7 +54,8 @@ export default {
             .then(() => {const uid = auth.currentUser.uid;
             try {
               const docRef = setDoc(doc(db, "User", uid), {
-                Email: this.email, CompanyName: this.companyName, Employer: true
+                Email: this.email, CompanyName: this.companyName, photoURL: this.photoURL,
+            companyProfileData: this.companyProfileData, Employer: true
             })
             console.log(docRef)
             } catch (error) {
