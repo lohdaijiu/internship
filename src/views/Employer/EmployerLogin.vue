@@ -50,7 +50,7 @@
               >
               <el-row
                 ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link class="form-link-text"
+                  ><el-link class="form-link-text" @click="forgotPassword()"
                     >Forgot Password?</el-link
                   ></el-col
                 ></el-row
@@ -145,6 +145,10 @@ export default {
     redirectToStudentRegister() {
       this.$router.push({ path: "/employerregister" });
     },
+    forgotPassword() {
+      this.$router.push("/forgotpassword"
+      )
+    }
     
   },
 };

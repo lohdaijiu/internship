@@ -7,20 +7,20 @@
           ><el-col :span="23"
             ><el-image
               style="margin-top: 20px; height: 30px"
-              :src="require('../../assets/' + brand_url)"
+              :src="require('../assets/' + brand_url)"
               :fit="fit" /></el-col
         ></el-row>
         <el-image
           class="left-container"
           style="width: 90%"
-          :src="require('../../assets/' + url)"
+          :src="require('../assets/' + url)"
           :fit="fit"
       /></el-col>
       <el-col :span="12" class="bg-green title-tag-container"
         ><el-row
           ><el-col :span="24" class="text-center"
-            ><p class="tagline">Take a step towards your future career</p>
-            <p class="title-tag">Student Login</p></el-col
+            ><p class="tagline">An email will be sent to you to reset your password</p>
+            <p class="title-tag">Password reset</p></el-col
           ></el-row
         >
         <el-row>
@@ -32,38 +32,18 @@
                 placeholder="Email Address"
                 size="large"
                 :input-style="fitt" />
-              <el-input
-                v-model="form.pass"
-                type="password"
-                autocomplete="off"
-                placeholder="Password"
-                size="large"
-                :input-style="fitt" />
-              <el-row
-                ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link
-                    @click="redirectToStudentRegister()"
-                    class="form-link-text"
-                    >Register Here</el-link
-                  ></el-col
-                ></el-row
-              >
-              <el-row
-                ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link class="form-link-text" @click = "forgotPassword()"
-                    >Forgot Password?</el-link
-                  ></el-col
-                ></el-row
-              >
+              
+              
+              
               <el-row>
                 <el-col :span="6"></el-col>
                 <el-col :span="12">
                   <el-button
-                    @click="login()"
+                    @click="forgetPassword()"
                     class="login-btns"
                     size="large"
                     color="#96C67F"
-                    ><p class="btn-text">Login</p></el-button
+                    ><p class="btn-text">Send Email</p></el-button
                   >
                 </el-col>
                 <el-col :span="6"></el-col> </el-row></el-form
@@ -85,10 +65,8 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { reactive } from "vue";
-import { doc, getDoc, getFirestore} from "firebase/firestore";
-import firebaseApp from "../../main.js" 
 export default {
   data() {
     return {
@@ -105,33 +83,25 @@ export default {
       brand_url: "brand-black.png",
       form: reactive({
         email: "",
-        pass: "",
       }),
     };
   },
 
   methods: {
-    async login() {
-
-         
+    async forgetPassword() {
 
       try {
-        await signInWithEmailAndPassword(getAuth(), this.form.email, this.form.pass)
+        await sendPasswordResetEmail(getAuth(), this.form.email)
         //.then(this.$router.push("/employerhome"))
         .catch((error) => {
         alert(error.message);
         });
 
-        const db = getFirestore(firebaseApp);
-        const docRef = doc(db, "User", getAuth().currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        const status = docSnap.data().Employer
-
         if (!status) {
-          this.$router.push('/studenthome')
+          alert("An email has been sent to your email to reset your password.")
+          this.$router.go(-1)
         } else {
-          alert("No such student account found")
-          signOut(getAuth())
+          console.log("error")
         }
         
       } catch {
@@ -141,12 +111,7 @@ export default {
         };
       }
     },
-    redirectToStudentRegister() {
-      this.$router.push({ path: "/studentregister" });
-    },
-    forgotPassword() {
-      this.$router.push("/forgotpassword")
-    }
+
   },
 };
 </script>
