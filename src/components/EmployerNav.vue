@@ -5,7 +5,7 @@
             <img src="../assets/boat.png" id = 'icon'>
         </div>
         <router-link class ='routerlink' to="/EmployerHome">Home </router-link> 
-        <router-link class ='routerlink' to="">Create Listing</router-link> 
+        <router-link class ='routerlink' to="/addjoblisting">Create Listing</router-link> 
         <router-link class ='routerlink' to="">Application Management</router-link> 
         <router-link class ='routerlink' to="/EmployerProfile">Profile</router-link> 
         <button id = "signButton" @click ="logout">Log out </button>

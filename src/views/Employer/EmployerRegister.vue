@@ -60,7 +60,7 @@ export default {
             try {
               const docRef = setDoc(doc(db, "User", uid), {
                 Email: this.email, CompanyName: this.companyName, photoURL: this.photoURL,
-            companyProfileData: this.companyProfileData, Employer: true
+            companyProfileData: this.companyProfileData, Employer: true, Jobs: []
             })
             console.log(docRef)
             this.$router.push("/employerlogin");

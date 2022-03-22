@@ -23,7 +23,7 @@ import EmployerViewListing from '@/views/Employer/EmployerViewListing.vue';
 import EmployerProfile from '@/views/Employer/EmployerProfile.vue';
 import EditEmployerProfile from '@/views/Employer/EditEmployerProfile.vue';
 import ForgotPassword from '@/views/ForgotPassword.vue'
-
+import AddJobListing from '@/views/Employer/AddJobListing.vue'
 
 
 const router = createRouter({
@@ -174,6 +174,15 @@ const router = createRouter({
       component: ForgotPassword,
       meta: {
         requiresAuth : false
+      }
+    },
+    {
+      path: '/addjoblisting',
+      name: 'AddJobListing',
+      component: AddJobListing,
+      meta : {
+        requiresAuth : true,
+        employer: true
       }
     }
   ],
