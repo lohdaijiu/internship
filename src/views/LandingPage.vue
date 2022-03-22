@@ -4,7 +4,7 @@
   </el-row> -->
   <el-row>
     <el-col :span="2"><div class="grid-content" /></el-col>
-    <el-col :span="10">
+    <el-col :span="10" class="taglines">
       <p class="text-tag">Sail to startups with internSHIP</p>
       <el-row
         ><el-col :span="18"
@@ -70,8 +70,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+.taglines {
+  margin: auto 0;
+}
 body {
   margin: 0;
   padding: 0;
@@ -89,7 +92,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   color: #1f1d2a;
-  font-size: 42px;
+  font-size: 60px;
   margin-top: 100px;
   text-align: left;
 }
