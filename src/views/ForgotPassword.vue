@@ -12,14 +12,15 @@
         ></el-row>
         <el-image
           class="left-container"
-          style="width: 90%"
           :src="require('../assets/' + url)"
           :fit="fit"
       /></el-col>
       <el-col :span="12" class="bg-green title-tag-container"
         ><el-row
           ><el-col :span="24" class="text-center"
-            ><p class="tagline">An email will be sent to you to reset your password</p>
+            ><p class="tagline">
+              An email will be sent to you to reset your password
+            </p>
             <p class="title-tag">Password reset</p></el-col
           ></el-row
         >
@@ -32,9 +33,7 @@
                 placeholder="Email Address"
                 size="large"
                 :input-style="fitt" />
-              
-              
-              
+
               <el-row>
                 <el-col :span="6"></el-col>
                 <el-col :span="12">
@@ -89,29 +88,25 @@ export default {
 
   methods: {
     async forgetPassword() {
-
       try {
         await sendPasswordResetEmail(getAuth(), this.form.email)
-        //.then(this.$router.push("/employerhome"))
-        .catch((error) => {
-        alert(error.message);
-        });
+          //.then(this.$router.push("/employerhome"))
+          .catch((error) => {
+            alert(error.message);
+          });
 
         if (!status) {
-          alert("An email has been sent to your email to reset your password.")
-          this.$router.go(-1)
+          alert("An email has been sent to your email to reset your password.");
+          this.$router.go(-1);
         } else {
-          console.log("error")
+          console.log("error");
         }
-        
       } catch {
         (error) => {
           alert(error.message);
-          
         };
       }
     },
-
   },
 };
 </script>
