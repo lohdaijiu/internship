@@ -38,7 +38,7 @@ html {
   margin: 0;
   width: 100%;
   min-height: 100vh;
-  background-color: rgb(230, 240, 248);
+  background-color: #fafafa;
 }
 #app {
   min-height: 100vh;
