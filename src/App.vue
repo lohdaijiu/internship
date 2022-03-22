@@ -1,18 +1,15 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
-
+// import { Search } from "@element-plus/icons-vue";
 export default {
-  
-  name: 'App',
+  name: "App",
   components: {
-    
+    // Search,
   },
-
-}
-
+};
 </script>
 
 <style>
@@ -35,11 +32,15 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-body, html {
+body,
+html {
   padding: 0;
   margin: 0;
   width: 100%;
   min-height: 100vh;
-  background-color: rgb(230, 240, 248) ;
+  background-color: rgb(230, 240, 248);
+}
+#app {
+  min-height: 100vh;
 }
 </style>
