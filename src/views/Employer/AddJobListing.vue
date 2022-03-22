@@ -58,7 +58,7 @@
 import { getAuth } from "firebase/auth";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
 import { reactive } from "vue";
 import NavBar from "../../components/EmployerNav.vue"
 
@@ -111,6 +111,7 @@ export default {
       const docRef = doc(db, "Job", docName)
       const docSnap = await getDoc(docRef);
       const id = getAuth().currentUser.uid
+      var errorboolean = true;
 
       if (docSnap.exists() == false) {
         
@@ -123,7 +124,8 @@ export default {
           Type: this.form.type,
           CompanyName: companyName,
           Renumeration: this.form.renum,
-          Applicants: []
+          Applicants: [],
+          CreatedAt : serverTimestamp()
         };
         try {
           const docRef1 = doc(db, "Job", docName);
@@ -133,12 +135,17 @@ export default {
           alert("Job Created!")
         } catch (error) {
           console.error(error)
+          errorboolean = false;
+        }
+
+        if (errorboolean) {
+          this.$router.push("/employerhome")
         }
       } else { //same internship title
         alert("Please choose a new internship title")
       }
 
-        this.$router.push("/employerhome")
+        
       }
     },
   components : {
