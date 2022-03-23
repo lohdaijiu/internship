@@ -65,7 +65,7 @@
         </el-table-column>
         <el-table-column prop="range" label="Date Range" />
 
-        <el-table-column label="Apply" >
+        <el-table-column >
           <template #default="scope">
              <el-button
           size="small"
@@ -126,11 +126,12 @@ export default {
       const jobName = x.companyname.concat(" - ", x.jobpos)
       const id = getAuth().currentUser.uid
       const db = getFirestore(firebaseApp);
+      const jobWithStatus = {Job: jobName, Status: "Pending"}
       try {
         const docRef1 = doc(db, "Job", jobName);
         const docRef2 = doc(db, "User", id);
         await updateDoc(docRef1, {Applicants : arrayUnion(id)});
-        await updateDoc(docRef2, {JobsApplied : arrayUnion(jobName)});
+        await updateDoc(docRef2, {JobsApplied : arrayUnion(jobWithStatus)});
         alert("Job applied!")
       } catch (error) {
         alert("There was an error processing the application")
