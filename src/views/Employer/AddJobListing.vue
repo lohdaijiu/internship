@@ -36,6 +36,16 @@
       </el-select>
     </el-form-item>
 
+    <el-form-item label="Date Range">
+      <el-date-picker
+        v-model="form.daterange"
+        type="daterange"
+        range-separator="To"
+        start-placeholder="Start date"
+        end-placeholder="End date"
+      />
+    </el-form-item>
+
      <el-form-item label="Nature of Work">
       <el-radio-group v-model="form.type">
         <el-radio label="On-site" />
@@ -75,6 +85,7 @@ export default {
         duration: "",
         type: "",
         renum: "",
+        daterange: "",
       }),
       internshipTitle: "",
       jobDesc: "",
@@ -83,6 +94,7 @@ export default {
       duration: "",
       type: "",
       renum: "",
+      daterange: "",
     };
   },
 
@@ -125,24 +137,27 @@ export default {
           CompanyName: companyName,
           Renumeration: this.form.renum,
           Applicants: [],
-          CreatedAt : serverTimestamp()
+          CreatedAt : serverTimestamp(),
+          DateRange: this.form.daterange
         };
         try {
           const docRef1 = doc(db, "Job", docName);
           const docRef2 = doc(db, "User", id);
           await setDoc(docRef1, data);
           await updateDoc(docRef2, {Jobs : arrayUnion(this.form.internshipTitle)});
+          
           alert("Job Created!")
         } catch (error) {
           console.error(error)
           errorboolean = false;
         }
 
-        if (errorboolean) {
-          this.$router.push("/employerhome")
+        if (!errorboolean) {
+          //this.$router.push("/employerhome")
         }
       } else { //same internship title
         alert("Please choose a new internship title")
+
       }
 
         

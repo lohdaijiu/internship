@@ -34,6 +34,8 @@
     </el-col>
     <el-col :span="2"></el-col>
   </el-row>
+
+  
   <el-row>
     <el-col :span="2"></el-col>
     <el-col :span="20">
@@ -79,30 +81,18 @@
 // import { computed, ref } from "vue";
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import firebaseApp from "../../main.js";
 
 //   // dummy values for frontend
 
-const jobData = [
-  {
-    companyname: "Company ABC",
-    jobpos: "Data Scientist",
-    postdate: "21/2/22",
-    duration: "3 Months",
-    yos: "2 3 4",
-    range: "Jul 22 - Dec 23",
-  },
-  {
-    companyname: "Company XYZ",
-    jobpos: "Software Engineer",
-    postdate: "19/2/22",
-    duration: "6 Months",
-    yos: "3",
-    range: "May 22 - Aug 22",
-  },
-];
+var jobData = [];
+  
 
 export default {
   name: "StudentJobBoard",
+
+    
 
   components: {
     StudentNav,
@@ -119,6 +109,33 @@ export default {
       return jobData.filter(({ companyname }) => companyname.includes(keyword));
     },
   },
+
+  methods: {
+    
+  },
+
+  beforeMount() {
+    async function getData() {
+      try {
+      const db = getFirestore(firebaseApp);
+      const querySnapshot =  await getDocs(collection(db, "Job"));
+      querySnapshot.forEach((doc) => 
+      jobData.push({
+      companyname: doc.data().CompanyName,
+      jobpos: doc.data().InternshipTitle,
+      postdate: doc.data().CreatedAt.toDate().toString().slice(4,15),
+      duration: doc.data().Duration,
+      yos: doc.data().Year,
+      range: doc.data().DateRange[0].toDate().toString().slice(4,15)
+      .concat(" - ", doc.data().DateRange[1].toDate().toString().slice(4,15))}))
+      console.log(jobData)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getData();
+  },
+}
   // setup() {
 
   //   const searchQuery = ref("");
@@ -140,7 +157,7 @@ export default {
 
   //       return {searchResult, searchQuery};
   //     },
-};
+
 </script>
 
 <style scoped>
