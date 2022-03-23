@@ -63,8 +63,18 @@
           filter-placement="bottom-end"
         >
         </el-table-column>
-
         <el-table-column prop="range" label="Date Range" />
+
+        <el-table-column label="Apply" >
+          <template #default="scope">
+             <el-button
+          size="small"
+          type="success"
+          @click="apply(scope.row)"
+          >Apply</el-button
+        >
+          </template>
+        </el-table-column>
       </el-table>
     </el-col>
     <el-col :span="2"></el-col>
@@ -81,8 +91,9 @@
 // import { computed, ref } from "vue";
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, updateDoc, arrayUnion, doc } from "firebase/firestore";
 import firebaseApp from "../../main.js";
+import { getAuth } from "firebase/auth";
 
 //   // dummy values for frontend
 
@@ -111,7 +122,22 @@ export default {
   },
 
   methods: {
-    
+    async apply(x) {
+      const jobName = x.companyname.concat(" - ", x.jobpos)
+      const id = getAuth().currentUser.uid
+      const db = getFirestore(firebaseApp);
+      try {
+        const docRef1 = doc(db, "Job", jobName);
+        const docRef2 = doc(db, "User", id);
+        await updateDoc(docRef1, {Applicants : arrayUnion(id)});
+        await updateDoc(docRef2, {JobsApplied : arrayUnion(jobName)});
+        alert("Job applied!")
+      } catch (error) {
+        alert("There was an error processing the application")
+        console.log(error)
+      }
+      
+    }
   },
 
   beforeMount() {
