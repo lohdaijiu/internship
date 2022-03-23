@@ -14,7 +14,6 @@
                 <br>
                 Number Of Rejections
                 <br>
-                <h4>{{studentData['numberOfRejections']}}</h4>
                 
             </div>
             <div class="appInProgress">Application in progress</div>
