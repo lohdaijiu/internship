@@ -368,5 +368,9 @@ export default {
   margin-top: 40px;
 }
 </style>
-
+<style>
+.el-select__tags {
+  transform: translateY(-80%) !important;
+}
+</style>
 
