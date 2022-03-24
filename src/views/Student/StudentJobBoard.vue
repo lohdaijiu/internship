@@ -1,5 +1,5 @@
 <template>
-<div v-if="rendered">
+<div>
   <StudentNav />
 
   <!-- <div class="searchbar" style="width: 100%">
@@ -199,12 +199,6 @@ export default {
   },
 
   data() {
-<<<<<<< HEAD
-    return { 
-      keyword: "",
-      jobData,
-      rendered: false };
-=======
     return {
       keyword: "",
       workLocation: ref([]),
@@ -213,7 +207,6 @@ export default {
       queriedData,
       workLocationOpt,
     };
->>>>>>> e2b0f083053b08ac261c89a6cce8aa39da79b5ae
   },
 
   computed: {},
@@ -292,7 +285,7 @@ export default {
     },
   },
 
-  async mounted() {
+  async beforeMount() {
     async function getData() {
 
       jobData = [];
@@ -320,21 +313,12 @@ export default {
               ),
           })
         );
-<<<<<<< HEAD
-        
-        
-=======
-
->>>>>>> e2b0f083053b08ac261c89a6cce8aa39da79b5ae
         console.log("success");
       } catch (error) {
         console.error(error);
       }
     }
     await getData();
-<<<<<<< HEAD
-    this.rendered = true;
-=======
 
     console.log("hello");
 
@@ -343,7 +327,6 @@ export default {
 
   mounted() {
     console.log("mpinted"); // I'm text inside the component.
->>>>>>> e2b0f083053b08ac261c89a6cce8aa39da79b5ae
   },
 };
 // setup() {
