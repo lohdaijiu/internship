@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import VueChartkick from 'vue-chartkick';
 import 'chartkick/chart.js';
+
 // import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap"
 
