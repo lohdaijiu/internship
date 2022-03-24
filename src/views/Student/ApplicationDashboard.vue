@@ -5,7 +5,7 @@
 <el-row>
     <el-col :span="2"></el-col>
     <el-col :span="20">
-<el-table :data="tableData" style="width: 100%">
+<el-table :data="tableData" style="width: 100%"  default-expand-all>
 
     <el-table-column prop="companyname" label="Company" width="180" />
     <el-table-column prop="jobpos" label="Job Position" width="180" />
@@ -36,8 +36,11 @@ export default {
         }
     },
 
-    beforeMount() {
+    async beforeMount() {
         async function getData() {
+
+            tableData = []
+
             try {
                 const id = getAuth().currentUser.uid
                 const db = getFirestore(firebaseApp);
@@ -64,7 +67,7 @@ export default {
             }
         }
 
-        getData();
+        await getData();
         console.log(tableData);
     }
 }

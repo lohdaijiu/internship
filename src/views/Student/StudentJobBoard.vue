@@ -175,9 +175,13 @@ export default {
     },
   },
 
-  async beforeMount() {
+  async created() {
     async function getData() {
+
+      jobData = [];
+
       try {
+        
         const db = getFirestore(firebaseApp);
         const querySnapshot = await getDocs(collection(db, "Job"));
         querySnapshot.forEach((doc) =>
@@ -205,6 +209,7 @@ export default {
     }
     await getData();
     console.log("hello");
+    console.log(jobData)
   },
 };
 // setup() {

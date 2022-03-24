@@ -6,7 +6,7 @@
         </div>
         <router-link class ='routerlink' to="/EmployerHome">Home </router-link> 
         <router-link class ='routerlink' to="/addjoblisting">Create Listing</router-link> 
-        <router-link class ='routerlink' to="">Application Management</router-link> 
+        <router-link class ='routerlink' to="/viewapplicants">Application Management</router-link> 
         <router-link class ='routerlink' to="/EmployerProfile">Profile</router-link> 
         <button id = "signButton" @click ="logout">Log out </button>
     </div>
