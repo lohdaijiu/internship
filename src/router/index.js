@@ -24,6 +24,8 @@ import EmployerProfile from '@/views/Employer/EmployerProfile.vue';
 import EditEmployerProfile from '@/views/Employer/EditEmployerProfile.vue';
 import ForgotPassword from '@/views/ForgotPassword.vue'
 import AddJobListing from '@/views/Employer/AddJobListing.vue'
+import ApplicationDashboard from '@/views/Student/ApplicationDashboard.vue';
+
 
 
 const router = createRouter({
@@ -183,6 +185,15 @@ const router = createRouter({
       meta : {
         requiresAuth : true,
         employer: true
+      }
+    },
+    {
+      path: '/applicationdashboard',
+      name: 'AApplicationDashboard',
+      component: ApplicationDashboard,
+      meta : {
+        requiresAuth : true,
+        employer: false
       }
     }
   ],

@@ -91,7 +91,7 @@
 // import { computed, ref } from "vue";
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
-import { collection, getDocs, getFirestore, updateDoc, arrayUnion, doc } from "firebase/firestore";
+import { getDocs, setDoc, collection, getDoc, getFirestore, updateDoc, arrayUnion, doc, serverTimestamp } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
 
@@ -122,26 +122,58 @@ export default {
   },
 
   methods: {
+    // async getStudentName() {
+    //   const db = getFirestore(firebaseApp);
+    //   if (getAuth().currentUser == null) {
+    //     return null;
+    //   }
+    //   const docRef = doc(db, "User", getAuth().currentUser.uid);
+    //   const docSnap = await getDoc(docRef);
+
+    //   try {
+    //     return docSnap.data().Name;
+    //   } catch {
+    //     console.log("error")
+    //   }  
+    // },
     async apply(x) {
-      const jobName = x.companyname.concat(" - ", x.jobpos)
-      const id = getAuth().currentUser.uid
       const db = getFirestore(firebaseApp);
-      const jobWithStatus = {Job: jobName, Status: "Pending"}
+      const id = getAuth().currentUser.uid
+      const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id)
+      const jobName = x.companyname.concat(" - ", x.jobpos)
+      const docRef = doc(db, "Application", applicationName)
+      const docSnap = await getDoc(docRef);
+      const docRef1 = doc(db, "Job", jobName);
+      const docRef2 = doc(db, "User", id);
+
+      if (docSnap.exists()) {
+        alert("You have already applied for this position")
+      } else {
       try {
-        const docRef1 = doc(db, "Job", jobName);
-        const docRef2 = doc(db, "User", id);
+        //Add document into application db
+
+        const data = {
+          CreatedAt : serverTimestamp(),
+          Progress : "Pending",
+          Applicant : id,
+          Position : x.jobpos,
+          Status : "",
+          CompanyName : x.companyname
+        }
+
+        await setDoc(docRef, data)
         await updateDoc(docRef1, {Applicants : arrayUnion(id)});
-        await updateDoc(docRef2, {JobsApplied : arrayUnion(jobWithStatus)});
+        await updateDoc(docRef2, {JobsApplied : arrayUnion(applicationName)});
         alert("Job applied!")
       } catch (error) {
         alert("There was an error processing the application")
         console.log(error)
       }
-      
+      }
     }
   },
 
-  beforeMount() {
+  async beforeMount() {
     async function getData() {
       try {
       const db = getFirestore(firebaseApp);
@@ -155,12 +187,13 @@ export default {
       yos: doc.data().Year,
       range: doc.data().DateRange[0].toDate().toString().slice(4,15)
       .concat(" - ", doc.data().DateRange[1].toDate().toString().slice(4,15))}))
-      console.log(jobData)
+      console.log("success")
       } catch (error) {
         console.error(error);
       }
     }
-    getData();
+    await getData();
+    console.log("hello")
   },
 }
   // setup() {

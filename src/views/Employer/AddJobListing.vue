@@ -100,25 +100,27 @@ export default {
 
   methods: {
 
-    async getCompanyName() {
-      const db = getFirestore(firebaseApp);
-      if (getAuth().currentUser == null) {
-        return null;
-      }
-      const docRef = doc(db, "User", getAuth().currentUser.uid);
-      const docSnap = await getDoc(docRef);
+    // async getCompanyName() {
+    //   const db = getFirestore(firebaseApp);
+    //   if (getAuth().currentUser == null) {
+    //     return null;
+    //   }
+    //   const docRef = doc(db, "User", getAuth().currentUser.uid);
+    //   const docSnap = await getDoc(docRef);
 
-      try {
-        return docSnap.data().CompanyName;
-      } catch {
-        console.log("error")
-      }  
-    },
+    //   try {
+    //     return docSnap.data().CompanyName;
+    //   } catch {
+    //     console.log("error")
+    //   }  
+    // },
 
     async addJob() {
 
       const db = getFirestore(firebaseApp);
-      let companyName = "testcompany1";
+      const docRef1 = doc(db, "User", getAuth().currentUser.uid)
+      const companyName1 = await getDoc(docRef1);
+      const companyName = companyName1.data().CompanyName
       let docName = companyName.concat(" - ", this.form.internshipTitle)
       const docRef = doc(db, "Job", docName)
       const docSnap = await getDoc(docRef);
