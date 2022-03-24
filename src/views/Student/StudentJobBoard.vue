@@ -1,4 +1,5 @@
 <template>
+<div v-if="rendered">
   <StudentNav />
 
   <!-- <div class="searchbar" style="width: 100%">
@@ -67,6 +68,7 @@
   <div v-for="(f, index) of searchResult" :key="index">
     <!-- <p>{{ f.companyname }}</p> -->
   </div>
+  </div>
 </template>
 
 <script>
@@ -102,7 +104,10 @@ export default {
   },
 
   data() {
-    return { keyword: "", jobData };
+    return { 
+      keyword: "",
+      jobData,
+      rendered: false };
   },
 
   computed: {
@@ -175,7 +180,7 @@ export default {
     },
   },
 
-  async created() {
+  async mounted() {
     async function getData() {
 
       jobData = [];
@@ -202,14 +207,15 @@ export default {
               ),
           })
         );
+        
+        
         console.log("success");
       } catch (error) {
         console.error(error);
       }
     }
     await getData();
-    console.log("hello");
-    console.log(jobData)
+    this.rendered = true;
   },
 };
 // setup() {
