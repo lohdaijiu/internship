@@ -34,6 +34,65 @@
     </el-col>
     <el-col :span="2"></el-col>
   </el-row>
+  <el-row>
+    <el-col :span="2"></el-col>
+    <el-col :span="3">
+      <el-select
+        v-model="value"
+        class="m-2"
+        placeholder="Company Name"
+        size="large"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-col>
+    <el-col :span="3">
+      <el-select
+        v-model="value"
+        class="m-2"
+        placeholder="On-site/Remote"
+        size="large"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-col>
+    <el-col :span="3">
+      <el-select
+        v-model="value"
+        class="m-2"
+        placeholder="Duration"
+        size="large"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-col>
+    <el-col :span="3">
+      <el-date-picker
+        v-model="value1"
+        type="daterange"
+        range-separator="To"
+        start-placeholder="Start date"
+        end-placeholder="End date"
+        size="large"
+      />
+    </el-col>
+    <el-col :span="13"></el-col>
+  </el-row>
 
   <el-row>
     <el-col :span="2"></el-col>
@@ -90,7 +149,28 @@ import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
 
 //   // dummy values for frontend
-
+const options = [
+  {
+    value: "Option1",
+    label: "Option1",
+  },
+  {
+    value: "Option2",
+    label: "Option2",
+  },
+  {
+    value: "Option3",
+    label: "Option3",
+  },
+  {
+    value: "Option4",
+    label: "Option4",
+  },
+  {
+    value: "Option5",
+    label: "Option5",
+  },
+];
 var jobData = [];
 
 export default {
@@ -102,7 +182,7 @@ export default {
   },
 
   data() {
-    return { keyword: "", jobData };
+    return { keyword: "", jobData, options };
   },
 
   computed: {
