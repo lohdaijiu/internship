@@ -210,18 +210,23 @@ export default {
   computed: {},
 
   methods: {
+    // populateQueriedData() {
+    //   const { jobData } = this;
+    // },
     searchResult() {
       const { jobData, keyword, workLocation } = this;
       console.log(jobData, keyword);
       console.log(
-        jobData.filter(({ jobpos }) =>
-          jobpos.toLowerCase().includes(keyword.toLowerCase())
+        jobData.filter(
+          ({ jobpos, worklocation }) =>
+            jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
+            (workLocation.includes(worklocation) || !workLocation)
         )
       );
       this.queriedData = jobData.filter(
         ({ jobpos, worklocation }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-          workLocation.includes(worklocation)
+          (workLocation.includes(worklocation) || workLocation.length == 0)
       );
     },
     // async getStudentName() {
@@ -302,13 +307,21 @@ export default {
               ),
           })
         );
+
         console.log("success");
       } catch (error) {
         console.error(error);
       }
     }
     await getData();
+
     console.log("hello");
+
+    this.queriedData = jobData;
+  },
+
+  mounted() {
+    console.log("mpinted"); // I'm text inside the component.
   },
 };
 // setup() {
