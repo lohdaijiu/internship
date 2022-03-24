@@ -1,4 +1,5 @@
 !<template>
+    <div v-if="done">
   <NavBar/>
 
   <br><br>
@@ -41,6 +42,7 @@
     
     </el-table>
     </el-row>
+    </div>
 </template>
 
 <script>
@@ -56,7 +58,8 @@ export default {
     data() {
         return {
             tableData,
-            empty : false
+            empty : false,
+            done: false,
         }
     },
     components : {
@@ -111,7 +114,7 @@ export default {
         }
     },
 
-    async beforeMount() {
+    async beforeCreate() {
 
         async function getData(){
 
@@ -170,9 +173,11 @@ export default {
                 }
             }
         }
-        await getData();
+        await getData().then(() => {this.done = true;})
         console.log(tableData)
-    }
+    },
+
+
 }
 </script>
 

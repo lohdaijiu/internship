@@ -1,4 +1,5 @@
 !<template>
+<div v-if="done">
 <NavBar /> <br>
 <h1> Application DashBoard </h1> <br>
 
@@ -16,6 +17,7 @@
 </el-table>
 </el-col>
 </el-row>
+</div>
 </template>
 
 <script>
@@ -33,10 +35,11 @@ export default {
     data() {
         return {
             tableData,
+            done : false
         }
     },
 
-    async beforeMount() {
+    async beforeCreate() {
         async function getData() {
 
             tableData = []
@@ -67,7 +70,7 @@ export default {
             }
         }
 
-        await getData();
+        await getData().then(() => {this.done = true});
         console.log(tableData);
     }
 }
