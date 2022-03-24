@@ -24,7 +24,7 @@
     </el-col>
     <el-col :span="6" class="search-btn-container">
       <i class="searchicon">
-        <el-button type="primary" size="large">
+        <el-button type="primary" size="large" @click="searchResult()">
           <el-icon style="vertical-align: middle">
             <Search />
           </el-icon>
@@ -53,13 +53,16 @@
     </el-col>
     <el-col :span="3">
       <el-select
-        v-model="value"
+        multiple
+        collapse-tags
+        collapse-tags-tooltip
+        v-model="workLocation"
         class="m-2"
         placeholder="On-site/Remote"
         size="large"
       >
         <el-option
-          v-for="item in options"
+          v-for="item in workLocationOpt"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -91,15 +94,15 @@
         size="large"
       />
     </el-col>
-    <el-col :span="13"></el-col>
+    <el-col :span="10"></el-col>
   </el-row>
 
-  <el-row>
+  <el-row class="table-container">
     <el-col :span="2"></el-col>
     <el-col :span="20">
       <el-table
         ref="tableRef"
-        :data="searchResult"
+        :data="queriedData"
         :default-sort="{ prop: 'postdate', order: descending }"
         height="250"
         style="width: 100%"
@@ -134,6 +137,7 @@
 // import { computed, ref } from "vue";
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
+import { ref } from "vue";
 import {
   getDocs,
   setDoc,
@@ -171,7 +175,18 @@ const options = [
     label: "Option5",
   },
 ];
+const workLocationOpt = [
+  {
+    value: "On-site",
+    label: "On-site",
+  },
+  {
+    value: "Remote",
+    label: "Remote",
+  },
+];
 var jobData = [];
+var queriedData = ref([]);
 
 export default {
   name: "StudentJobBoard",
@@ -182,25 +197,33 @@ export default {
   },
 
   data() {
-    return { keyword: "", jobData, options };
+    return {
+      keyword: "",
+      workLocation: ref([]),
+      jobData,
+      options,
+      queriedData,
+      workLocationOpt,
+    };
   },
 
-  computed: {
-    searchResult() {
-      const { jobData, keyword } = this;
-      console.log(jobData, keyword);
-      console.log(
-        jobData.filter(({ companyname }) =>
-          companyname.toLowerCase().includes(keyword.toLowerCase())
-        )
-      );
-      return jobData.filter(({ companyname }) =>
-        companyname.toLowerCase().includes(keyword.toLowerCase())
-      );
-    },
-  },
+  computed: {},
 
   methods: {
+    searchResult() {
+      const { jobData, keyword, workLocation } = this;
+      console.log(jobData, keyword);
+      console.log(
+        jobData.filter(({ jobpos }) =>
+          jobpos.toLowerCase().includes(keyword.toLowerCase())
+        )
+      );
+      this.queriedData = jobData.filter(
+        ({ jobpos, worklocation }) =>
+          jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
+          workLocation.includes(worklocation)
+      );
+    },
     // async getStudentName() {
     //   const db = getFirestore(firebaseApp);
     //   if (getAuth().currentUser == null) {
@@ -267,6 +290,7 @@ export default {
             postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
             duration: doc.data().Duration,
             yos: doc.data().Year,
+            worklocation: doc.data().Type,
             range: doc
               .data()
               .DateRange[0].toDate()
@@ -317,6 +341,9 @@ export default {
 }
 .search-btn-container {
   margin-left: 30px;
+}
+.table-container {
+  margin-top: 40px;
 }
 </style>
 
