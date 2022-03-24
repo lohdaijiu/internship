@@ -25,7 +25,7 @@
     </el-col>
     <el-col :span="6" class="search-btn-container">
       <i class="searchicon">
-        <el-button type="primary" size="large">
+        <el-button type="primary" size="large" @click="searchResult()">
           <el-icon style="vertical-align: middle">
             <Search />
           </el-icon>
@@ -35,13 +35,75 @@
     </el-col>
     <el-col :span="2"></el-col>
   </el-row>
-
   <el-row>
+    <el-col :span="2"></el-col>
+    <el-col :span="3">
+      <el-select
+        v-model="value"
+        class="m-2"
+        placeholder="Company Name"
+        size="large"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-col>
+    <el-col :span="3">
+      <el-select
+        multiple
+        collapse-tags
+        collapse-tags-tooltip
+        v-model="workLocation"
+        class="m-2"
+        placeholder="On-site/Remote"
+        size="large"
+      >
+        <el-option
+          v-for="item in workLocationOpt"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-col>
+    <el-col :span="3">
+      <el-select
+        v-model="value"
+        class="m-2"
+        placeholder="Duration"
+        size="large"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+    </el-col>
+    <el-col :span="3">
+      <el-date-picker
+        v-model="value1"
+        type="daterange"
+        range-separator="To"
+        start-placeholder="Start date"
+        end-placeholder="End date"
+        size="large"
+      />
+    </el-col>
+    <el-col :span="10"></el-col>
+  </el-row>
+
+  <el-row class="table-container">
     <el-col :span="2"></el-col>
     <el-col :span="20">
       <el-table
         ref="tableRef"
-        :data="searchResult"
+        :data="queriedData"
         :default-sort="{ prop: 'postdate', order: descending }"
         height="250"
         style="width: 100%"
@@ -77,6 +139,7 @@
 // import { computed, ref } from "vue";
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
+import { ref } from "vue";
 import {
   getDocs,
   setDoc,
@@ -92,8 +155,40 @@ import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
 
 //   // dummy values for frontend
-
+const options = [
+  {
+    value: "Option1",
+    label: "Option1",
+  },
+  {
+    value: "Option2",
+    label: "Option2",
+  },
+  {
+    value: "Option3",
+    label: "Option3",
+  },
+  {
+    value: "Option4",
+    label: "Option4",
+  },
+  {
+    value: "Option5",
+    label: "Option5",
+  },
+];
+const workLocationOpt = [
+  {
+    value: "On-site",
+    label: "On-site",
+  },
+  {
+    value: "Remote",
+    label: "Remote",
+  },
+];
 var jobData = [];
+var queriedData = ref([]);
 
 export default {
   name: "StudentJobBoard",
@@ -104,28 +199,45 @@ export default {
   },
 
   data() {
+<<<<<<< HEAD
     return { 
       keyword: "",
       jobData,
       rendered: false };
+=======
+    return {
+      keyword: "",
+      workLocation: ref([]),
+      jobData,
+      options,
+      queriedData,
+      workLocationOpt,
+    };
+>>>>>>> e2b0f083053b08ac261c89a6cce8aa39da79b5ae
   },
 
-  computed: {
-    searchResult() {
-      const { jobData, keyword } = this;
-      console.log(jobData, keyword);
-      console.log(
-        jobData.filter(({ companyname }) =>
-          companyname.toLowerCase().includes(keyword.toLowerCase())
-        )
-      );
-      return jobData.filter(({ companyname }) =>
-        companyname.toLowerCase().includes(keyword.toLowerCase())
-      );
-    },
-  },
+  computed: {},
 
   methods: {
+    // populateQueriedData() {
+    //   const { jobData } = this;
+    // },
+    searchResult() {
+      const { jobData, keyword, workLocation } = this;
+      console.log(jobData, keyword);
+      console.log(
+        jobData.filter(
+          ({ jobpos, worklocation }) =>
+            jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
+            (workLocation.includes(worklocation) || !workLocation)
+        )
+      );
+      this.queriedData = jobData.filter(
+        ({ jobpos, worklocation }) =>
+          jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
+          (workLocation.includes(worklocation) || workLocation.length == 0)
+      );
+    },
     // async getStudentName() {
     //   const db = getFirestore(firebaseApp);
     //   if (getAuth().currentUser == null) {
@@ -196,6 +308,7 @@ export default {
             postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
             duration: doc.data().Duration,
             yos: doc.data().Year,
+            worklocation: doc.data().Type,
             range: doc
               .data()
               .DateRange[0].toDate()
@@ -207,15 +320,30 @@ export default {
               ),
           })
         );
+<<<<<<< HEAD
         
         
+=======
+
+>>>>>>> e2b0f083053b08ac261c89a6cce8aa39da79b5ae
         console.log("success");
       } catch (error) {
         console.error(error);
       }
     }
     await getData();
+<<<<<<< HEAD
     this.rendered = true;
+=======
+
+    console.log("hello");
+
+    this.queriedData = jobData;
+  },
+
+  mounted() {
+    console.log("mpinted"); // I'm text inside the component.
+>>>>>>> e2b0f083053b08ac261c89a6cce8aa39da79b5ae
   },
 };
 // setup() {
@@ -248,6 +376,9 @@ export default {
 }
 .search-btn-container {
   margin-left: 30px;
+}
+.table-container {
+  margin-top: 40px;
 }
 </style>
 
