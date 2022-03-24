@@ -15,9 +15,14 @@
       <el-table-column prop="title" label="Job" width="180" />
       <el-table-column prop="date" label="Date Applied" width="180" />
       <el-table-column prop="name" label="Applicant Name" width="180" />
-      <el-table-column prop="resume" label="Resume" width="180" />
+      <el-table-column width="180" label="Resume">
+          <template #default="scope">
+            <el-button size="small" type="info" @click="downloadResume(scope.row)" v-if="rendered(scope.row)"
+              >Download</el-button
+            >
+          </template>
+      </el-table-column>
       <el-table-column prop="talk" label="Communicate" width="180" />
-      <el-table-column prop="uid" label="Communicate" width="180" v-if="empty"/>
       <el-table-column width="180" label="Offer">
           <template #default="scope">
             <el-button size="small" type="success" @click="offer(scope.row)" v-if="rendered(scope.row)"
@@ -99,6 +104,10 @@ export default {
             } else {
                 return true;
             }
+        },
+        downloadResume(x) {
+
+            window.open(x.resume);
         }
     },
 
@@ -148,7 +157,7 @@ export default {
                         }
                         child.push({
                             name : appName,
-                            resume : "placeholder",
+                            resume : docSnap2.data().resumeURL,
                             date : docSnap3.data().CreatedAt.toDate().toString().slice(4,15),
                             title : docSnap1.data().InternshipTitle,
                             uid : docSnap3.data().Applicant,
