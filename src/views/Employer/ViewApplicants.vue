@@ -9,6 +9,7 @@
       :data="tableData"
       style="width: 100%; margin-bottom: 20px"
       row-key="id"
+      default-expand-all
     >
       <el-table-column width="180" />
       <el-table-column prop="title" label="Job" width="180" />
@@ -16,8 +17,22 @@
       <el-table-column prop="name" label="Applicant Name" width="180" />
       <el-table-column prop="resume" label="Resume" width="180" />
       <el-table-column prop="talk" label="Communicate" width="180" />
-      <el-table-column prop="offer" label="Offer" width="180" />
-      <el-table-column prop="reject" label="Reject" width="180" />
+      <el-table-column prop="uid" label="Communicate" width="180" v-if="empty"/>
+      <el-table-column width="180" label="Offer">
+          <template #default="scope">
+            <el-button size="small" type="success" @click="offer(scope.row)" v-if="rendered(scope.row)"
+              >Offer</el-button
+            >
+          </template>
+      </el-table-column>
+      <el-table-column width="180" label="Reject">
+          <template #default="scope">
+            <el-button size="small" type="warning" @click="reject(scope.row)" v-if="rendered(scope.row)"
+              >Reject</el-button
+            >
+          </template>
+      </el-table-column>
+      <el-table-column prop="progress" label="Progress" width="180" />
     
     </el-table>
     </el-row>
@@ -27,7 +42,7 @@
 import { getAuth } from "firebase/auth";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import NavBar from "../../components/EmployerNav.vue"
 
 var tableData = []
@@ -36,11 +51,57 @@ export default {
     data() {
         return {
             tableData,
+            empty : false
         }
     },
     components : {
         NavBar
     },
+    methods :{
+        async offer(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docRef = doc(db, "User", id);
+            const docSnap = await getDoc(docRef);
+            const employerName = docSnap.data().CompanyName;
+            const docName = employerName.concat(" - ", x.title, " - ", x.uid)
+
+            await updateDoc(doc(db, "Application", docName), {
+                Progress: "Done",
+                Status: "Accepted"
+            });
+
+            alert("Applicant Accepted")
+            window.location.reload();
+        },
+        async reject(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docRef = doc(db, "User", id);
+            const docSnap = await getDoc(docRef);
+            const employerName = docSnap.data().CompanyName;
+            const docName = employerName.concat(" - ", x.title, " - ", x.uid)
+
+            await updateDoc(doc(db, "Application", docName), {
+                Progress: "Done",
+                Status: "Rejected"
+}           );
+
+            alert("Applicant Rejected")
+            window.location.reload();
+        },
+        rendered(x) {
+
+            if (x.name == null) {
+                return false;
+            } else if (x.progress != "Pending") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    },
+
     async beforeMount() {
 
         async function getData(){
@@ -81,10 +142,17 @@ export default {
                         console.log(docName)
                         const docRef3 = doc(db, "Application", docName)
                         const docSnap3 = await getDoc(docRef3)
+                        var statusAdd = ""
+                        if (docSnap3.data().Status != "") {
+                            statusAdd = "(".concat(docSnap3.data().Status, ")")
+                        }
                         child.push({
                             name : appName,
                             resume : "placeholder",
                             date : docSnap3.data().CreatedAt.toDate().toString().slice(4,15),
+                            title : docSnap1.data().InternshipTitle,
+                            uid : docSnap3.data().Applicant,
+                            progress : docSnap3.data().Progress.concat(statusAdd)
                         })
                     }
 
