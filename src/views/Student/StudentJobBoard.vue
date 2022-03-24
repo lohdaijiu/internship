@@ -1,5 +1,4 @@
 <template>
-<div>
   <StudentNav />
 
   <!-- <div class="searchbar" style="width: 100%">
@@ -58,7 +57,6 @@
         collapse-tags
         collapse-tags-tooltip
         v-model="workLocation"
-        class="m-2"
         placeholder="On-site/Remote"
         size="large"
       >
@@ -72,13 +70,16 @@
     </el-col>
     <el-col :span="3">
       <el-select
-        v-model="value"
+        multiple
+        collapse-tags
+        collapse-tags-tooltip
+        v-model="durations"
         class="m-2"
         placeholder="Duration"
         size="large"
       >
         <el-option
-          v-for="item in options"
+          v-for="item in durationOpt"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -93,6 +94,7 @@
         start-placeholder="Start date"
         end-placeholder="End date"
         size="large"
+        format="DD/MM/YYYY"
       />
     </el-col>
     <el-col :span="10"></el-col>
@@ -130,7 +132,6 @@
   <div v-for="(f, index) of searchResult" :key="index">
     <!-- <p>{{ f.companyname }}</p> -->
   </div>
-  </div>
 </template>
 
 <script>
@@ -153,7 +154,7 @@ import {
 } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
-
+const value1 = ref([]);
 //   // dummy values for frontend
 const options = [
   {
@@ -164,18 +165,6 @@ const options = [
     value: "Option2",
     label: "Option2",
   },
-  {
-    value: "Option3",
-    label: "Option3",
-  },
-  {
-    value: "Option4",
-    label: "Option4",
-  },
-  {
-    value: "Option5",
-    label: "Option5",
-  },
 ];
 const workLocationOpt = [
   {
@@ -185,6 +174,16 @@ const workLocationOpt = [
   {
     value: "Remote",
     label: "Remote",
+  },
+];
+const durationOpt = [
+  {
+    value: "3",
+    label: "3",
+  },
+  {
+    value: "6",
+    label: "6",
   },
 ];
 var jobData = [];
@@ -206,6 +205,9 @@ export default {
       options,
       queriedData,
       workLocationOpt,
+      durationOpt,
+      durations: ref([]),
+      value1,
     };
   },
 
@@ -216,7 +218,8 @@ export default {
     //   const { jobData } = this;
     // },
     searchResult() {
-      const { jobData, keyword, workLocation } = this;
+      const { jobData, keyword, workLocation, durations, value1 } = this;
+      console.log(value1);
       console.log(jobData, keyword);
       console.log(
         jobData.filter(
@@ -226,9 +229,12 @@ export default {
         )
       );
       this.queriedData = jobData.filter(
-        ({ jobpos, worklocation }) =>
+        ({ jobpos, worklocation, duration, dateRange }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-          (workLocation.includes(worklocation) || workLocation.length == 0)
+          (workLocation.includes(worklocation) || workLocation.length == 0) &&
+          (durations.includes(duration) || durations.length == 0) &&
+          ((value1[0] == dateRange[0] && value1[1] == dateRange[1]) ||
+            value1.length == 0)
       );
     },
     // async getStudentName() {
@@ -287,11 +293,7 @@ export default {
 
   async beforeMount() {
     async function getData() {
-
-      jobData = [];
-
       try {
-        
         const db = getFirestore(firebaseApp);
         const querySnapshot = await getDocs(collection(db, "Job"));
         querySnapshot.forEach((doc) =>
@@ -302,6 +304,7 @@ export default {
             duration: doc.data().Duration,
             yos: doc.data().Year,
             worklocation: doc.data().Type,
+            dateRange: doc.data().DateRange,
             range: doc
               .data()
               .DateRange[0].toDate()
@@ -313,6 +316,7 @@ export default {
               ),
           })
         );
+
         console.log("success");
       } catch (error) {
         console.error(error);
@@ -364,4 +368,5 @@ export default {
   margin-top: 40px;
 }
 </style>
+
 
