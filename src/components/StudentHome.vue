@@ -1,27 +1,42 @@
 <template>
     <body>
-        
         <div id ='welcome'>
                 <h1>Welcome, {{name}}!</h1>
         </div>
         <div id ='analytics'>
                 <h2>Analytics</h2>
         </div>
-        
-        <div class="statistics">
-            <div class="numberOfRejections" data="studentData">
+    
+        <div class="statistics" data="studentData">
+            <div class="numberOfRejections">
                 <br>
                 Number Of Rejections
                 <br>
-
+                {{studentData.numberOfRejections}}
             </div>
-            <div class="appInProgress">Application in progress</div>
-            <div class="appComp">Applications Completed</div>
-            <div class="jobType">Job Types of My Application</div>
-            <div class="companyDistri">Company Distribution of My Application</div>
+            <div class="appInProgress">
+                <br>
+                Application in progress
+                <br>
+                {{studentData.appInProgress}}
+            </div>
+            <div class="appComp">
+                <br>
+                Applications Completed
+                <br>
+                {{studentData.appComp}}
+            </div>
+            <div class="jobType">
+                Job Types of My Application
+                <br>
+                <StudentJobTypeChart></StudentJobTypeChart>
+                </div>
+            <div class="companyDistri">
+                Company Distribution of My Application
+                <br>
+                <StudentCompDistributionChart></StudentCompDistributionChart>
+            </div>
         </div>
-        
-    
     </body>
    
 </template>
@@ -30,27 +45,26 @@ import firebaseApp from '../main.js'
 import { getFirestore} from "firebase/firestore";
 import { doc , getDoc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-const studentData = [
-  {
+
+import StudentJobTypeChart from '@/components/StudentJobTypeChart.vue'
+import StudentCompDistributionChart from '@/components/StudentCompDistributionChart.vue'
+
+const studentData = {
     numberOfRejections: '3',
     appInProgress: '11',
-    appComp: '14',
-    jobType: {
-        "Data Analyst": '65%',
-        "Software Engineer": '35%'
-    }, 
-    companyDistri: {
-        "Grab": '25%',
-        "Shopee": '25%',
-        "Facebook": '25%',
-        "Google" : '25%'
-    }
-  }]
+    appComp: '14'
+  }
+
 export default {
+    components: {
+        StudentJobTypeChart,
+        StudentCompDistributionChart
+    },
     data() {
             return { keyword: "", 
             studentData,
             name: ''};
+
     },
     async created() {
             const db = getFirestore(firebaseApp);
@@ -64,15 +78,16 @@ export default {
             this.profileData = newData.slice(1)
             this.image = docSnap.data().photoURL
             this.resumeURL = docSnap.data().resumeURL
+
     },
+
     methods: {
-        goToEditProfile() {
-                this.$router.push({ path: "/EditStudentProfile" });
-        }
         
     } 
 }  
+
 </script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 .analytics {
@@ -82,6 +97,7 @@ export default {
     color: #1f1d2a;
     font-size: 16px;
 }
+
 .statistics {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -93,25 +109,32 @@ export default {
     color: #1f1d2a;
     font-size: 16px;
 }
+
 .numberOfRejections {
     grid-column: 1;
-    grid-row: 1/2;
+    grid-row: 1/3;
     background-color: rgba(102, 97, 97, 0.397);
 }
+
 .appInProgress {
     grid-column: 1;
-    grid-row: 3/4;
+    grid-row: 3/5;
+    background-color: rgba(102, 97, 97, 0.397);
 }
 .appComp {
     grid-column: 1;
-    grid-row: 5/6;
+    grid-row: 5/7;
+    background-color: rgba(102, 97, 97, 0.397);
 }
 .jobType {
     grid-column: 2/4;
-    grid-row: 1/3;
+    grid-row: 1/4;
+    background-color: rgba(102, 97, 97, 0.397);
 }
+
 .companyDistri {
     grid-column: 2/4;
-    grid-row: 4/6;
+    grid-row: 4/7;
+    background-color: rgba(102, 97, 97, 0.397);
 }
 </style>

@@ -1,13 +1,14 @@
-!<template>
+<template>
   <EmployerNav/>
-  
+  <EmployerHome/>
 </template>
 
 <script>
 import EmployerNav from "../../components/EmployerNav.vue"
+import EmployerHome from '../../components/EmployerHome.vue'
 
 export default {
-    name: 'EmployerHome',
+    name: 'App',
 
     mounted() {
        
@@ -19,6 +20,7 @@ export default {
 
     components: {
       EmployerNav,
+      EmployerHome
     }
 }
 </script>
@@ -26,3 +28,4 @@ export default {
 <style>
 
 </style>
+

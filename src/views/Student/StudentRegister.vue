@@ -153,7 +153,6 @@ export default {
               resumeURL: this.resumeURL,
               ProfileData: this.profileData,
               Employer: false,
-              JobsApplied: [],
             });
             console.log(docRef);
           } catch (error) {

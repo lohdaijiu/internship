@@ -4,6 +4,8 @@ import router from './router/index.js';
 import { initializeApp } from 'firebase/app';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+import VueChartkick from 'vue-chartkick';
+import 'chartkick/chart.js';
 // import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap"
 
@@ -22,6 +24,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const app = createApp(App);
 app.use(router);
 app.use(ElementPlus);
+app.use(VueChartkick);
 app.mount('#app');
 
 export default firebaseApp;
