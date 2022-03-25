@@ -123,6 +123,7 @@ export default {
           //.then(this.$router.push("/employerhome"))
           .catch((error) => {
             alert(error.message);
+            return;
           });
 
         const db = getFirestore(firebaseApp);
