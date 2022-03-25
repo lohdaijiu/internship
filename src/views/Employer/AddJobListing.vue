@@ -36,16 +36,6 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item label="Date Range">
-      <el-date-picker
-        v-model="form.daterange"
-        type="daterange"
-        range-separator="To"
-        start-placeholder="Start date"
-        end-placeholder="End date"
-      />
-    </el-form-item>
-
      <el-form-item label="Nature of Work">
       <el-radio-group v-model="form.type">
         <el-radio label="On-site" />
@@ -85,7 +75,6 @@ export default {
         duration: "",
         type: "",
         renum: "",
-        daterange: "",
       }),
       internshipTitle: "",
       jobDesc: "",
@@ -94,33 +83,30 @@ export default {
       duration: "",
       type: "",
       renum: "",
-      daterange: "",
     };
   },
 
   methods: {
 
-    // async getCompanyName() {
-    //   const db = getFirestore(firebaseApp);
-    //   if (getAuth().currentUser == null) {
-    //     return null;
-    //   }
-    //   const docRef = doc(db, "User", getAuth().currentUser.uid);
-    //   const docSnap = await getDoc(docRef);
+    async getCompanyName() {
+      const db = getFirestore(firebaseApp);
+      if (getAuth().currentUser == null) {
+        return null;
+      }
+      const docRef = doc(db, "User", getAuth().currentUser.uid);
+      const docSnap = await getDoc(docRef);
 
-    //   try {
-    //     return docSnap.data().CompanyName;
-    //   } catch {
-    //     console.log("error")
-    //   }  
-    // },
+      try {
+        return docSnap.data().CompanyName;
+      } catch {
+        console.log("error")
+      }  
+    },
 
     async addJob() {
 
       const db = getFirestore(firebaseApp);
-      const docRef1 = doc(db, "User", getAuth().currentUser.uid)
-      const companyName1 = await getDoc(docRef1);
-      const companyName = companyName1.data().CompanyName
+      let companyName = "testcompany1";
       let docName = companyName.concat(" - ", this.form.internshipTitle)
       const docRef = doc(db, "Job", docName)
       const docSnap = await getDoc(docRef);
@@ -139,27 +125,24 @@ export default {
           CompanyName: companyName,
           Renumeration: this.form.renum,
           Applicants: [],
-          CreatedAt : serverTimestamp(),
-          DateRange: this.form.daterange
+          CreatedAt : serverTimestamp()
         };
         try {
           const docRef1 = doc(db, "Job", docName);
           const docRef2 = doc(db, "User", id);
           await setDoc(docRef1, data);
           await updateDoc(docRef2, {Jobs : arrayUnion(this.form.internshipTitle)});
-          
           alert("Job Created!")
         } catch (error) {
           console.error(error)
           errorboolean = false;
         }
 
-        if (!errorboolean) {
-          //this.$router.push("/employerhome")
+        if (errorboolean) {
+          this.$router.push("/employerhome")
         }
       } else { //same internship title
         alert("Please choose a new internship title")
-
       }
 
         

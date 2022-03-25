@@ -243,17 +243,3 @@ body {
   background-color: #f9fafc;
 }
 </style>
-
-
-//   methods: {
-//     async login() {
-//       try {
-//       await signInWithEmailAndPassword(getAuth(), this.email, this.password)
-//       .then(this.$router.push('/employerhome'))
-//       .catch((error) => {alert(error.message)})
-//       } catch {
-//         (error) => {alert(error.message)}
-//       }
-//   }
-//   }
-// }
