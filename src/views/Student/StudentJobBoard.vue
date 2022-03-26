@@ -246,21 +246,22 @@ export default {
       const { jobData, keyword, workLocation, durationValue, companyValue } =
         this;
       console.log(jobData, keyword);
+
       console.log(
         jobData.filter(
           ({ jobpos, worklocation, duration, companyname }) =>
             jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-            (workLocation.includes(worklocation) || !workLocation) &&
-            (durationValue.includes(duration) || !durationValue) &&
-            (companyValue.includes(companyname) || !companyValue)
+            (workLocation.includes(worklocation) || workLocation.length == 0) &&
+            (durationValue.includes(duration) || durationValue.length == 0) &&
+            (companyValue.includes(companyname) || companyValue.length == 0)
         )
       );
       this.queriedData = jobData.filter(
         ({ jobpos, worklocation, duration, companyname }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
           (workLocation.includes(worklocation) || workLocation.length == 0) &&
-          (durationValue.includes(duration) || !durationValue) &&
-          (companyValue.includes(companyname) || !companyValue)
+          (durationValue.includes(duration) || durationValue.length == 0) &&
+          (companyValue.includes(companyname) || companyValue.length == 0)
       );
     },
     // async getStudentName() {
