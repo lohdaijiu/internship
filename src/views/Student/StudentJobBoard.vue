@@ -1,5 +1,4 @@
 <template>
-<div>
   <StudentNav />
 
   <!-- <div class="searchbar" style="width: 100%">
@@ -37,28 +36,32 @@
   </el-row>
   <el-row>
     <el-col :span="2"></el-col>
-    <el-col :span="3">
+    <el-col :span="3" id="companySelect">
       <el-select
-        v-model="value"
-        class="m-2"
+        v-model="companyValue"
+        multiple
+        filterable
+        remote
+        reserve-keyword
         placeholder="Company Name"
+        :remote-method="remoteMethod"
+        :loading="loading"
         size="large"
       >
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="item in options1"
+          :key="item"
+          :label="item"
+          :value="item"
         />
       </el-select>
     </el-col>
-    <el-col :span="3">
+    <el-col :span="3" id="remoteSelect">
       <el-select
         multiple
         collapse-tags
         collapse-tags-tooltip
         v-model="workLocation"
-        class="m-2"
         placeholder="On-site/Remote"
         size="large"
       >
@@ -72,13 +75,16 @@
     </el-col>
     <el-col :span="3">
       <el-select
-        v-model="value"
+        multiple
+        collapse-tags
+        collapse-tags-tooltip
+        v-model="durationValue"
         class="m-2"
         placeholder="Duration"
         size="large"
       >
         <el-option
-          v-for="item in options"
+          v-for="item in durationOpt"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -93,6 +99,7 @@
         start-placeholder="Start date"
         end-placeholder="End date"
         size="large"
+        format="DD/MM/YYYY"
       />
     </el-col>
     <el-col :span="10"></el-col>
@@ -143,7 +150,6 @@
   <div v-for="(f, index) of searchResult" :key="index">
     <!-- <p>{{ f.companyname }}</p> -->
   </div>
-  </div>
 </template>
 
 <script>
@@ -169,7 +175,7 @@ import {
 } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
-
+const value1 = ref([]);
 //   // dummy values for frontend
 const options = [
   {
@@ -179,18 +185,6 @@ const options = [
   {
     value: "Option2",
     label: "Option2",
-  },
-  {
-    value: "Option3",
-    label: "Option3",
-  },
-  {
-    value: "Option4",
-    label: "Option4",
-  },
-  {
-    value: "Option5",
-    label: "Option5",
   },
 ];
 const workLocationOpt = [
@@ -203,8 +197,21 @@ const workLocationOpt = [
     label: "Remote",
   },
 ];
+const durationOpt = [
+  {
+    value: "3",
+    label: "3",
+  },
+  {
+    value: "6",
+    label: "6",
+  },
+];
 var jobData = [];
-var queriedData = ref([]);
+var queriedData = [];
+var companyNameData = ref([]);
+var options1 = ref([]);
+var loading = ref(false);
 
 var ListingData = [];
 
@@ -220,11 +227,18 @@ export default {
     return {
       keyword: "",
       workLocation: ref([]),
+      durationValue: ref([]),
       jobData,
       options,
       queriedData,
       workLocationOpt,
       ListingData,
+      durationOpt,
+      value1,
+      companyNameData,
+      companyValue: ref([]),
+      options1,
+      loading,
     };
   },
 
@@ -234,20 +248,39 @@ export default {
     // populateQueriedData() {
     //   const { jobData } = this;
     // },
+    remoteMethod(query) {
+      if (query) {
+        loading.value = true;
+        setTimeout(() => {
+          loading.value = false;
+          options1.value = companyNameData.value.filter((item) => {
+            return item.toLowerCase().includes(query.toLowerCase());
+          });
+        }, 200);
+      } else {
+        options.value = [];
+      }
+    },
     searchResult() {
-      const { jobData, keyword, workLocation } = this;
+      const { jobData, keyword, workLocation, durationValue, companyValue } =
+        this;
       console.log(jobData, keyword);
+
       console.log(
         jobData.filter(
-          ({ jobpos, worklocation }) =>
+          ({ jobpos, worklocation, duration, companyname }) =>
             jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-            (workLocation.includes(worklocation) || !workLocation)
+            (workLocation.includes(worklocation) || workLocation.length == 0) &&
+            (durationValue.includes(duration) || durationValue.length == 0) &&
+            (companyValue.includes(companyname) || companyValue.length == 0)
         )
       );
       this.queriedData = jobData.filter(
-        ({ jobpos, worklocation }) =>
+        ({ jobpos, worklocation, duration, companyname }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-          (workLocation.includes(worklocation) || workLocation.length == 0)
+          (workLocation.includes(worklocation) || workLocation.length == 0) &&
+          (durationValue.includes(duration) || durationValue.length == 0) &&
+          (companyValue.includes(companyname) || companyValue.length == 0)
       );
     },
     // async getStudentName() {
@@ -376,11 +409,7 @@ export default {
 
   async beforeMount() {
     async function getData() {
-
-      jobData = [];
-
       try {
-        
         const db = getFirestore(firebaseApp);
         const querySnapshot = await getDocs(collection(db, "Job"));
         querySnapshot.forEach((doc) =>
@@ -391,6 +420,7 @@ export default {
             duration: doc.data().Duration,
             yos: doc.data().Year,
             worklocation: doc.data().Type,
+            dateRange: doc.data().DateRange,
             range: doc
               .data()
               .DateRange[0].toDate()
@@ -402,6 +432,7 @@ export default {
               ),
           })
         );
+
         console.log("success");
       } catch (error) {
         console.error(error);
@@ -412,10 +443,18 @@ export default {
     console.log("hello");
 
     this.queriedData = jobData;
+    this.companyNameData = this.queriedData
+      .map((item) => item.companyname)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    console.log(this.companyNameData);
   },
 
   mounted() {
-    console.log("mpinted"); // I'm text inside the component.
+    // const array1 = [1, 4, 9, 16];/
+    // pass a function to map
+    // const map1 = queriedData.map((x) => x  .duration);
+    // console.log(map1);
+    // console.log(nameArray );
   },
 };
 // setup() {
@@ -451,6 +490,14 @@ export default {
 }
 .table-container {
   margin-top: 40px;
+}
+</style>
+<style>
+#remoteSelect .el-select__tags {
+  transform: translateY(-80%) !important;
+}
+#companySelect .el-select__tags {
+  top: 40% !important;
 }
 </style>
 

@@ -12,7 +12,16 @@
     <el-table-column prop="jobpos" label="Job Position" width="180" />
     <el-table-column prop="date" label="Date Applied" />
     <el-table-column prop="progress" label="Progress" />
-    <el-table-column prop="status" label="Accept/Reject Offer" />
+    <el-table-column prop="status" label="Accept/Reject Offer">
+        <template #default="scope">
+            <el-button size="small" type="success" @click="accept(scope.row)" v-if="rendered(scope.row)"
+              >Accept</el-button
+            >
+            <el-button size="small" type="warning" @click="reject(scope.row)" v-if="rendered(scope.row)"
+              >Reject</el-button
+            >
+          </template>    
+    </el-table-column>
 
 </el-table>
 </el-col>
@@ -22,7 +31,7 @@
 
 <script>
 import NavBar from "../../components/StudentNav.vue"
-import { getDoc, getFirestore, doc } from "firebase/firestore";
+import { getDoc, getFirestore, doc, updateDoc } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
 
@@ -37,6 +46,41 @@ export default {
             tableData,
             done : false
         }
+    },
+    methods : {
+        rendered(x) {
+            if (x.status == "Pending student reply") {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
+        async accept(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docName = x.companyname.concat(" - ", x.jobpos, " - ", id)
+
+            await updateDoc(doc(db, "Application", docName), {
+                Status: "Accepted by Student"
+            });
+
+            alert("Offer Accepted")
+            window.location.reload();
+        },
+
+        async reject(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docName = x.companyname.concat(" - ", x.jobpos, " - ", id)
+
+            await updateDoc(doc(db, "Application", docName), {
+                Status: "Rejected by Student"
+            });
+
+            alert("Offer Rejected")
+            window.location.reload();
+        },
     },
 
     async beforeCreate() {

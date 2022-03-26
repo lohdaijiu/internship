@@ -3,7 +3,12 @@
   <el-container>
     <el-header>
       <el-row class="header-row">
-        <el-col :span="4" class><div class="grid-content bg-purple" /></el-col>
+        <el-col :span="4" class="col-brand"
+          ><el-image
+            style="height: 100%"
+            :src="require('../../assets/' + brand_url)"
+            :fit="fit"
+        /></el-col>
         <el-col :span="16" class
           ><p class="header-brand">
             Take a step towards your future career
@@ -82,6 +87,8 @@ import { reactive } from "vue";
 export default {
   data() {
     return {
+      brand_url: "brand-black.png",
+      fit: "fill",
       form: reactive({
         name: "",
         pos: "",
@@ -135,31 +142,34 @@ export default {
       const db = getFirestore(firebaseApp);
       let status = true;
 
-      await createUserWithEmailAndPassword(auth, this.form.email, this.form.password)
-        .catch((error) => {
-          alert(error.message);
-          status = false;
-        });
+      await createUserWithEmailAndPassword(
+        auth,
+        this.form.email,
+        this.form.password
+      ).catch((error) => {
+        alert(error.message);
+        status = false;
+      });
 
       if (status) {
         const uid = auth.currentUser.uid;
-          try {
-            const docRef = setDoc(doc(db, "User", uid), {
-              Email: this.form.email,
-              Major: this.form.major,
-              Name: this.form.name,
-              PlaceOfStudy: this.form.pos,
-              photoURL: this.photoURL,
-              resumeURL: this.resumeURL,
-              ProfileData: this.profileData,
-              Employer: false,
-              JobsApplied: [],
-            });
-            console.log(docRef);
-          } catch (error) {
-            console.error(error);
-          }
-          this.$router.push("/studentlogin");
+        try {
+          const docRef = setDoc(doc(db, "User", uid), {
+            Email: this.form.email,
+            Major: this.form.major,
+            Name: this.form.name,
+            PlaceOfStudy: this.form.pos,
+            photoURL: this.photoURL,
+            resumeURL: this.resumeURL,
+            ProfileData: this.profileData,
+            Employer: false,
+            JobsApplied: [],
+          });
+          console.log(docRef);
+        } catch (error) {
+          console.error(error);
+        }
+        this.$router.push("/studentlogin");
       }
     },
   },
@@ -214,10 +224,11 @@ export default {
 .bg-purple-light {
   background: #e5e9f2;
 }
-/* .grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-} */
+.col-brand {
+  height: 30px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;

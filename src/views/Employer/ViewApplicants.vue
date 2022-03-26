@@ -24,21 +24,17 @@
           </template>
       </el-table-column>
       <el-table-column prop="talk" label="Communicate" width="180" />
-      <el-table-column width="180" label="Offer">
+      <el-table-column width="180" label="Decision">
           <template #default="scope">
             <el-button size="small" type="success" @click="offer(scope.row)" v-if="rendered(scope.row)"
               >Offer</el-button
             >
-          </template>
-      </el-table-column>
-      <el-table-column width="180" label="Reject">
-          <template #default="scope">
             <el-button size="small" type="warning" @click="reject(scope.row)" v-if="rendered(scope.row)"
               >Reject</el-button
             >
           </template>
       </el-table-column>
-      <el-table-column prop="progress" label="Progress" width="180" />
+      <el-table-column prop="status" label="Status" width="180" />
     
     </el-table>
     </el-row>
@@ -75,11 +71,10 @@ export default {
             const docName = employerName.concat(" - ", x.title, " - ", x.uid)
 
             await updateDoc(doc(db, "Application", docName), {
-                Progress: "Done",
-                Status: "Accepted"
+                Status: "Pending student reply"
             });
 
-            alert("Applicant Accepted")
+            alert("Offer sent")
             window.location.reload();
         },
         async reject(x) {
@@ -91,7 +86,6 @@ export default {
             const docName = employerName.concat(" - ", x.title, " - ", x.uid)
 
             await updateDoc(doc(db, "Application", docName), {
-                Progress: "Done",
                 Status: "Rejected"
 }           );
 
@@ -100,12 +94,10 @@ export default {
         },
         rendered(x) {
 
-            if (x.name == null) {
-                return false;
-            } else if (x.progress != "Pending") {
-                return false;
-            } else {
+            if (x.status == "Pending") {
                 return true;
+            } else {
+                return false;
             }
         },
         downloadResume(x) {
@@ -154,17 +146,14 @@ export default {
                         console.log(docName)
                         const docRef3 = doc(db, "Application", docName)
                         const docSnap3 = await getDoc(docRef3)
-                        var statusAdd = ""
-                        if (docSnap3.data().Status != "") {
-                            statusAdd = "(".concat(docSnap3.data().Status, ")")
-                        }
+                                 
                         child.push({
                             name : appName,
                             resume : docSnap2.data().resumeURL,
                             date : docSnap3.data().CreatedAt.toDate().toString().slice(4,15),
                             title : docSnap1.data().InternshipTitle,
                             uid : docSnap3.data().Applicant,
-                            progress : docSnap3.data().Progress.concat(statusAdd)
+                            status: docSnap3.data().Status
                         })
                     }
 
