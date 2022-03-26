@@ -180,25 +180,6 @@ export default {
         
     },
 
-    async created() {
-        const db = getFirestore(firebaseApp);
-        const auth = getAuth()
-        const uid = auth.currentUser.uid
-        const docRef = doc(db, "User", "" + uid);
-        console.log(docRef);
-        // TODO
-        // console.log('Params: ', this.$route.params.listing);
-        console.log('Params: ', this.$route.query);
-
-        // const clickedListingData = this.$route.query.StudentViewListing;
-        // console.log(clickedListingData[0]["companyname"])
-
-
-
-
-
-    },
-
     async beforeMount() {
         async function getData() {
 

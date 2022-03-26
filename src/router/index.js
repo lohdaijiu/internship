@@ -26,11 +26,29 @@ import ForgotPassword from '@/views/ForgotPassword.vue'
 import AddJobListing from '@/views/Employer/AddJobListing.vue'
 import ApplicationDashboard from '@/views/Student/ApplicationDashboard.vue';
 import ViewApplicants from "@/views/Employer/ViewApplicants.vue"
+import Chat from "@/components/Chat.vue";
+import StudentChatSelection from "@/views/Student/StudentChatSelection.vue";
+import EmployerChatSelection from "@/views/Employer/EmployerChatSelection.vue";
 
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: "/chat",
+      name: "Chat",
+      component: Chat
+    },
+    {
+      path: "/studentchatselection",
+      name: "StudentChatSelection",
+      component: StudentChatSelection
+    },
+    {
+      path: "/employerchatselection",
+      name: "EmployerChatSelection",
+      component: EmployerChatSelection
+    },
     {
       path: "/studentregister",
       name: "StudentRegister",

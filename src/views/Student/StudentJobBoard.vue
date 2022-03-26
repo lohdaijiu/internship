@@ -337,7 +337,7 @@ export default {
     },
 
     async getListing(x) {
-      ListingData = [];
+
       // console.log("the listing" + x);
       console.log("getting listing")
       const db = getFirestore(firebaseApp);
@@ -351,7 +351,7 @@ export default {
         console.log("exists")
         try {
           // console.log(docSnap.data().CompanyName)
-          ListingData.push({
+          const ListingData = {
             companyname: docSnap.data().CompanyName,
             jobpos: docSnap.data().InternshipTitle,
             postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
@@ -370,11 +370,9 @@ export default {
             compensation: docSnap.data().Renumeration,
             description: docSnap.data().JobDescription,
             competency: docSnap.data().PreferredCompetencies
-
-          })
-          console.log(ListingData)
-          console.log(ListingData[0]["compensation"])
-          // return docSnap.data().CompanyName;
+            
+          }
+          return ListingData;
         } catch (error) {
           console.log(error)
         }  
@@ -382,23 +380,19 @@ export default {
     },
 
     viewListing(x) {
-      this.getListing(x);
+      const data = this.getListing(x);
       // console.log(row.innerHTML);
-      console.log(ListingData[0]["compensation"])
-
-      console.log("Viewing listing")
       // this.$emit('viewListing');
       try{
-        console.log(ListingData["companyname"])
 
         this.$router.push({ 
           // path: "/viewjoblisting"
           name: "StudentViewListing",
-          query: {listing: ListingData},
+         
 
           // props: {listing: this.ListingData},
 
-          // params: {listing: ListingData}
+          params: {listing: data}
                             });
 
       } catch (error) {

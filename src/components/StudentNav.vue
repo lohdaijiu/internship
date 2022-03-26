@@ -9,6 +9,7 @@
         <router-link class ='routerlink' to="/StudentJobBoard">Find Internships</router-link> 
         <router-link class ='routerlink' to="/applicationdashboard">My Applications</router-link> 
         <router-link class ='routerlink' to="/StudentProfile">Profile</router-link> 
+        <router-link class ='routerlink' to="/studentchatselection">Messages</router-link> 
         <button id = "signButton" @click ="logout">Log out </button>
 
     </div>

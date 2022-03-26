@@ -23,7 +23,14 @@
             >
           </template>
       </el-table-column>
-      <el-table-column prop="talk" label="Communicate" width="180" />
+      
+      <el-table-column prop="talk" label="Communicate" width="180" >
+          <template #default="scope">
+            <el-button size="small" type="info" @click="createRoom(scope.row)" v-if="rendered(scope.row)"
+              >Chat</el-button
+            >
+            </template>
+      </el-table-column>    
       <el-table-column width="180" label="Decision">
           <template #default="scope">
             <el-button size="small" type="success" @click="offer(scope.row)" v-if="rendered(scope.row)"
@@ -45,7 +52,7 @@
 import { getAuth } from "firebase/auth";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import NavBar from "../../components/EmployerNav.vue"
 
 var tableData = []
@@ -62,6 +69,30 @@ export default {
         NavBar
     },
     methods :{
+
+        async createRoom(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docName = id.concat(x.uid)
+            const data = {
+                Messages : [],
+                Employer : id,
+                Student : x.uid
+            }
+            const docRef4 = doc(db, "ChatRoom", docName)
+            const docSnap = await getDoc(docRef4)
+            if (docSnap.exists()) {
+                this.$router.push('/employerchatselection')
+            } else {
+                await setDoc(docRef4, data);
+                const docRef5 = doc(db, "User", id)
+                const docRef6 = doc(db, "User", x.uid)
+                await updateDoc(docRef5, {Chats: arrayUnion(x.uid)})
+                await updateDoc(docRef6, {Chats: arrayUnion(id)})
+                this.$router.push('/employerchatselection')
+            }
+        },
+
         async offer(x) {
             const id = getAuth().currentUser.uid
             const db = getFirestore(firebaseApp);
