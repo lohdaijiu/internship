@@ -1,5 +1,4 @@
 <template>
-<div>
   <StudentNav />
 
   <!-- <div class="searchbar" style="width: 100%">
@@ -37,22 +36,27 @@
   </el-row>
   <el-row>
     <el-col :span="2"></el-col>
-    <el-col :span="3">
+    <el-col :span="3" id="companySelect">
       <el-select
-        v-model="value"
-        class="m-2"
+        v-model="companyValue"
+        multiple
+        filterable
+        remote
+        reserve-keyword
         placeholder="Company Name"
+        :remote-method="remoteMethod"
+        :loading="loading"
         size="large"
       >
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="item in options1"
+          :key="item"
+          :label="item"
+          :value="item"
         />
       </el-select>
     </el-col>
-    <el-col :span="3">
+    <el-col :span="3" id="remoteSelect">
       <el-select
         multiple
         collapse-tags
@@ -72,13 +76,13 @@
     </el-col>
     <el-col :span="3">
       <el-select
-        v-model="value"
+        v-model="durationValue"
         class="m-2"
         placeholder="Duration"
         size="large"
       >
         <el-option
-          v-for="item in options"
+          v-for="item in durationOpt"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -129,7 +133,6 @@
 
   <div v-for="(f, index) of searchResult" :key="index">
     <!-- <p>{{ f.companyname }}</p> -->
-  </div>
   </div>
 </template>
 
@@ -187,8 +190,21 @@ const workLocationOpt = [
     label: "Remote",
   },
 ];
+const durationOpt = [
+  {
+    value: "3",
+    label: "3",
+  },
+  {
+    value: "6",
+    label: "6",
+  },
+];
 var jobData = [];
-var queriedData = ref([]);
+var queriedData = [];
+var companyNameData = ref([]);
+var options1 = ref([]);
+var loading = ref(false);
 
 export default {
   name: "StudentJobBoard",
@@ -202,10 +218,16 @@ export default {
     return {
       keyword: "",
       workLocation: ref([]),
+      durationValue: ref([]),
       jobData,
       options,
       queriedData,
       workLocationOpt,
+      durationOpt,
+      companyNameData,
+      companyValue: ref([]),
+      options1,
+      loading,
     };
   },
 
@@ -215,20 +237,38 @@ export default {
     // populateQueriedData() {
     //   const { jobData } = this;
     // },
+    remoteMethod(query) {
+      if (query) {
+        loading.value = true;
+        setTimeout(() => {
+          loading.value = false;
+          options1.value = companyNameData.value.filter((item) => {
+            return item.toLowerCase().includes(query.toLowerCase());
+          });
+        }, 200);
+      } else {
+        options.value = [];
+      }
+    },
     searchResult() {
-      const { jobData, keyword, workLocation } = this;
+      const { jobData, keyword, workLocation, durationValue, companyValue } =
+        this;
       console.log(jobData, keyword);
       console.log(
         jobData.filter(
-          ({ jobpos, worklocation }) =>
+          ({ jobpos, worklocation, duration, companyname }) =>
             jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-            (workLocation.includes(worklocation) || !workLocation)
+            (workLocation.includes(worklocation) || !workLocation) &&
+            (durationValue.includes(duration) || !durationValue) &&
+            (companyValue.includes(companyname) || !companyValue)
         )
       );
       this.queriedData = jobData.filter(
-        ({ jobpos, worklocation }) =>
+        ({ jobpos, worklocation, duration, companyname }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-          (workLocation.includes(worklocation) || workLocation.length == 0)
+          (workLocation.includes(worklocation) || workLocation.length == 0) &&
+          (durationValue.includes(duration) || !durationValue) &&
+          (companyValue.includes(companyname) || !companyValue)
       );
     },
     // async getStudentName() {
@@ -267,7 +307,7 @@ export default {
             Progress: "Pending",
             Applicant: id,
             Position: x.jobpos,
-            Status: "Pending",
+            Status: "",
             CompanyName: x.companyname,
           };
 
@@ -287,11 +327,7 @@ export default {
 
   async beforeMount() {
     async function getData() {
-
-      jobData = [];
-
       try {
-        
         const db = getFirestore(firebaseApp);
         const querySnapshot = await getDocs(collection(db, "Job"));
         querySnapshot.forEach((doc) =>
@@ -313,6 +349,7 @@ export default {
               ),
           })
         );
+
         console.log("success");
       } catch (error) {
         console.error(error);
@@ -323,10 +360,18 @@ export default {
     console.log("hello");
 
     this.queriedData = jobData;
+    this.companyNameData = this.queriedData
+      .map((item) => item.companyname)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    console.log(this.companyNameData);
   },
 
   mounted() {
-    console.log("mpinted"); // I'm text inside the component.
+    // const array1 = [1, 4, 9, 16];/
+    // pass a function to map
+    // const map1 = queriedData.map((x) => x  .duration);
+    // console.log(map1);
+    // console.log(nameArray );
   },
 };
 // setup() {
@@ -362,6 +407,14 @@ export default {
 }
 .table-container {
   margin-top: 40px;
+}
+</style>
+<style>
+#remoteSelect .el-select__tags {
+  transform: translateY(-80%) !important;
+}
+#companySelect .el-select__tags {
+  top: 40% !important;
 }
 </style>
 
