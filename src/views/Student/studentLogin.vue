@@ -1,77 +1,79 @@
 <template>
   <el-container class="container">
-    <el-row class="tags">
-      <el-col :span="12">
-        <el-row style="height: 50px"
-          ><el-col :span="1"></el-col
-          ><el-col :span="23"
-            ><el-image
-              style="margin-top: 20px; height: 30px"
-              :src="require('../../assets/' + brand_url)"
-              :fit="fit" /></el-col
-        ></el-row>
-        <el-image
-          class="left-container"
-          style="width: 90%"
-          :src="require('../../assets/' + url)"
-          :fit="fit"
-      /></el-col>
-      <el-col :span="12" class="bg-green title-tag-container"
-        ><el-row
-          ><el-col :span="24" class="text-center"
-            ><p class="tagline">Take a step towards your future career</p>
-            <p class="title-tag">Student Login</p></el-col
-          ></el-row
-        >
-        <el-row>
-          <el-col :span="6"></el-col>
-          <el-col :span="12"
-            ><el-form :model="form" label-width="120px">
-              <el-input
-                v-model="form.email"
-                placeholder="Email Address"
-                size="large"
-                :input-style="fitt" />
-              <el-input
-                v-model="form.pass"
-                type="password"
-                autocomplete="off"
-                placeholder="Password"
-                size="large"
-                :input-style="fitt" />
-              <el-row
-                ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link
-                    @click="redirectToStudentRegister()"
-                    class="form-link-text"
-                    >Register Here</el-link
-                  ></el-col
-                ></el-row
-              >
-              <el-row
-                ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link class="form-link-text"
-                    >Forgot Password?</el-link
-                  ></el-col
-                ></el-row
-              >
-              <el-row>
-                <el-col :span="6"></el-col>
-                <el-col :span="12">
-                  <el-button
-                    @click="login()"
-                    class="login-btns"
-                    size="large"
-                    color="#96C67F"
-                    ><p class="btn-text">Login</p></el-button
-                  >
-                </el-col>
-                <el-col :span="6"></el-col> </el-row></el-form
-          ></el-col>
-          <el-col :span="6"></el-col>
-        </el-row>
-      </el-col>
-    </el-row>
+    <el-main class="container-main">
+      <el-row class="container-row">
+        <el-col :span="12">
+          <el-row style="height: 50px"
+            ><el-col :span="1"></el-col
+            ><el-col :span="23"
+              ><el-image
+                style="margin-top: 20px; height: 30px"
+                :src="require('../../assets/' + brand_url)"
+                :fit="fit" /></el-col
+          ></el-row>
+          <el-image
+            class="left-container"
+            :src="require('../../assets/' + url)"
+            :fit="fit"
+          />
+        </el-col>
+        <el-col :span="12" class="bg-green title-tag-container"
+          ><el-row
+            ><el-col :span="24" class="text-center"
+              ><p class="tagline">Take a step towards your future career</p>
+              <p class="title-tag">Student Login</p></el-col
+            ></el-row
+          >
+          <el-row>
+            <el-col :span="6"></el-col>
+            <el-col :span="12"
+              ><el-form :model="form" label-width="120px">
+                <el-input
+                  v-model="form.email"
+                  placeholder="Email Address"
+                  size="large"
+                  :input-style="fitt" />
+                <el-input
+                  v-model="form.pass"
+                  type="password"
+                  autocomplete="off"
+                  placeholder="Password"
+                  size="large"
+                  :input-style="fitt" />
+                <el-row
+                  ><el-col :span="24" class="text-center form-link-text"
+                    ><el-link
+                      @click="redirectToStudentRegister()"
+                      class="form-link-text"
+                      >Register Here</el-link
+                    ></el-col
+                  ></el-row
+                >
+                <el-row
+                  ><el-col :span="24" class="text-center form-link-text"
+                    ><el-link class="form-link-text" @click="forgotPassword()"
+                      >Forgot Password?</el-link
+                    ></el-col
+                  ></el-row
+                >
+                <el-row>
+                  <el-col :span="6"></el-col>
+                  <el-col :span="12">
+                    <el-button
+                      @click="login()"
+                      class="login-btns"
+                      size="large"
+                      color="#96C67F"
+                      ><p class="btn-text">Login</p></el-button
+                    >
+                  </el-col>
+                  <el-col :span="6"></el-col> </el-row></el-form
+            ></el-col>
+            <el-col :span="6"></el-col>
+          </el-row>
+        </el-col>
+      </el-row>
+    </el-main>
   </el-container>
 
   <!-- <div>
@@ -87,8 +89,8 @@
 <script>
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { reactive } from "vue";
-import { doc, getDoc, getFirestore} from "firebase/firestore";
-import firebaseApp from "../../main.js" 
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import firebaseApp from "../../main.js";
 export default {
   data() {
     return {
@@ -112,43 +114,52 @@ export default {
 
   methods: {
     async login() {
-
-         
-
       try {
-        await signInWithEmailAndPassword(getAuth(), this.form.email, this.form.pass)
-        //.then(this.$router.push("/employerhome"))
-        .catch((error) => {
-        alert(error.message);
-        });
+        await signInWithEmailAndPassword(
+          getAuth(),
+          this.form.email,
+          this.form.pass
+        )
+          //.then(this.$router.push("/employerhome"))
+          .catch((error) => {
+            alert(error.message);
+            return;
+          });
 
         const db = getFirestore(firebaseApp);
         const docRef = doc(db, "User", getAuth().currentUser.uid);
         const docSnap = await getDoc(docRef);
-        const status = docSnap.data().Employer
+        const status = docSnap.data().Employer;
 
         if (!status) {
-          this.$router.push('/studenthome')
+          this.$router.push("/studenthome");
         } else {
-          alert("No such student account found")
-          signOut(getAuth())
+          alert("No such student account found");
+          signOut(getAuth());
         }
-        
       } catch {
         (error) => {
           alert(error.message);
-          
         };
       }
     },
     redirectToStudentRegister() {
       this.$router.push({ path: "/studentregister" });
     },
+    forgotPassword() {
+      this.$router.push("/forgotpassword");
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
+.container-main {
+  padding: 0px;
+}
+.container-row {
+  height: 100%;
+}
 .el-input {
   margin-bottom: 20px;
 }
@@ -157,7 +168,10 @@ body {
 }
 .container {
   background-color: #fafafa;
+  width: 100%;
+  min-height: 100vh;
 }
+
 .form-input {
   background-color: #dbecd1;
   height: 40px;
@@ -236,8 +250,6 @@ body {
   padding: 10px 0;
   background-color: #f9fafc;
 }
-</style>
-<style scoped>
 .el-row {
   margin-bottom: 20px;
 }

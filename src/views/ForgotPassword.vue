@@ -7,19 +7,21 @@
           ><el-col :span="23"
             ><el-image
               style="margin-top: 20px; height: 30px"
-              :src="require('../../assets/' + brand_url)"
+              :src="require('../assets/' + brand_url)"
               :fit="fit" /></el-col
         ></el-row>
         <el-image
           class="left-container"
-          :src="require('../../assets/' + url)"
+          :src="require('../assets/' + url)"
           :fit="fit"
       /></el-col>
       <el-col :span="12" class="bg-green title-tag-container"
         ><el-row
           ><el-col :span="24" class="text-center"
-            ><p class="tagline">Bring on the best assets to your team</p>
-            <p class="title-tag">Startup Login</p></el-col
+            ><p class="tagline">
+              An email will be sent to you to reset your password
+            </p>
+            <p class="title-tag">Password reset</p></el-col
           ></el-row
         >
         <el-row>
@@ -31,38 +33,16 @@
                 placeholder="Email Address"
                 size="large"
                 :input-style="fitt" />
-              <el-input
-                v-model="form.pass"
-                type="password"
-                autocomplete="off"
-                placeholder="Password"
-                size="large"
-                :input-style="fitt" />
-              <el-row
-                ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link
-                    @click="redirectToStudentRegister()"
-                    class="form-link-text"
-                    >Register Here</el-link
-                  ></el-col
-                ></el-row
-              >
-              <el-row
-                ><el-col :span="24" class="text-center form-link-text"
-                  ><el-link class="form-link-text" @click="forgotPassword()"
-                    >Forgot Password?</el-link
-                  ></el-col
-                ></el-row
-              >
+
               <el-row>
                 <el-col :span="6"></el-col>
                 <el-col :span="12">
                   <el-button
-                    @click="login()"
+                    @click="forgetPassword()"
                     class="login-btns"
                     size="large"
-                    color="#A5A6F6"
-                    ><p class="btn-text">Login</p></el-button
+                    color="#96C67F"
+                    ><p class="btn-text">Send Email</p></el-button
                   >
                 </el-col>
                 <el-col :span="6"></el-col> </el-row></el-form
@@ -84,10 +64,8 @@
 </template>
 
 <script>
-import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { reactive } from "vue";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
-import firebaseApp from "../../main.js";
 export default {
   data() {
     return {
@@ -100,38 +78,28 @@ export default {
         "box-shadow": "0 0 0 0.5",
         "margin-botton": "20px",
       },
-      url: "employer-login-pic.png",
+      url: "student-login-pic.png",
       brand_url: "brand-black.png",
       form: reactive({
         email: "",
-        pass: "",
       }),
     };
   },
 
   methods: {
-    async login() {
+    async forgetPassword() {
       try {
-        await signInWithEmailAndPassword(
-          getAuth(),
-          this.form.email,
-          this.form.pass
-        )
+        await sendPasswordResetEmail(getAuth(), this.form.email)
           //.then(this.$router.push("/employerhome"))
           .catch((error) => {
             alert(error.message);
           });
 
-        const db = getFirestore(firebaseApp);
-        const docRef = doc(db, "User", getAuth().currentUser.uid);
-        const docSnap = await getDoc(docRef);
-        const status = docSnap.data().Employer;
-
-        if (status) {
-          this.$router.push("/employerhome");
+        if (!status) {
+          alert("An email has been sent to your email to reset your password.");
+          this.$router.go(-1);
         } else {
-          alert("No such employer account found");
-          signOut(getAuth());
+          console.log("error");
         }
       } catch {
         (error) => {
@@ -139,25 +107,11 @@ export default {
         };
       }
     },
-    redirectToStudentRegister() {
-      this.$router.push({ path: "/employerregister" });
-    },
-    forgotPassword() {
-      this.$router.push("/forgotpassword");
-    },
   },
 };
 </script>
 
-<style scoped>
-</style>
-<style scoped>
-.el-row {
-  margin-bottom: 20px;
-}
-.el-row:last-child {
-  margin-bottom: 0;
-}
+<style>
 .el-input {
   margin-bottom: 20px;
 }
@@ -186,7 +140,7 @@ body {
   justify-content: center; */
 }
 .bg-green {
-  background-color: #c1c2f4;
+  background-color: #b5d7a5;
 }
 .btn-text {
   color: #1f1d2a;
@@ -231,6 +185,9 @@ body {
 .bg-purple-dark {
   background: #99a9bf;
 }
+.bg-purple {
+  background: #d3dce6;
+}
 .bg-purple-light {
   background: #e5e9f2;
 }
@@ -243,17 +200,11 @@ body {
   background-color: #f9fafc;
 }
 </style>
-
-
-//   methods: {
-//     async login() {
-//       try {
-//       await signInWithEmailAndPassword(getAuth(), this.email, this.password)
-//       .then(this.$router.push('/employerhome'))
-//       .catch((error) => {alert(error.message)})
-//       } catch {
-//         (error) => {alert(error.message)}
-//       }
-//   }
-//   }
-// }
+<style scoped>
+.el-row {
+  margin-bottom: 20px;
+}
+.el-row:last-child {
+  margin-bottom: 0;
+}
+</style>
