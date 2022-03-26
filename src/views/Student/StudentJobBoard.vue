@@ -224,6 +224,7 @@ export default {
       options,
       queriedData,
       workLocationOpt,
+      ListingData,
     };
   },
 
@@ -338,6 +339,8 @@ export default {
             competency: docSnap.data().PreferredCompetencies
 
           })
+          console.log(ListingData)
+          console.log(ListingData[0]["compensation"])
           // return docSnap.data().CompanyName;
         } catch (error) {
           console.log(error)
@@ -348,14 +351,22 @@ export default {
     viewListing(x) {
       this.getListing(x);
       // console.log(row.innerHTML);
+      console.log(ListingData[0]["compensation"])
+
       console.log("Viewing listing")
       // this.$emit('viewListing');
       try{
-      this.$router.push({ 
-        // path: "/viewjoblisting"
-        name: "/viewjoblisting",
-        params: {data: ListingData}
-                           });
+        console.log(ListingData["companyname"])
+
+        this.$router.push({ 
+          // path: "/viewjoblisting"
+          name: "StudentViewListing",
+          query: {listing: ListingData},
+
+          // props: {listing: this.ListingData},
+
+          // params: {listing: ListingData}
+                            });
 
       } catch (error) {
         console.log(error)

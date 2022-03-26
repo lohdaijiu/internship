@@ -126,13 +126,16 @@ const router = createRouter({
       }
     },
     {
+      // path: '/viewjoblisting/listing',
       path: '/viewjoblisting',
       name: 'StudentViewListing',
       component: StudentViewListing,
       meta : {
         requiresAuth : true,
         employer: false
-      }
+      },
+      // props: {listing: false}
+
     },
     {
         path: '/EditStudentProfile',

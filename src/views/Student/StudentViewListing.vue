@@ -103,6 +103,7 @@ const tableData = [{
 var jobData = [];
 // var queriedData = ref([]);
 
+
 export default {
     name: 'StudentViewListing',
 
@@ -186,6 +187,14 @@ export default {
         const docRef = doc(db, "User", "" + uid);
         console.log(docRef);
         // TODO
+        // console.log('Params: ', this.$route.params.listing);
+        console.log('Params: ', this.$route.query);
+
+        // const clickedListingData = this.$route.query.StudentViewListing;
+        // console.log(clickedListingData[0]["companyname"])
+
+
+
 
 
     },
@@ -224,8 +233,6 @@ export default {
         }
         }
         await getData();
-
-        console.log("hello");
 
         this.queriedData = jobData;
     },    
