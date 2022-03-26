@@ -107,6 +107,8 @@
         :default-sort="{ prop: 'postdate', order: descending }"
         height="250"
         style="width: 100%"
+
+        @row-click="viewListing()"
       >
         <el-table-column prop="companyname" label="Company Name" width="180" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
@@ -122,6 +124,8 @@
             >
           </template>
         </el-table-column>
+
+
       </el-table>
     </el-col>
     <el-col :span="2"></el-col>
@@ -137,6 +141,9 @@
 // import firebase from "firebase";
 // import { computed, onMounted, reactive, ref } from "vue";
 // import { computed, ref } from "vue";
+// import StudentViewListing from '@/views/Student/StudentViewListing.vue';
+
+
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
@@ -283,6 +290,11 @@ export default {
         }
       }
     },
+
+    viewListing() {
+      this.$router.push({ path: "/viewjoblisting" });
+
+    }
   },
 
   async beforeMount() {
