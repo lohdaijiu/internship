@@ -108,8 +108,9 @@
         height="250"
         style="width: 100%"
 
-        @row-click="viewListing()"
       >
+              <!-- @row-click="viewListing(row)" -->
+
         <el-table-column prop="companyname" label="Company Name" width="180" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
         <el-table-column prop="postdate" label="Date Posted" sortable />
@@ -121,6 +122,14 @@
           <template #default="scope">
             <el-button size="small" type="success" @click="apply(scope.row)"
               >Apply</el-button
+            >
+          </template>
+        </el-table-column>
+
+        <el-table-column>
+          <template #default="scope">
+            <el-button size="small" type="success" @click="viewListing(scope.row)"
+              >Details</el-button
             >
           </template>
         </el-table-column>
@@ -196,6 +205,8 @@ const workLocationOpt = [
 ];
 var jobData = [];
 var queriedData = ref([]);
+
+var ListingData = [];
 
 export default {
   name: "StudentJobBoard",
@@ -291,9 +302,64 @@ export default {
       }
     },
 
-    viewListing() {
-      this.$router.push({ path: "/viewjoblisting" });
+    async getListing(x) {
+      ListingData = [];
+      // console.log("the listing" + x);
+      console.log("getting listing")
+      const db = getFirestore(firebaseApp);
+      // const id = getAuth().currentUser.uid;
+      // const docName = x[0].concat(x[1])
+      const docName = x.companyname.concat(" - ", x.jobpos)
+      const docRef = doc(db, "Job", docName);
+      const docSnap = await getDoc(docRef);
 
+      if (docSnap.exists()) {
+        console.log("exists")
+        try {
+          // console.log(docSnap.data().CompanyName)
+          ListingData.push({
+            companyname: docSnap.data().CompanyName,
+            jobpos: docSnap.data().InternshipTitle,
+            postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
+            duration: docSnap.data().Duration,
+            yos: docSnap.data().Year,
+            worklocation: docSnap.data().Type,
+            range: docSnap
+              .data()
+              .DateRange[0].toDate()
+              .toString()
+              .slice(4, 15)
+              .concat(
+                " - ",
+                docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
+              ),
+            compensation: docSnap.data().Renumeration,
+            description: docSnap.data().JobDescription,
+            competency: docSnap.data().PreferredCompetencies
+
+          })
+          // return docSnap.data().CompanyName;
+        } catch (error) {
+          console.log(error)
+        }  
+      }
+    },
+
+    viewListing(x) {
+      this.getListing(x);
+      // console.log(row.innerHTML);
+      console.log("Viewing listing")
+      // this.$emit('viewListing');
+      try{
+      this.$router.push({ 
+        // path: "/viewjoblisting"
+        name: "/viewjoblisting",
+        params: {data: ListingData}
+                           });
+
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 
