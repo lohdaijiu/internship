@@ -130,7 +130,9 @@ export default {
             soft_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
                         ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu… SOFT COMPETENCY",
-            location: "location"
+            location: "location",
+
+            test: this.$route.params.listing
             
             
 
@@ -180,7 +182,31 @@ export default {
         
     },
 
+    async created() {
+        const db = getFirestore(firebaseApp);
+        const auth = getAuth()
+        const uid = auth.currentUser.uid
+        const docRef = doc(db, "User", "" + uid);
+        console.log(docRef);
+        // TODO
+        // console.log('Params: ', this.$route.params.listing);
+        console.log('Params: ', this.$route.params.listing);
+        console.log("hello123")
+        // const clickedListingData = this.$route.query.StudentViewListing;
+        // console.log(clickedListingData[0]["companyname"])
+
+
+
+
+
+    },
+
+    afterMount() {
+        console.log('Params: ', this.$route.params.listing);
+    },
+
     async beforeMount() {
+
         async function getData() {
 
         jobData = [];
@@ -209,6 +235,7 @@ export default {
             })
             );
             console.log("success");
+            
         } catch (error) {
             console.error(error);
         }
