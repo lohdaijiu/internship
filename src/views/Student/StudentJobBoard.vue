@@ -273,7 +273,7 @@ export default {
             Progress: "Pending",
             Applicant: id,
             Position: x.jobpos,
-            Status: "",
+            Status: "Pending",
             CompanyName: x.companyname,
           };
 
