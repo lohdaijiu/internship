@@ -29,7 +29,7 @@ import ViewApplicants from "@/views/Employer/ViewApplicants.vue"
 import Chat from "@/components/Chat.vue";
 import StudentChatSelection from "@/views/Student/StudentChatSelection.vue";
 import EmployerChatSelection from "@/views/Employer/EmployerChatSelection.vue";
-
+import ViewProfile from "@/views/Employer/ViewProfile.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -221,6 +221,15 @@ const router = createRouter({
       path: '/viewapplicants',
       name: 'ViewApplicants',
       component: ViewApplicants,
+      meta : {
+        requiresAuth : true,
+        employer: true
+      }
+    },
+    {
+      path: '/viewprofile',
+      name: 'ViewProfile',
+      component: ViewProfile,
       meta : {
         requiresAuth : true,
         employer: true

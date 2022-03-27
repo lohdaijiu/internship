@@ -191,7 +191,6 @@ export default {
         // TODO
         // console.log('Params: ', this.$route.params.listing);
         console.log('Params: ', this.$route.params.listing);
-        console.log("hello123")
         // const clickedListingData = this.$route.query.StudentViewListing;
         // console.log(clickedListingData[0]["companyname"])
 

@@ -16,10 +16,10 @@
       <el-table-column prop="title" label="Job" width="180" />
       <el-table-column prop="date" label="Date Applied" width="180" />
       <el-table-column prop="name" label="Applicant Name" width="180" />
-      <el-table-column width="180" label="Resume">
+      <el-table-column width="180" >
           <template #default="scope">
-            <el-button size="small" type="info" @click="downloadResume(scope.row)" v-if="rendered(scope.row)"
-              >Download</el-button
+            <el-button size="small" type="info" @click="viewProfile(scope.row)" v-if="rendered(scope.row)"
+              >View Profile</el-button
             >
           </template>
       </el-table-column>
@@ -131,9 +131,8 @@ export default {
                 return false;
             }
         },
-        downloadResume(x) {
-
-            window.open(x.resume);
+        viewProfile(x) {
+            this.$router.push({name: 'ViewProfile', params:{id:x.uid}})
         }
     },
 
