@@ -21,7 +21,9 @@
             </template>
         </div>
     </div>
+    <div v-if= 'canRender'>
     <button id ='editButton' @click='goToEditProfile'>Edit Profile</button>
+    </div>
     </body>
    
 </template>
@@ -39,9 +41,15 @@ export default {
             aboutCompany: '',
             image: '',
             companyName: '',
+            canRender: false,
         }
     },
     async created() {
+        this.$watch('companyProfileData', ()=> {
+            this.canRender = true;
+        })
+    },
+    async beforeMount() {
             const db = getFirestore(firebaseApp);
             const auth = getAuth()
             const uid = auth.currentUser.uid
@@ -53,7 +61,6 @@ export default {
             this.companyName = docSnap.data().CompanyName
             this.companyProfileData = newData.slice(1)
             this.image = docSnap.data().photoURL
-
     },
 
     methods: {
@@ -178,7 +185,7 @@ h2{
 }
 
 #editButton {
-    border-radius: 10px;
+    border-radius: 5px;
     margin-left: 80%;
     margin-top: 1%;
     padding-left: 1.5%;
@@ -190,6 +197,7 @@ h2{
     font-weight: bold;
     background-color: #A5A6F6;
     border-style: solid;
+    color:black;
     border-color: #A5A6F6;
 }
 
