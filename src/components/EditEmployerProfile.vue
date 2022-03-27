@@ -132,8 +132,6 @@ export default {
             this.$refs.fileInput.click()
         },
         
-        
-
         onFilePicked(event) {
             const auth = getAuth();
             const uid = auth.currentUser.uid;
@@ -194,7 +192,7 @@ h2 {
     min-height: 200px;
 }
 #addButton {
-    border-radius: 10px;
+    border-radius: 5px;
     margin-left: 73.5%;
     padding-left: 1.5%;
     padding-right: 1.5%;
@@ -269,14 +267,14 @@ span {
 }
 
 #applyButton {
-    border-radius: 10px;
+    border-radius: 5px;
     
     padding-left: 50%;
     padding-right: 50%;
     padding-top: 24%;
     padding-bottom: 24%;
     text-align: center;
-
+    color:black;
     font-weight: bold;
     background-color: #A5A6F6;
     border-style: solid;
@@ -284,7 +282,7 @@ span {
 }
 
 #cancelButton {
-    border-radius: 10px;
+    border-radius: 5px;
     margin-left: 30%;
     
     padding-left: 40%;
@@ -292,6 +290,7 @@ span {
     padding-top: 20%;
     padding-bottom: 20%;
     text-align: center;
+    color: black;
     font-weight: bold;
     background-color: #A5A6F6;
     border-style: solid;

@@ -13,7 +13,7 @@
                 <h2> {{section}} </h2> 
                 <div class ='writeupfont'> {{writeup}} </div>
             </div>
-            <div>
+            <div v-if='canRender'>
                 <h2> Support Documents:</h2>
                 <a :href="resumeURL" target="_blank" id ='resumeLink' >Resume Document</a>
 
@@ -26,8 +26,10 @@
                 <div class ='writeupfont'> {{ writeup}} </div>
             </template>
         </div>
+    </div >
+    <div v-if='canRender'>
+    <button  id ='editButton' @click='goToEditProfile'>Edit Profile</button>
     </div>
-    <button id ='editButton' @click='goToEditProfile'>Edit Profile</button>
     </body>
    
 </template>
@@ -46,9 +48,15 @@ export default {
             image: '',
             name: '',
             resumeURL:'',
+            canRender: false,
         }
     },
     async created() {
+        this.$watch('profileData', ()=> {
+            this.canRender = true;
+        })
+    },
+    async beforeMount() {
             const db = getFirestore(firebaseApp);
             const auth = getAuth()
             const uid = auth.currentUser.uid
@@ -97,7 +105,7 @@ a:hover {
   
     font-weight: 300;
     color: #1f1d2a;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 
@@ -185,7 +193,7 @@ h2{
 }
 
 #editButton {
-    border-radius: 10px;
+    border-radius: 5px;
     margin-left: 80%;
     margin-top: 1%;
     padding-left: 1.5%;
@@ -194,6 +202,7 @@ h2{
     text-align: center;
     padding-bottom: 0.5%;
     margin-bottom: 5%;
+    color:black;
     font-weight: bold;
     background-color: #D4D381;
     border-style: solid;
