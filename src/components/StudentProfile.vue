@@ -105,7 +105,7 @@ a:hover {
   
     font-weight: 300;
     color: #1f1d2a;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 
