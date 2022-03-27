@@ -132,7 +132,7 @@ export default {
             }
         },
         viewProfile(x) {
-            this.$router.push({name: 'ViewProfile', params:{id:x.uid}})
+            this.$router.push({path: '/viewprofile', query:{id:x.uid}})
         }
     },
 

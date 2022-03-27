@@ -58,7 +58,7 @@ export default {
     },
     async created() {
             const db = getFirestore(firebaseApp);
-            const uid = this.$route.params.id
+            const uid = this.$route.query.id
             const docRef = doc(db, "User", "" + uid);
             const docSnap = await getDoc(docRef);
             let newData = docSnap.data().ProfileData
