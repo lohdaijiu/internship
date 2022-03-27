@@ -20,8 +20,8 @@
         <el-col :span="20">
         <el-table
             ref="tableRef"
-            :data="onlyListing"
-            height="100"
+            :data="tableData"
+            height="250"
             style="width: 100%"
         >
             <el-table-column prop="yos" label="Year of Study"/>
@@ -99,7 +99,7 @@ import { getAuth } from "firebase/auth";
 var listingName = "";
 
 var listingData = [];
-
+var tableData = [];
 var onlyListing = [];
 
 export default {
@@ -114,6 +114,7 @@ export default {
 
             listingData,
             listingName,
+            tableData,
             // img: '../../assets/employer-login-pic.png',
             // img: '../../assets/',
 
@@ -125,11 +126,7 @@ export default {
             soft_compet: "",
             location: "",
             company_name: "",
-            pay: "",
-            yos: "",
-            range: "",
-            duration: "",
-            postdate: "",
+    
             onlyListing
             
 
@@ -271,22 +268,25 @@ export default {
         // console.log(onlyListing)
 
         onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+        console.log(onlyListing);
+        tableData.push({
+            "yos": onlyListing[4]["yos"], 
+            "duration": onlyListing[3]["duration"],
+            "compensation": onlyListing[7]["compensation"],
+            "postdate": onlyListing[2]["postdate"],
+            "range": onlyListing[6]["range"]
+        })
+        console.log(tableData[0])
 
 
         // Object.keys(listingData[0]).forEach(key => onlyListing.push({
         //     listingData[0][key],
         // }));
-        console.log(onlyListing);
 
         this.job_descr = listingData[0]["description"]
         this.job_title = listingData[0]["jobpos"]
         this.tech_compet = listingData[0]["competency"]
         this.location = listingData[0]["worklocation"]
-        this.pay = listingData[0]["compensation"]
-        this.yos = listingData[0]["yos"]
-        this.range = listingData[0]["range"]
-        this.duration = listingData[0]["duration"]
-        this.postdate = listingData[0]["postdate"]
         this.company_name = listingData[0]["companyname"]
 
         // console.log(this.company_name)
