@@ -336,48 +336,6 @@ export default {
       }
     },
 
-    // async getListing(x) {
-
-    //   // console.log("the listing" + x);
-    //   console.log("getting listing")
-    //   const db = getFirestore(firebaseApp);
-    //   // const id = getAuth().currentUser.uid;
-    //   // const docName = x[0].concat(x[1])
-    //   const docName = x.companyname.concat(" - ", x.jobpos)
-    //   const docRef = doc(db, "Job", docName);
-    //   const docSnap = await getDoc(docRef);
-
-    //   if (docSnap.exists()) {
-    //     console.log("exists")
-    //     try {
-    //       // console.log(docSnap.data().CompanyName)
-    //       const ListingData = {
-    //         companyname: docSnap.data().CompanyName,
-    //         jobpos: docSnap.data().InternshipTitle,
-    //         postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
-    //         duration: docSnap.data().Duration,
-    //         yos: docSnap.data().Year,
-    //         worklocation: docSnap.data().Type,
-    //         range: docSnap
-    //           .data()
-    //           .DateRange[0].toDate()
-    //           .toString()
-    //           .slice(4, 15)
-    //           .concat(
-    //             " - ",
-    //             docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
-    //           ),
-    //         compensation: docSnap.data().Renumeration,
-    //         description: docSnap.data().JobDescription,
-    //         competency: docSnap.data().PreferredCompetencies
-            
-    //       }
-    //       return ListingData;
-    //     } catch (error) {
-    //       console.log(error)
-    //     }  
-    //   }
-    // },
 
     viewListing(x) {
       // const data = this.getListing(x);
@@ -392,7 +350,7 @@ export default {
 
           // props: {listing: this.ListingData},
 
-          params: {listing: x.companyname.concat(" - ", x.jobpos)}
+          params: {jobId: x.companyname.concat(" - ", x.jobpos)}
                             });
 
       } catch (error) {

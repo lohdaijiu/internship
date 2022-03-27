@@ -81,9 +81,9 @@ import StudentNav from '../../components/StudentNav.vue'
 import firebaseApp from '../../main.js'
 import { getFirestore} from "firebase/firestore";
 import {
-  getDocs,
+//   getDocs,
   setDoc,
-  collection,
+//   collection,
   getDoc,
   updateDoc,
   arrayUnion,
@@ -93,16 +93,18 @@ import {
 import { getAuth } from "firebase/auth";
 
 // dummy data
-const tableData = [{
-    yr: '2',
-    duration: '3 months',
-    loc: 'remote',
-    pay: "20000"
-}]
+// const tableData = [{
+//     yr: '2',
+//     duration: '3 months',
+//     loc: 'remote',
+//     pay: "20000"
+// }]
 
-var jobData = [];
+// var jobData = [];
 // var queriedData = ref([]);
+var listingName = "";
 
+var listingData = [];
 
 export default {
     name: 'StudentViewListing',
@@ -114,7 +116,9 @@ export default {
     data() {
         return {
             //dummy data, to get from firebase later on
-            tableData,
+            // tableData,
+            listingData,
+            listingName,
             // img: '../../assets/employer-login-pic.png',
             // img: '../../assets/',
 
@@ -140,6 +144,7 @@ export default {
     },
 
     methods: {
+
         async apply(x) {
             console.log(x);
             const db = getFirestore(firebaseApp);
@@ -183,6 +188,7 @@ export default {
     },
 
     async created() {
+        // listingData = [];
         const db = getFirestore(firebaseApp);
         const auth = getAuth()
         const uid = auth.currentUser.uid
@@ -190,7 +196,12 @@ export default {
         console.log(docRef);
         // TODO
         // console.log('Params: ', this.$route.params.listing);
-        console.log('Params: ', this.$route.params.listing);
+        console.log('Params: ', this.$route.params.jobId);
+        listingName = this.$route.params.jobId;
+
+        // listingData = this.getListing(this.$route.params.listing);
+        
+        
         // const clickedListingData = this.$route.query.StudentViewListing;
         // console.log(clickedListingData[0]["companyname"])
 
@@ -206,42 +217,97 @@ export default {
 
     async beforeMount() {
 
-        async function getData() {
+        async function getListing() {
+            listingData = [];
 
-        jobData = [];
-
-        try {
-            
+            // console.log("the listing" + x);
+            console.log("getting listing")
             const db = getFirestore(firebaseApp);
-            const querySnapshot = await getDocs(collection(db, "Job"));
-            querySnapshot.forEach((doc) =>
-            jobData.push({
-                companyname: doc.data().CompanyName,
-                jobpos: doc.data().InternshipTitle,
-                postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
-                duration: doc.data().Duration,
-                yos: doc.data().Year,
-                worklocation: doc.data().Type,
-                range: doc
-                .data()
-                .DateRange[0].toDate()
-                .toString()
-                .slice(4, 15)
-                .concat(
-                    " - ",
-                    doc.data().DateRange[1].toDate().toString().slice(4, 15)
-                ),
-            })
-            );
-            console.log("success");
-            
-        } catch (error) {
-            console.error(error);
-        }
-        }
-        await getData();
+            // const id = getAuth().currentUser.uid;
+            // const docName = x[0].concat(x[1])
+            // const docName = x.companyname.concat(" - ", x.jobpos)
+            // const docName = this.$route.params.jobId
+            const docName = listingName
+            console.log(docName);
+            const docRef = doc(db, "Job", docName);
+            const docSnap = await getDoc(docRef);
 
-        this.queriedData = jobData;
+            if (docSnap.exists()) {
+                console.log("exists")
+                try {
+                // console.log(docSnap.data().CompanyName)
+                    listingData.push({
+                        companyname: docSnap.data().CompanyName,
+                        jobpos: docSnap.data().InternshipTitle,
+                        postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
+                        duration: docSnap.data().Duration,
+                        yos: docSnap.data().Year,
+                        worklocation: docSnap.data().Type,
+                        range: docSnap
+                        .data()
+                        .DateRange[0].toDate()
+                        .toString()
+                        .slice(4, 15)
+                        .concat(
+                            " - ",
+                            docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
+                        ),
+                        compensation: docSnap.data().Renumeration,
+                        description: docSnap.data().JobDescription,
+                        competency: docSnap.data().PreferredCompetencies
+                        
+                    })
+                    console.log(listingData);
+
+                    console.log(listingData[0]["competency"]);
+
+                    // return ListingData;
+                    
+                } catch (error) {
+                    console.log(error)
+                }  
+            }
+        }
+
+        await getListing();
+        
+
+        // async function getData() {
+
+        // jobData = [];
+
+        // try {
+            
+        //     const db = getFirestore(firebaseApp);
+        //     const querySnapshot = await getDocs(collection(db, "Job"));
+        //     querySnapshot.forEach((doc) =>
+        //     jobData.push({
+        //         companyname: doc.data().CompanyName,
+        //         jobpos: doc.data().InternshipTitle,
+        //         postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
+        //         duration: doc.data().Duration,
+        //         yos: doc.data().Year,
+        //         worklocation: doc.data().Type,
+        //         range: doc
+        //         .data()
+        //         .DateRange[0].toDate()
+        //         .toString()
+        //         .slice(4, 15)
+        //         .concat(
+        //             " - ",
+        //             doc.data().DateRange[1].toDate().toString().slice(4, 15)
+        //         ),
+        //     })
+        //     );
+        //     console.log("success");
+            
+        // } catch (error) {
+        //     console.error(error);
+        // }
+        // }
+        // await getData();
+
+        // this.queriedData = jobData;
     },    
 }
 
