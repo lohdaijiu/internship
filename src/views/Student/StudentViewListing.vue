@@ -3,12 +3,13 @@
     <StudentNav/>       
 
     <div id="general_info">
+        <h2>{{company_name}}</h2>
 
         <h3> {{job_title}}</h3>
-        <el-image
+        <!-- <el-image
             class="company-profile"
             :src="require('../../assets/' + url)"
-        />
+        /> -->
         <br>
         <br>
 
@@ -19,15 +20,15 @@
         <el-col :span="20">
         <el-table
             ref="tableRef"
-            :data="clickedListingData"
+            :data="onlyListing"
             height="100"
             style="width: 100%"
         >
             <el-table-column prop="yos" label="Year of Study"/>
-            <el-table-column prop="duration" label="Work Duration"/>
-            <el-table-column prop="loc" label="Remote/On-site" />
-            <el-table-column prop="pay" label="Compensation Range" />
+            <el-table-column prop="duration" label="Internship Duration"/>
+            <el-table-column prop="compensation" label="Compensation" />
             <el-table-column prop="range" label="Date Range" />
+            <el-table-column prop="postdate" label="Date Posted" />
 
         </el-table>
         </el-col>
@@ -46,9 +47,9 @@
                     <el-tab-pane label="Technical Competencies">
                         {{tech_compet}}
                     </el-tab-pane>
-                    <el-tab-pane label="Soft Competencies">
+                    <!-- <el-tab-pane label="Soft Competencies">
                         {{soft_compet}}
-                    </el-tab-pane>
+                    </el-tab-pane> -->
                     <el-tab-pane label="Location">
                         {{location}}
                     </el-tab-pane>
@@ -91,20 +92,15 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+// import { list } from '@firebase/storage';
 
-// dummy data
-// const tableData = [{
-//     yr: '2',
-//     duration: '3 months',
-//     loc: 'remote',
-//     pay: "20000"
-// }]
 
-// var jobData = [];
-// var queriedData = ref([]);
+
 var listingName = "";
 
 var listingData = [];
+
+var onlyListing = [];
 
 export default {
     name: 'StudentViewListing',
@@ -115,28 +111,29 @@ export default {
 
     data() {
         return {
-            //dummy data, to get from firebase later on
-            // tableData,
+
             listingData,
             listingName,
             // img: '../../assets/employer-login-pic.png',
             // img: '../../assets/',
 
-            url: "employer-login-pic.png",
+            // url: "",
 
-            job_title: "Software Engineer",
-            job_descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…",
-            tech_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…TECH COMPETENCY",
-            soft_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu… SOFT COMPETENCY",
-            location: "location",
+            job_title: "",
+            job_descr: "",
+            tech_compet: "",
+            soft_compet: "",
+            location: "",
+            company_name: "",
+            pay: "",
+            yos: "",
+            range: "",
+            duration: "",
+            postdate: "",
+            onlyListing
+            
 
-            test: this.$route.params.listing
+            // test: this.$route.params.listing
             
             
 
@@ -189,12 +186,11 @@ export default {
 
     async created() {
         // listingData = [];
-        const db = getFirestore(firebaseApp);
-        const auth = getAuth()
-        const uid = auth.currentUser.uid
-        const docRef = doc(db, "User", "" + uid);
-        console.log(docRef);
-        // TODO
+        // const db = getFirestore(firebaseApp);
+        // const auth = getAuth()
+        // const uid = auth.currentUser.uid
+        // const docRef = doc(db, "User", "" + uid);
+        // console.log(docRef);
         // console.log('Params: ', this.$route.params.listing);
         console.log('Params: ', this.$route.params.jobId);
         listingName = this.$route.params.jobId;
@@ -211,9 +207,9 @@ export default {
 
     },
 
-    afterMount() {
-        console.log('Params: ', this.$route.params.listing);
-    },
+    // afterMount() {
+    //     console.log('Params: ', this.$route.params.listing);
+    // },
 
     async beforeMount() {
 
@@ -270,6 +266,32 @@ export default {
         }
 
         await getListing();
+
+        // onlyListing = Object.entries(listingData[0]);
+        // console.log(onlyListing)
+
+        onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+
+
+        // Object.keys(listingData[0]).forEach(key => onlyListing.push({
+        //     listingData[0][key],
+        // }));
+        console.log(onlyListing);
+
+        this.job_descr = listingData[0]["description"]
+        this.job_title = listingData[0]["jobpos"]
+        this.tech_compet = listingData[0]["competency"]
+        this.location = listingData[0]["worklocation"]
+        this.pay = listingData[0]["compensation"]
+        this.yos = listingData[0]["yos"]
+        this.range = listingData[0]["range"]
+        this.duration = listingData[0]["duration"]
+        this.postdate = listingData[0]["postdate"]
+        this.company_name = listingData[0]["companyname"]
+
+        // console.log(this.company_name)
+
+
         
 
         // async function getData() {
