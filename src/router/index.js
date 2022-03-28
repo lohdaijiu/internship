@@ -25,6 +25,9 @@ import EditEmployerProfile from '@/views/Employer/EditEmployerProfile.vue';
 import ForgotPassword from '@/views/ForgotPassword.vue'
 import AddJobListing from '@/views/Employer/AddJobListing.vue'
 import ApplicationDashboard from '@/views/Student/ApplicationDashboard.vue';
+
+import StudentApplyJob from '@/views/Student/StudentApplyJob.vue';
+
 import ViewApplicants from "@/views/Employer/ViewApplicants.vue"
 import Chat from "@/components/Chat.vue";
 import StudentChatSelection from "@/views/Student/StudentChatSelection.vue";
@@ -212,6 +215,15 @@ const router = createRouter({
       path: '/applicationdashboard',
       name: 'ApplicationDashboard',
       component: ApplicationDashboard,
+      meta : {
+        requiresAuth : true,
+        employer: false
+      }
+    },
+    {
+      path: '/applyjob',
+      name: 'StudentApplyJob',
+      component: StudentApplyJob,
       meta : {
         requiresAuth : true,
         employer: false
