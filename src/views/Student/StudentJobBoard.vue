@@ -112,11 +112,9 @@
         ref="tableRef"
         :data="queriedData"
         :default-sort="{ prop: 'postdate', order: descending }"
-
         style="width: 100%"
-
       >
-              <!-- @row-click="viewListing(row)" -->
+        <!-- @row-click="viewListing(row)" -->
 
         <el-table-column prop="companyname" label="Company Name" width="180" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
@@ -135,13 +133,14 @@
 
         <el-table-column>
           <template #default="scope">
-            <el-button size="small" type="success" @click="viewListing(scope.row)"
+            <el-button
+              size="small"
+              type="success"
+              @click="viewListing(scope.row)"
               >Details</el-button
             >
           </template>
         </el-table-column>
-
-
       </el-table>
     </el-col>
     <el-col :span="2"></el-col>
@@ -157,7 +156,6 @@
 // import { computed, onMounted, reactive, ref } from "vue";
 // import { computed, ref } from "vue";
 // import StudentViewListing from '@/views/Student/StudentViewListing.vue';
-
 
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
@@ -301,12 +299,12 @@ export default {
       const notApplied = await this.appliedBoolean(x);
       if (notApplied) {
         const jobName = x.companyname.concat(" - ", x.jobpos);
-        this.$router.push({path : '/applyjob', query: {job : jobName}});
+        this.$router.push({ path: "/applyjob", query: { job: jobName } });
       } else {
-        alert("Job already applied")
+        alert("Job already applied");
       }
       // console.log(x);
-      // 
+      //
       // const docRef1 = doc(db, "Job", jobName);
       // const docRef2 = doc(db, "User", id);
 
@@ -342,7 +340,7 @@ export default {
       const db = getFirestore(firebaseApp);
       const id = getAuth().currentUser.uid;
       const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
-      
+
       const docRef = doc(db, "Application", applicationName);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
@@ -352,27 +350,23 @@ export default {
       }
     },
 
-
     viewListing(x) {
       // const data = this.getListing(x);
       // console.log(row.innerHTML);
       // this.$emit('viewListing');
-      try{
-
-        this.$router.push({ 
+      try {
+        this.$router.push({
           path: "/viewjoblisting",
           // name: "StudentViewListing",
-         
 
           // props: {listing: this.ListingData},
 
-          query: {jobId: x.companyname.concat(" - ", x.jobpos)}
-                            });
-
+          query: { jobId: x.companyname.concat(" - ", x.jobpos) },
+        });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    },
   },
 
   async beforeMount() {
@@ -380,6 +374,7 @@ export default {
       try {
         const db = getFirestore(firebaseApp);
         const querySnapshot = await getDocs(collection(db, "Job"));
+        jobData = [];
         querySnapshot.forEach((doc) =>
           jobData.push({
             companyname: doc.data().CompanyName,
