@@ -113,6 +113,7 @@
         :data="queriedData"
         :default-sort="{ prop: 'postdate', order: descending }"
         style="width: 100%"
+        max-height="550"
       >
         <!-- @row-click="viewListing(row)" -->
 
@@ -125,7 +126,7 @@
 
         <el-table-column>
           <template #default="scope">
-            <el-button size="small" type="success" @click="applyJob(scope.row)"
+            <el-button size="medium" type="success" @click="applyJob(scope.row)"
               >Apply</el-button
             >
           </template>
@@ -134,7 +135,7 @@
         <el-table-column>
           <template #default="scope">
             <el-button
-              size="small"
+              size="medium"
               type="success"
               @click="viewListing(scope.row)"
               >Details</el-button
@@ -461,6 +462,11 @@ export default {
 }
 #companySelect .el-select__tags {
   top: 40% !important;
+}
+</style>
+<style>
+.el-table_1_column_7 .el-table__cell {
+  text-align: center;
 }
 </style>
 

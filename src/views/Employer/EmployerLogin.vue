@@ -15,7 +15,7 @@
           :src="require('../../assets/' + url)"
           :fit="fit"
       /></el-col>
-      <el-col :span="12" class="bg-green title-tag-container"
+      <el-col :span="12" class="bg-purple title-tag-container"
         ><el-row
           ><el-col :span="24" class="text-center"
             ><p class="tagline">Bring on the best assets to your team</p>
@@ -185,7 +185,7 @@ body {
   /* display: flex;
   justify-content: center; */
 }
-.bg-green {
+.bg-purple {
   background-color: #c1c2f4;
 }
 .btn-text {
