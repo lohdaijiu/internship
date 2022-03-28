@@ -83,15 +83,15 @@ import firebaseApp from '../../main.js'
 import { getFirestore} from "firebase/firestore";
 import {
 //   getDocs,
-  setDoc,
+//   setDoc,
 //   collection,
   getDoc,
-  updateDoc,
-  arrayUnion,
+//   updateDoc,
+//   arrayUnion,
   doc,
-  serverTimestamp,
+//   serverTimestamp,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 // import { list } from '@firebase/storage';
 
 
@@ -139,43 +139,44 @@ export default {
 
     methods: {
 
-        async apply(x) {
-            console.log(x);
-            const db = getFirestore(firebaseApp);
-            const id = getAuth().currentUser.uid;
-            const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
-            const jobName = x.companyname.concat(" - ", x.jobpos);
-            const docRef = doc(db, "Application", applicationName);
-            const docSnap = await getDoc(docRef);
-            const docRef1 = doc(db, "Job", jobName);
-            const docRef2 = doc(db, "User", id);
+        async apply() {
+            this.$router.push({path : '/applyjob', query: {job : this.$route.params.jobId}});
+            // console.log(x);
+            // const db = getFirestore(firebaseApp);
+            // const id = getAuth().currentUser.uid;
+            // const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
+            // const jobName = x.companyname.concat(" - ", x.jobpos);
+            // const docRef = doc(db, "Application", applicationName);
+            // const docSnap = await getDoc(docRef);
+            // const docRef1 = doc(db, "Job", jobName);
+            // const docRef2 = doc(db, "User", id);
 
-            if (docSnap.exists()) {
-                alert("You have already applied for this position");
-            } else {
-                try {
-                //Add document into application db
+            // if (docSnap.exists()) {
+            //     alert("You have already applied for this position");
+            // } else {
+            //     try {
+            //     //Add document into application db
 
-                const data = {
-                    CreatedAt: serverTimestamp(),
-                    Progress: "Pending",
-                    Applicant: id,
-                    Position: x.jobpos,
-                    Status: "",
-                    CompanyName: x.companyname,
-                };
+            //     const data = {
+            //         CreatedAt: serverTimestamp(),
+            //         Progress: "Pending",
+            //         Applicant: id,
+            //         Position: x.jobpos,
+            //         Status: "",
+            //         CompanyName: x.companyname,
+            //     };
 
-                await setDoc(docRef, data);
-                await updateDoc(docRef1, { Applicants: arrayUnion(id) });
-                await updateDoc(docRef2, {
-                    JobsApplied: arrayUnion(applicationName),
-                });
-                alert("Job applied!");
-                } catch (error) {
-                alert("There was an error processing the application");
-                console.log(error);
-                }
-            }
+            //     await setDoc(docRef, data);
+            //     await updateDoc(docRef1, { Applicants: arrayUnion(id) });
+            //     await updateDoc(docRef2, {
+            //         JobsApplied: arrayUnion(applicationName),
+            //     });
+            //     alert("Job applied!");
+            //     } catch (error) {
+            //     alert("There was an error processing the application");
+            //     console.log(error);
+            //     }
+            // }
         },            
             // send resume
         

@@ -8,16 +8,16 @@
                 <!-- Cards -->
               <el-card class="box-card">
                     <div id="company_name">
-                        {{company_name}} Company Name
+                        Company Name  :  {{company_name}}
                     </div>
                     <br>
                     <div id="jobpos">
-                        {{jobpos}} Job Position
+                        Job Position  :  {{jobpos}}
                     </div>
                     <br>
 
                     <div id="range">
-                        {{range}} Date Range
+                        Date Range  :  {{range}}
                     </div>
               </el-card>
 
@@ -40,8 +40,8 @@
         
     </div>
     <div id = 'buttonContainer'>
-        <router-link to="/applicationdashboard"> <button id ='applyButton' @click="apply" >Apply</button></router-link>
-        <router-link to="/viewjoblisting"> <button id ='cancelButton' >Cancel</button></router-link>
+        <button id ='applyButton' @click="apply" >Apply</button>
+        <button id ='cancelButton' @click="goBack">Cancel</button>
     </div>
 
 </template>
@@ -83,22 +83,26 @@ export default {
         }
     },
 
-    async created() {
+    async beforeCreate() {
             const db = getFirestore(firebaseApp);
-            const auth = getAuth();
-            const uid = auth.currentUser.uid;
-            const docRef = doc(db, "User", "" + uid);
+            const docRef = doc(db, "Job", this.$route.query.job);
             const docSnap = await getDoc(docRef);
-            console.log(docSnap.data())
+            this.company_name = docSnap.data().CompanyName
+            this.jobpos = docSnap.data().InternshipTitle
+            const startDate = docSnap.data().DateRange[0].toDate().toString().slice(4, 15);
+            const endDate = docSnap.data().DateRange[1].toDate().toString().slice(4, 15);
+            this.range = startDate.concat(" - ", endDate)
     },
 
     methods: {
-        async apply(x) {
-            console.log(x);
+        goBack() {
+            this.$router.push('/studentjobboard')
+        },
+        async apply() {
             const db = getFirestore(firebaseApp);
             const id = getAuth().currentUser.uid;
-            const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
-            const jobName = x.companyname.concat(" - ", x.jobpos);
+            const applicationName = this.company_name.concat(" - ", this.jobpos, " - ", id);
+            const jobName = this.$route.query.job;
             const docRef = doc(db, "Application", applicationName);
             const docSnap = await getDoc(docRef);
             const docRef1 = doc(db, "Job", jobName);
@@ -114,9 +118,10 @@ export default {
                     CreatedAt: serverTimestamp(),
                     Progress: "Pending",
                     Applicant: id,
-                    Position: x.jobpos,
+                    Position: this.jobpos,
                     Status: "",
-                    CompanyName: x.companyname,
+                    CompanyName: this.company_name,
+                    Writeup : this.textarea
                 };
 
                 await setDoc(docRef, data);
@@ -125,6 +130,7 @@ export default {
                     JobsApplied: arrayUnion(applicationName),
                 });
                 alert("Job applied!");
+                this.$router.push("/applicationdashboard")
                 } catch (error) {
                 alert("There was an error processing the application");
                 console.log(error);
@@ -151,7 +157,7 @@ h3 {
 
 .box-card {
   width: 80%;
-  height: 150px;
+  height: 160px;
   font-family: "Poppins";
 }
 

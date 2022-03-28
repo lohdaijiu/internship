@@ -112,7 +112,7 @@
         ref="tableRef"
         :data="queriedData"
         :default-sort="{ prop: 'postdate', order: descending }"
-        height="250"
+
         style="width: 100%"
 
       >
@@ -127,7 +127,7 @@
 
         <el-table-column>
           <template #default="scope">
-            <el-button size="small" type="success" @click="apply(scope.row)"
+            <el-button size="small" type="success" @click="applyJob(scope.row)"
               >Apply</el-button
             >
           </template>
@@ -164,14 +164,14 @@ import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import {
   getDocs,
-  setDoc,
+  // setDoc,
   collection,
   getDoc,
   getFirestore,
-  updateDoc,
-  arrayUnion,
+  // updateDoc,
+  // arrayUnion,
   doc,
-  serverTimestamp,
+  // serverTimestamp,
 } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
@@ -297,42 +297,58 @@ export default {
     //     console.log("error")
     //   }
     // },
-    async apply(x) {
-      console.log(x);
+    async applyJob(x) {
+      const notApplied = await this.appliedBoolean(x);
+      if (notApplied) {
+        const jobName = x.companyname.concat(" - ", x.jobpos);
+        this.$router.push({path : '/applyjob', query: {job : jobName}});
+      } else {
+        alert("Job already applied")
+      }
+      // console.log(x);
+      // 
+      // const docRef1 = doc(db, "Job", jobName);
+      // const docRef2 = doc(db, "User", id);
+
+      // if (docSnap.exists()) {
+      //   alert("You have already applied for this position");
+      // } else {
+      //   try {
+      //     //Add document into application db
+
+      //     const data = {
+      //       CreatedAt: serverTimestamp(),
+      //       Progress: "Pending",
+      //       Applicant: id,
+      //       Position: x.jobpos,
+      //       Status: "",
+      //       CompanyName: x.companyname,
+      //     };
+
+      //     await setDoc(docRef, data);
+      //     await updateDoc(docRef1, { Applicants: arrayUnion(id) });
+      //     await updateDoc(docRef2, {
+      //       JobsApplied: arrayUnion(applicationName),
+      //     });
+      //     alert("Job applied!");
+      //   } catch (error) {
+      //     alert("There was an error processing the application");
+      //     console.log(error);
+      //   }
+      // }
+    },
+
+    async appliedBoolean(x) {
       const db = getFirestore(firebaseApp);
       const id = getAuth().currentUser.uid;
       const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
-      const jobName = x.companyname.concat(" - ", x.jobpos);
+      
       const docRef = doc(db, "Application", applicationName);
       const docSnap = await getDoc(docRef);
-      const docRef1 = doc(db, "Job", jobName);
-      const docRef2 = doc(db, "User", id);
-
       if (docSnap.exists()) {
-        alert("You have already applied for this position");
+        return false;
       } else {
-        try {
-          //Add document into application db
-
-          const data = {
-            CreatedAt: serverTimestamp(),
-            Progress: "Pending",
-            Applicant: id,
-            Position: x.jobpos,
-            Status: "",
-            CompanyName: x.companyname,
-          };
-
-          await setDoc(docRef, data);
-          await updateDoc(docRef1, { Applicants: arrayUnion(id) });
-          await updateDoc(docRef2, {
-            JobsApplied: arrayUnion(applicationName),
-          });
-          alert("Job applied!");
-        } catch (error) {
-          alert("There was an error processing the application");
-          console.log(error);
-        }
+        return true;
       }
     },
 
@@ -344,13 +360,13 @@ export default {
       try{
 
         this.$router.push({ 
-          // path: "/viewjoblisting"
-          name: "StudentViewListing",
+          path: "/viewjoblisting",
+          // name: "StudentViewListing",
          
 
           // props: {listing: this.ListingData},
 
-          params: {jobId: x.companyname.concat(" - ", x.jobpos)}
+          query: {jobId: x.companyname.concat(" - ", x.jobpos)}
                             });
 
       } catch (error) {

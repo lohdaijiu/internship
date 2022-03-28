@@ -140,6 +140,8 @@ export default {
 
         async function getData(){
 
+            try {
+
             tableData = []
 
             const auth = getAuth();
@@ -190,6 +192,9 @@ export default {
                     tableData.push({title:docSnap1.data().InternshipTitle, children : child})
 
                 }
+            }
+            } catch (error) {
+                console.log(error)
             }
         }
         await getData().then(() => {this.done = true;})
