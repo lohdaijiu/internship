@@ -91,6 +91,20 @@ import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { reactive } from "vue";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import firebaseApp from "../../main.js";
+import { ElMessage } from "element-plus";
+import { h } from "vue";
+
+const alertMsg = (msg) => {
+  ElMessage({
+    message: h("p", null, [
+      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
+    ]),
+    type: "error",
+    offset: 30,
+    showClose: true,
+    duration: 3000,
+  });
+};
 export default {
   data() {
     return {
@@ -122,7 +136,7 @@ export default {
         )
           //.then(this.$router.push("/employerhome"))
           .catch((error) => {
-            alert(error.message);
+            alertMsg(error.message);
             return;
           });
 
@@ -134,12 +148,12 @@ export default {
         if (!status) {
           this.$router.push("/studenthome");
         } else {
-          alert("No such student account found");
+          alertMsg("No such student account found");
           signOut(getAuth());
         }
       } catch {
         (error) => {
-          alert(error.message);
+          alertMsg(error.message);
         };
       }
     },

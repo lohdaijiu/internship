@@ -79,6 +79,21 @@ import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import { reactive } from "vue";
+import { ElMessage } from "element-plus";
+import { h } from "vue";
+
+const alertMsg = (msg) => {
+  ElMessage({
+    message: h("p", null, [
+      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
+    ]),
+    type: "error",
+    offset: 30,
+    showClose: true,
+    duration: 3000,
+  });
+};
+
 export default {
   data() {
     return {
@@ -104,12 +119,19 @@ export default {
     };
   },
   methods: {
+    // open1(msg){
+    //   ElMessage({
+    //     showClose: true,
+    //     message: msg,
+    //     duration:0
+    //   })
+    // },
     redirectToEmployerLogin() {
       this.$router.push({ path: "/employerlogin" });
     },
     async register() {
       if (this.form.password != this.form.password1) {
-        alert("Password is different");
+        alertMsg("Password is different");
         return;
       }
 
@@ -119,7 +141,7 @@ export default {
         this.form.password1 == "" ||
         this.form.companyName == ""
       ) {
-        alert("Please fill in all the blanks");
+        alertMsg("Please fill in all of the fields");
         return;
       }
 
@@ -132,7 +154,8 @@ export default {
         this.form.email,
         this.form.password
       ).catch((error) => {
-        alert(error.message);
+        alertMsg(error.message);
+        // ElMessage.error(error.message);
         status = false;
       });
       console.log(status);

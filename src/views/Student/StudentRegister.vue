@@ -84,6 +84,20 @@ import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, setDoc } from "firebase/firestore";
 import { reactive } from "vue";
+import { ElMessage } from "element-plus";
+import { h } from "vue";
+
+const alertMsg = (msg) => {
+  ElMessage({
+    message: h("p", null, [
+      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
+    ]),
+    type: "error",
+    offset: 30,
+    showClose: true,
+    duration: 3000,
+  });
+};
 export default {
   data() {
     return {
@@ -122,7 +136,7 @@ export default {
     },
     async register() {
       if (this.form.password != this.form.password1) {
-        alert("Password is different");
+        alertMsg("Password is different");
         return;
       }
 
@@ -134,7 +148,7 @@ export default {
         this.form.name == "" ||
         this.form.pos == ""
       ) {
-        alert("Please fill in all the blanks");
+        alertMsg("Please fill in all the blanks");
         return;
       }
 
@@ -147,7 +161,7 @@ export default {
         this.form.email,
         this.form.password
       ).catch((error) => {
-        alert(error.message);
+        alertMsg(error.message);
         status = false;
       });
 

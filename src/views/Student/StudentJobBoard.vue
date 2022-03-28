@@ -161,6 +161,20 @@
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
+import { h } from "vue";
+
+const alertMsg = (msg) => {
+  ElMessage({
+    message: h("p", null, [
+      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
+    ]),
+    type: "error",
+    offset: 30,
+    showClose: true,
+    duration: 3000,
+  });
+};
 import {
   getDocs,
   // setDoc,
@@ -302,7 +316,7 @@ export default {
         const jobName = x.companyname.concat(" - ", x.jobpos);
         this.$router.push({ path: "/applyjob", query: { job: jobName } });
       } else {
-        alert("Job already applied");
+        alertMsg("Job already applied");
       }
       // console.log(x);
       //
