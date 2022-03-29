@@ -71,6 +71,20 @@ import { getFirestore } from "firebase/firestore";
 import { doc, setDoc, getDoc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
 import { reactive } from "vue";
 import NavBar from "../../components/EmployerNav.vue"
+import { ElMessage } from "element-plus";
+import { h } from "vue";
+
+const alertMsg = (msg) => {
+  ElMessage({
+    message: h("p", null, [
+      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
+    ]),
+    type: "info",
+    offset: 30,
+    showClose: true,
+    duration: 3000,
+  });
+};
 
 
 
@@ -149,7 +163,7 @@ export default {
           await setDoc(docRef1, data);
           await updateDoc(docRef2, {Jobs : arrayUnion(this.form.internshipTitle)});
           
-          alert("Job Created!")
+          alertMsg("Job Created!")
         } catch (error) {
           console.error(error)
           errorboolean = false;
@@ -159,7 +173,7 @@ export default {
           //this.$router.push("/employerhome")
         }
       } else { //same internship title
-        alert("Please choose a new internship title")
+        alertMsg("Please choose a new internship title")
 
       }
 
