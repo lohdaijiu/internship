@@ -32,7 +32,7 @@
     <div class="details"
         align="center">
         <div class="tabbable"
-            >
+            align="left">
             <!-- Tabs -->
             <el-tabs tab-position="top" stretch="true">
                 <el-tab-pane label="Job Description">
@@ -114,100 +114,145 @@ export default {
     },
 
     async created() {
-        // listingData = [];
-        // const db = getFirestore(firebaseApp);
-        // const auth = getAuth()
-        // const uid = auth.currentUser.uid
-        // const docRef = doc(db, "User", "" + uid);
-        // console.log(docRef);
-        // console.log('Params: ', this.$route.params.listing);
+
         console.log('Query: ', this.$route.query.jobId);
         listingName = this.$route.query.jobId;
 
-        // listingData = this.getListing(this.$route.params.listing);
+        listingData = [];
+
+        console.log("getting listing")
+        const db = getFirestore(firebaseApp);
+
+        const docName = listingName
+        console.log(docName);
+        const docRef = doc(db, "Job", docName);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log("exists")
+            try {
+            // console.log(docSnap.data().CompanyName)
+                listingData.push({
+                    companyname: docSnap.data().CompanyName,
+                    jobpos: docSnap.data().InternshipTitle,
+                    postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
+                    duration: docSnap.data().Duration,
+                    yos: docSnap.data().Year,
+                    worklocation: docSnap.data().Type,
+                    range: docSnap
+                    .data()
+                    .DateRange[0].toDate()
+                    .toString()
+                    .slice(4, 15)
+                    .concat(
+                        " - ",
+                        docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
+                    ),
+                    compensation: docSnap.data().Renumeration,
+                    description: docSnap.data().JobDescription,
+                    competency: docSnap.data().PreferredCompetencies
+                    
+                })
+                console.log(listingData);
+
+                console.log(listingData[0]["competency"]);
+
+                tableData = [];
+
+                onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+                console.log(onlyListing);
+                this.tableData.push({
+                    "yos": onlyListing[4]["yos"], 
+                    "duration": onlyListing[3]["duration"],
+                    "compensation": onlyListing[7]["compensation"],
+                    "postdate": onlyListing[2]["postdate"],
+                    "range": onlyListing[6]["range"]
+                })
+                // console.log(tableData[0])
+
+                // return ListingData;
+                
+            } catch (error) {
+                console.log(error)
+            }  
+        }   
         
-        
-        // const clickedListingData = this.$route.query.StudentViewListing;
-        // console.log(clickedListingData[0]["companyname"])
-
-
-
-
+        this.job_descr = listingData[0]["description"]
+        this.job_title = listingData[0]["jobpos"]
+        this.tech_compet = listingData[0]["competency"]
+        this.location = listingData[0]["worklocation"]
+        this.company_name = listingData[0]["companyname"]            
 
     },
 
-    // afterMount() {
-    //     console.log('Params: ', this.$route.params.listing);
-    // },
+    // async beforeMount() {
 
-    async beforeMount() {
+        // async function getListing() {
+            // listingData = [];
 
-        async function getListing() {
-            listingData = [];
+            // // console.log("the listing" + x);
+            // console.log("getting listing")
+            // const db = getFirestore(firebaseApp);
+            // // const id = getAuth().currentUser.uid;
+            // // const docName = x[0].concat(x[1])
+            // // const docName = x.companyname.concat(" - ", x.jobpos)
+            // // const docName = this.$route.params.jobId
+            // const docName = listingName
+            // console.log(docName);
+            // const docRef = doc(db, "Job", docName);
+            // const docSnap = await getDoc(docRef);
 
-            // console.log("the listing" + x);
-            console.log("getting listing")
-            const db = getFirestore(firebaseApp);
-            // const id = getAuth().currentUser.uid;
-            // const docName = x[0].concat(x[1])
-            // const docName = x.companyname.concat(" - ", x.jobpos)
-            // const docName = this.$route.params.jobId
-            const docName = listingName
-            console.log(docName);
-            const docRef = doc(db, "Job", docName);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                console.log("exists")
-                try {
-                // console.log(docSnap.data().CompanyName)
-                    listingData.push({
-                        companyname: docSnap.data().CompanyName,
-                        jobpos: docSnap.data().InternshipTitle,
-                        postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
-                        duration: docSnap.data().Duration,
-                        yos: docSnap.data().Year,
-                        worklocation: docSnap.data().Type,
-                        range: docSnap
-                        .data()
-                        .DateRange[0].toDate()
-                        .toString()
-                        .slice(4, 15)
-                        .concat(
-                            " - ",
-                            docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
-                        ),
-                        compensation: docSnap.data().Renumeration,
-                        description: docSnap.data().JobDescription,
-                        competency: docSnap.data().PreferredCompetencies
+            // if (docSnap.exists()) {
+            //     console.log("exists")
+            //     try {
+            //     // console.log(docSnap.data().CompanyName)
+            //         listingData.push({
+            //             companyname: docSnap.data().CompanyName,
+            //             jobpos: docSnap.data().InternshipTitle,
+            //             postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
+            //             duration: docSnap.data().Duration,
+            //             yos: docSnap.data().Year,
+            //             worklocation: docSnap.data().Type,
+            //             range: docSnap
+            //             .data()
+            //             .DateRange[0].toDate()
+            //             .toString()
+            //             .slice(4, 15)
+            //             .concat(
+            //                 " - ",
+            //                 docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
+            //             ),
+            //             compensation: docSnap.data().Renumeration,
+            //             description: docSnap.data().JobDescription,
+            //             competency: docSnap.data().PreferredCompetencies
                         
-                    })
-                    console.log(listingData);
+            //         })
+            //         console.log(listingData);
 
-                    console.log(listingData[0]["competency"]);
+            //         console.log(listingData[0]["competency"]);
 
-                    tableData = [];
+            //         tableData = [];
 
-                    onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
-                    console.log(onlyListing);
-                    tableData.push({
-                        "yos": onlyListing[4]["yos"], 
-                        "duration": onlyListing[3]["duration"],
-                        "compensation": onlyListing[7]["compensation"],
-                        "postdate": onlyListing[2]["postdate"],
-                        "range": onlyListing[6]["range"]
-                    })
-                    console.log(tableData[0])
+            //         onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+            //         console.log(onlyListing);
+            //         tableData.push({
+            //             "yos": onlyListing[4]["yos"], 
+            //             "duration": onlyListing[3]["duration"],
+            //             "compensation": onlyListing[7]["compensation"],
+            //             "postdate": onlyListing[2]["postdate"],
+            //             "range": onlyListing[6]["range"]
+            //         })
+            //         console.log(tableData[0])
 
-                    // return ListingData;
+            //         // return ListingData;
                     
-                } catch (error) {
-                    console.log(error)
-                }  
-            }
-        }
+            //     } catch (error) {
+            //         console.log(error)
+            //     }  
+            // }
+        // }
 
-        await getListing();
+        // await getListing();
 
         // onlyListing = Object.entries(listingData[0]);
         // console.log(onlyListing)
@@ -230,15 +275,15 @@ export default {
         //     listingData[0][key],
         // }));
 
-        this.job_descr = listingData[0]["description"]
-        this.job_title = listingData[0]["jobpos"]
-        this.tech_compet = listingData[0]["competency"]
-        this.location = listingData[0]["worklocation"]
-        this.company_name = listingData[0]["companyname"]
+        // this.job_descr = listingData[0]["description"]
+        // this.job_title = listingData[0]["jobpos"]
+        // this.tech_compet = listingData[0]["competency"]
+        // this.location = listingData[0]["worklocation"]
+        // this.company_name = listingData[0]["companyname"]
 
         // console.log(this.company_name)
 
-    },    
+    // },    
 }
 
     
@@ -270,6 +315,7 @@ export default {
         margin-left: 20px;
         margin-right: 20px;
         position: middle;
+        margin-bottom: 50px;
 
     }
 
