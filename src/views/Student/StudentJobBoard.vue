@@ -126,7 +126,10 @@
 
         <el-table-column>
           <template #default="scope">
-            <el-button size="medium" type="success" @click="applyJob(scope.row)"
+            <el-button
+              size="default"
+              type="success"
+              @click="applyJob(scope.row)"
               >Apply</el-button
             >
           </template>
@@ -135,7 +138,7 @@
         <el-table-column>
           <template #default="scope">
             <el-button
-              size="medium"
+              size="default"
               type="success"
               @click="viewListing(scope.row)"
               >Details</el-button
@@ -386,43 +389,40 @@ export default {
 
   async beforeMount() {
     async function getData() {
-      try {
-        const db = getFirestore(firebaseApp);
-        const querySnapshot = await getDocs(collection(db, "Job"));
-        jobData = [];
-        querySnapshot.forEach((doc) => {
-          if (doc.data().Deleted == false) {
-          jobData.push({
-            companyname: doc.data().CompanyName,
-            jobpos: doc.data().InternshipTitle,
-            postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
-            duration: doc.data().Duration,
-            yos: doc.data().Year,
-            worklocation: doc.data().Type,
-            dateRange: doc.data().DateRange,
-            range: doc
-              .data()
-              .DateRange[0].toDate()
-              .toString()
-              .slice(4, 15)
-              .concat(
-                " - ",
-                doc.data().DateRange[1].toDate().toString().slice(4, 15)
-              ),
-          })
-          }
-        }
-        );
+      if (jobData.length == 0) {
+        try {
+          const db = getFirestore(firebaseApp);
+          const querySnapshot = await getDocs(collection(db, "Job"));
+          querySnapshot.forEach((doc) => {
+            if (doc.data().Deleted == false) {
+              jobData.push({
+                companyname: doc.data().CompanyName,
+                jobpos: doc.data().InternshipTitle,
+                postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
+                duration: doc.data().Duration,
+                yos: doc.data().Year,
+                worklocation: doc.data().Type,
+                dateRange: doc.data().DateRange,
+                range: doc
+                  .data()
+                  .DateRange[0].toDate()
+                  .toString()
+                  .slice(4, 15)
+                  .concat(
+                    " - ",
+                    doc.data().DateRange[1].toDate().toString().slice(4, 15)
+                  ),
+              });
+            }
+          });
 
-        console.log("success");
-      } catch (error) {
-        console.error(error);
+          console.log("success");
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
     await getData();
-
-    console.log("hello");
-
     this.queriedData = jobData;
     this.companyNameData = this.queriedData
       .map((item) => item.companyname)
