@@ -1,5 +1,6 @@
 !<template>
   <NavBar/>
+  <br><br>
   <ChatSelection/>
   <el-button type="primary" @click="test()">Create</el-button>
 </template>

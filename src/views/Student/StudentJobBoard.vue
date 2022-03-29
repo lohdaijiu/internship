@@ -107,6 +107,7 @@
 
   <el-row class="table-container">
     <el-col :span="2"></el-col>
+    
     <el-col :span="20">
       <el-table
         ref="tableRef"
@@ -114,9 +115,10 @@
         :default-sort="{ prop: 'postdate', order: descending }"
         style="width: 100%"
         max-height="550"
+        @selection-change="handleSelectionChange()"
       >
         <!-- @row-click="viewListing(row)" -->
-
+        <el-table-column type="selection" width="55" />
         <el-table-column prop="companyname" label="Company Name" width="180" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
         <el-table-column prop="postdate" label="Date Posted" sortable />
@@ -255,6 +257,7 @@ export default {
       companyValue: ref([]),
       options1,
       loading,
+      multipleSelection : ref([])
     };
   },
 
@@ -385,7 +388,13 @@ export default {
         console.log(error);
       }
     },
+
+    handleSelectionChange(x) {
+      this.multipleSelection.value = x;
+      console.log(this.multipleSelection)
+    }
   },
+    
 
   async beforeMount() {
     async function getData() {
