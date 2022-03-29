@@ -25,6 +25,7 @@
           show-word-limit
           type="textarea"
           :rows="10"
+          ref="writeup"
         />
         <!-- <textarea type="text" placeholder="Please enter here"> </textarea> -->
       </div>
@@ -75,8 +76,8 @@ const alertSuccessMsg = (msg) => {
     duration: 3000,
   });
 };
-const text = ref("");
-const textarea = ref("");
+var text = ref("");
+var textarea = ref("");
 
 export default {
   name: "StudentApplyJob",
@@ -91,7 +92,7 @@ export default {
       range: "",
       writeup: "",
       textarea,
-      text,
+      text
     };
   },
 
@@ -112,7 +113,17 @@ export default {
       .toString()
       .slice(4, 15);
     this.range = startDate.concat(" - ", endDate);
+    this.textarea = "";
+    this.text=""
+    this.$refs.writeup.value = ""
   },
+
+  async created() {
+    this.textarea = "";
+    this.text=""
+
+  },
+
 
   methods: {
     goBack() {
@@ -160,6 +171,7 @@ export default {
           console.log(error);
         }
       }
+
     },
   },
 };
