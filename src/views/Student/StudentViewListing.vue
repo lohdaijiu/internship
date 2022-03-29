@@ -4,15 +4,7 @@
 
     <div id="general_info">
         <h2>{{company_name}}</h2>
-
         <h3> {{job_title}}</h3>
-        <!-- <el-image
-            class="company-profile"
-            :src="require('../../assets/' + url)"
-        /> -->
-        <br>
-        <br>
-
     </div>
 
     <el-row class="table-container">
@@ -21,11 +13,12 @@
         <el-table
             ref="tableRef"
             :data="tableData"
-            height="250"
+            height="100"
             style="width: 100%"
+            align="center"
         >
             <el-table-column prop="yos" label="Year of Study"/>
-            <el-table-column prop="duration" label="Internship Duration"/>
+            <el-table-column prop="duration" label="Duration"/>
             <el-table-column prop="compensation" label="Compensation" />
             <el-table-column prop="range" label="Date Range" />
             <el-table-column prop="postdate" label="Date Posted" />
@@ -33,44 +26,35 @@
         </el-table>
         </el-col>
         <el-col :span="2"></el-col>
-    </el-row>         
-            
-        <!-- Full Description -->
-        <div class="details">
-            <div class="tabbable">
-                <!-- Tabs -->
-                <el-tabs tab-position="top" >
-                    <!-- TODO data from firebase -->
-                    <el-tab-pane label="Job Description">
-                        {{job_descr}}
-                    </el-tab-pane>
-                    <el-tab-pane label="Technical Competencies">
-                        {{tech_compet}}
-                    </el-tab-pane>
-                    <!-- <el-tab-pane label="Soft Competencies">
-                        {{soft_compet}}
-                    </el-tab-pane> -->
-                    <el-tab-pane label="Location">
-                        {{location}}
-                    </el-tab-pane>
-                </el-tabs>
+    </el-row>      
 
-            </div>
-        </div>
-
-        <!--  APPLY  -->
-        <!-- <el-button id ='applyBtn' type="success" @click='apply'>Apply</el-button> -->
-
-        <el-col :span="6" class="apply-btn-container">
-        <i class="applybtn">
-            <el-button size="small" type="success" @click="apply()"
-                >Apply</el-button
+    <!-- Full Description -->
+    <div class="details"
+        align="center">
+        <div class="tabbable"
             >
-        </i>
-        </el-col> 
+            <!-- Tabs -->
+            <el-tabs tab-position="top" stretch="true">
+                <el-tab-pane label="Job Description">
+                    {{job_descr}}
+                </el-tab-pane>
+                <el-tab-pane label="Technical Competencies">
+                    {{tech_compet}}
+                </el-tab-pane>
+                <el-tab-pane label="Location">
+                    {{location}}
+                </el-tab-pane>
+            </el-tabs>
 
-        <el-backtop />
+        </div>
+    </div>
 
+    <!--  APPLY  -->
+    <el-col :span="6" class="apply-btn-container">
+
+        <el-button id="applybtn" @click="apply()">Apply</el-button>
+
+    </el-col> 
 
     </div>
     <!-- </div> -->
@@ -82,19 +66,11 @@ import StudentNav from '../../components/StudentNav.vue'
 import firebaseApp from '../../main.js'
 import { getFirestore} from "firebase/firestore";
 import {
-//   getDocs,
-//   setDoc,
-//   collection,
   getDoc,
-//   updateDoc,
-//   arrayUnion,
+
   doc,
-//   serverTimestamp,
+
 } from "firebase/firestore";
-// import { getAuth } from "firebase/auth";
-// import { list } from '@firebase/storage';
-
-
 
 var listingName = "";
 
@@ -115,11 +91,6 @@ export default {
             listingData,
             listingName,
             tableData,
-            // img: '../../assets/employer-login-pic.png',
-            // img: '../../assets/',
-
-            // url: "",
-
             job_title: "",
             job_descr: "",
             tech_compet: "",
@@ -128,12 +99,8 @@ export default {
             company_name: "",
     
             onlyListing
+       
             
-
-            // test: this.$route.params.listing
-            
-            
-
         }
     },
 
@@ -141,44 +108,8 @@ export default {
 
         async apply() {
             this.$router.push({path : '/applyjob', query: {job : this.$route.query.jobId}});
-            // console.log(x);
-            // const db = getFirestore(firebaseApp);
-            // const id = getAuth().currentUser.uid;
-            // const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
-            // const jobName = x.companyname.concat(" - ", x.jobpos);
-            // const docRef = doc(db, "Application", applicationName);
-            // const docSnap = await getDoc(docRef);
-            // const docRef1 = doc(db, "Job", jobName);
-            // const docRef2 = doc(db, "User", id);
 
-            // if (docSnap.exists()) {
-            //     alert("You have already applied for this position");
-            // } else {
-            //     try {
-            //     //Add document into application db
-
-            //     const data = {
-            //         CreatedAt: serverTimestamp(),
-            //         Progress: "Pending",
-            //         Applicant: id,
-            //         Position: x.jobpos,
-            //         Status: "",
-            //         CompanyName: x.companyname,
-            //     };
-
-            //     await setDoc(docRef, data);
-            //     await updateDoc(docRef1, { Applicants: arrayUnion(id) });
-            //     await updateDoc(docRef2, {
-            //         JobsApplied: arrayUnion(applicationName),
-            //     });
-            //     alert("Job applied!");
-            //     } catch (error) {
-            //     alert("There was an error processing the application");
-            //     console.log(error);
-            //     }
-            // }
         },            
-            // send resume
         
     },
 
@@ -255,6 +186,19 @@ export default {
 
                     console.log(listingData[0]["competency"]);
 
+                    tableData = [];
+
+                    onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+                    console.log(onlyListing);
+                    tableData.push({
+                        "yos": onlyListing[4]["yos"], 
+                        "duration": onlyListing[3]["duration"],
+                        "compensation": onlyListing[7]["compensation"],
+                        "postdate": onlyListing[2]["postdate"],
+                        "range": onlyListing[6]["range"]
+                    })
+                    console.log(tableData[0])
+
                     // return ListingData;
                     
                 } catch (error) {
@@ -268,18 +212,18 @@ export default {
         // onlyListing = Object.entries(listingData[0]);
         // console.log(onlyListing)
 
-        tableData = [];
+        // tableData = [];
 
-        onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
-        console.log(onlyListing);
-        tableData.push({
-            "yos": onlyListing[4]["yos"], 
-            "duration": onlyListing[3]["duration"],
-            "compensation": onlyListing[7]["compensation"],
-            "postdate": onlyListing[2]["postdate"],
-            "range": onlyListing[6]["range"]
-        })
-        console.log(tableData[0])
+        // onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+        // console.log(onlyListing);
+        // tableData.push({
+        //     "yos": onlyListing[4]["yos"], 
+        //     "duration": onlyListing[3]["duration"],
+        //     "compensation": onlyListing[7]["compensation"],
+        //     "postdate": onlyListing[2]["postdate"],
+        //     "range": onlyListing[6]["range"]
+        // })
+        // console.log(tableData[0])
 
 
         // Object.keys(listingData[0]).forEach(key => onlyListing.push({
@@ -294,45 +238,6 @@ export default {
 
         // console.log(this.company_name)
 
-
-        
-
-        // async function getData() {
-
-        // jobData = [];
-
-        // try {
-            
-        //     const db = getFirestore(firebaseApp);
-        //     const querySnapshot = await getDocs(collection(db, "Job"));
-        //     querySnapshot.forEach((doc) =>
-        //     jobData.push({
-        //         companyname: doc.data().CompanyName,
-        //         jobpos: doc.data().InternshipTitle,
-        //         postdate: doc.data().CreatedAt.toDate().toString().slice(4, 15),
-        //         duration: doc.data().Duration,
-        //         yos: doc.data().Year,
-        //         worklocation: doc.data().Type,
-        //         range: doc
-        //         .data()
-        //         .DateRange[0].toDate()
-        //         .toString()
-        //         .slice(4, 15)
-        //         .concat(
-        //             " - ",
-        //             doc.data().DateRange[1].toDate().toString().slice(4, 15)
-        //         ),
-        //     })
-        //     );
-        //     console.log("success");
-            
-        // } catch (error) {
-        //     console.error(error);
-        // }
-        // }
-        // await getData();
-
-        // this.queriedData = jobData;
     },    
 }
 
@@ -341,31 +246,66 @@ export default {
 
 <style>
 
-    .company-profile {
-        width: 20%;
-    }
-
-    #general_info
-
-    .eltable {
-        width: 60%;
-        border: 4px solid black;
-        align: "center";
-        border-radius: 15px;        
-
-    }
-    tr:hover {
-        background-color: lightyellow;
-    }
-
-    /* #backtop_btn {
-        height: 100%;
-        width: 100%;
-        background-color: #f2f5f6;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
+    #general_info {
+        font-family: "Poppins";
         text-align: center;
-        line-height: 40px;
-        color: #1989fa;
+
+    }
+
+    .table-container {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    /* .details {
+        position: center;
+        align-content: center;
+        margin-left: 40px;
+        margin-right: 40px;
     } */
+
+    .tabbable {
+        width: 80%;
+        align-content: center;
+        margin-left: 20px;
+        margin-right: 20px;
+        position: middle;
+
+    }
+
+    .apply-btn-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin-left: 73.5%;
+        max-width: 15%;
+        padding-right: 3%;
+        min-height: 200px;
+        float: right;
+        justify-content: flex-end;
+
+    }
+
+    #applybtn {
+        border-radius: 10px;
+        
+        padding-left: 50%;
+        padding-right: 50%;
+        padding-top: 24%;
+        padding-bottom: 24%;
+        text-align: center;
+
+        font-weight: bold;
+        background-color: #96C67F;
+        border-style: solid;
+        border-color: #D4D381;
+        justify-content: flex-end;
+        float: right;
+    }
+
+    #applybtn:hover {
+        background-color: #D4D381;
+
+    }
 
 </style>
