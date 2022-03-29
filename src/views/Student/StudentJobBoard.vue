@@ -390,7 +390,8 @@ export default {
         const db = getFirestore(firebaseApp);
         const querySnapshot = await getDocs(collection(db, "Job"));
         jobData = [];
-        querySnapshot.forEach((doc) =>
+        querySnapshot.forEach((doc) => {
+          if (doc.data().Deleted == false) {
           jobData.push({
             companyname: doc.data().CompanyName,
             jobpos: doc.data().InternshipTitle,
@@ -409,6 +410,8 @@ export default {
                 doc.data().DateRange[1].toDate().toString().slice(4, 15)
               ),
           })
+          }
+        }
         );
 
         console.log("success");

@@ -41,7 +41,15 @@
             >
           </template>
       </el-table-column>
-      <el-table-column prop="status" label="Status" width="180" />
+      <el-table-column prop="status" label="Status" width="180"/>
+      <el-table-column width="180">
+          <template #default="scope">
+        <el-button size="small" type="danger" @click="deleteJob(scope.row)" v-if="deleted(scope.row)"
+              >Delete</el-button
+            >
+            <small v-if="alreadyDeleted(scope.row)"> Deleted </small>
+            </template>
+        </el-table-column>
     
     </el-table>
     </el-row>
@@ -93,6 +101,21 @@ export default {
             }
         },
 
+        async deleteJob(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docRef = doc(db, "User", id);
+            const docSnap = await getDoc(docRef);
+            const employerName = docSnap.data().CompanyName;
+            const docName = employerName.concat(" - ", x.title)
+
+            await updateDoc(doc(db, "Job", docName), {
+                Deleted : true
+            });
+
+
+        },
+
         async offer(x) {
             const id = getAuth().currentUser.uid
             const db = getFirestore(firebaseApp);
@@ -123,9 +146,24 @@ export default {
             alert("Applicant Rejected")
             window.location.reload();
         },
+
+        alreadyDeleted(x) {
+            if (x.date == null && x.deletion == true) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         rendered(x) {
 
             if (x.status == "Pending") {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        deleted(x) {
+            if (x.date == null && x.deletion == false) {
                 return true;
             } else {
                 return false;
@@ -165,7 +203,7 @@ export default {
                 const app = docSnap1.data().Applicants;
 
                 if (app.length == 0) {
-                    tableData.push({title : docSnap1.data().InternshipTitle})
+                    tableData.push({title : docSnap1.data().InternshipTitle, deletion: docSnap1.data().Deleted})
                 } else {
                     const child = []
                     
@@ -189,7 +227,7 @@ export default {
                         })
                     }
 
-                    tableData.push({title:docSnap1.data().InternshipTitle, children : child})
+                    tableData.push({title:docSnap1.data().InternshipTitle, deletion: docSnap1.data().Deleted, children : child})
 
                 }
             }

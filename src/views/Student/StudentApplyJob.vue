@@ -141,10 +141,9 @@ export default {
 
           const data = {
             CreatedAt: serverTimestamp(),
-            Progress: "Pending",
             Applicant: id,
             Position: this.jobpos,
-            Status: "",
+            Status: "Pending",
             CompanyName: this.company_name,
             Writeup: this.textarea,
           };

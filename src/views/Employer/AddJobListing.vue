@@ -140,7 +140,8 @@ export default {
           Renumeration: this.form.renum,
           Applicants: [],
           CreatedAt : serverTimestamp(),
-          DateRange: this.form.daterange
+          DateRange: this.form.daterange,
+          Deleted : false
         };
         try {
           const docRef1 = doc(db, "Job", docName);
