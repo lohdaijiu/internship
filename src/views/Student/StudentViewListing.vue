@@ -39,7 +39,7 @@
         <div class="details">
             <div class="tabbable">
                 <!-- Tabs -->
-                <el-tabs :tab-position= "top" >
+                <el-tabs tab-position="top" >
                     <!-- TODO data from firebase -->
                     <el-tab-pane label="Job Description">
                         {{job_descr}}
@@ -140,7 +140,7 @@ export default {
     methods: {
 
         async apply() {
-            this.$router.push({path : '/applyjob', query: {job : this.$route.params.jobId}});
+            this.$router.push({path : '/applyjob', query: {job : this.$route.query.jobId}});
             // console.log(x);
             // const db = getFirestore(firebaseApp);
             // const id = getAuth().currentUser.uid;
@@ -190,8 +190,8 @@ export default {
         // const docRef = doc(db, "User", "" + uid);
         // console.log(docRef);
         // console.log('Params: ', this.$route.params.listing);
-        console.log('Params: ', this.$route.params.jobId);
-        listingName = this.$route.params.jobId;
+        console.log('Query: ', this.$route.query.jobId);
+        listingName = this.$route.query.jobId;
 
         // listingData = this.getListing(this.$route.params.listing);
         
@@ -267,6 +267,8 @@ export default {
 
         // onlyListing = Object.entries(listingData[0]);
         // console.log(onlyListing)
+
+        tableData = [];
 
         onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
         console.log(onlyListing);
