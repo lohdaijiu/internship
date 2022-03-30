@@ -30,10 +30,11 @@ import ApplicationDashboard from '@/views/Student/ApplicationDashboard.vue';
 import StudentApplyJob from '@/views/Student/StudentApplyJob.vue';
 
 import ViewApplicants from '@/views/Employer/ViewApplicants.vue';
-import Chat from '@/components/Chat.vue';
 import StudentChatSelection from '@/views/Student/StudentChatSelection.vue';
 import EmployerChatSelection from '@/views/Employer/EmployerChatSelection.vue';
 import ViewProfile from '@/views/Employer/ViewProfile.vue';
+import StudentChat from '@/views/Student/StudentChat.vue';
+import EmployerChat from '@/views/Employer/EmployerChat.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,9 +45,14 @@ const router = createRouter({
       component: StudentResources
     },
     {
-      path: '/chat',
-      name: 'Chat',
-      component: Chat
+      path: '/studentchat',
+      name: 'StudentChat',
+      component: StudentChat
+    },
+    {
+      path: '/employerchat',
+      name: 'EmployerChat',
+      component: EmployerChat
     },
     {
       path: '/studentchatselection',

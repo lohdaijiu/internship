@@ -1,27 +1,105 @@
-!<template>
-  <NavBar/>
-  <br><br>
-  <ChatSelection/>
-  <el-button type="primary" @click="test()">Create</el-button>
+<template>
+  <NavBar />
+
+<div style="margin-top: 5%;">
+  <el-table
+    :data="chatArr"
+    style="width: 50%; margin-top: 5%; margin:auto"
+    row-key="id"
+    align = "center"
+    size = "large"
+  >
+    <el-table-column prop="nameid" label="Applicant Name" width="270" />
+    <el-table-column prop="jobsInSameCoy" label="Jobs Applied" width="540" />
+    <el-table-column width="120">
+        <template #default="scope">
+      <el-button
+        size="small"
+        type="info"
+        @click="goToChat(scope.row.uid)"
+        >View Message</el-button
+      >
+        </template>
+    </el-table-column>
+  </el-table>
+</div>
 </template>
 
 <script>
-import NavBar from "../../components/StudentNav.vue"
-import ChatSelection from "../../components/ChatSelection.vue"
+import { getAuth } from "firebase/auth";
+import firebaseApp from "../../main.js";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import NavBar from "../../components/StudentNav.vue";
 
 export default {
-    components : {
-        NavBar,
-        ChatSelection
+  components: {
+    NavBar,
+  },
+  data() {
+    return {
+      chatArr: [],
+    };
+  },
+
+  methods: {
+    goToChat(x) {
+      this.$router.push({ path: "/studentchat", query: { id: x } });
     },
-    methods : {
-        test() {
-            this.$router.push({name : 'Chat', params : {test : '123'}})
+  },
+
+  async beforeCreate() {
+    const id = getAuth().currentUser.uid;
+    const db = getFirestore(firebaseApp);
+    const docRef = doc(db, "User", id); //student
+    const docSnap = await getDoc(docRef);
+
+    const chats = docSnap.data().Chats;
+    for (var i = 0; i < chats.length; i++) {
+      const currChat = chats[i];
+      const docRef1 = doc(db, "User", currChat);
+      const docSnap1 = await getDoc(docRef1);
+
+      const name = docSnap1.data().CompanyName;
+      const jobsApplied = docSnap.data().JobsApplied;
+      var jbs = "";
+
+      for (i = 0; i < jobsApplied.length; i++) {
+        const curr = jobsApplied[i];
+        const arr = curr.split(" - ");
+        if (arr[0] == name) {            
+          jbs = jbs.concat(arr[1], ", ");
         }
+      }
+
+      jbs = jbs.slice(0, -2);
+
+      this.chatArr.push({
+        uid: currChat,
+        nameid: name,
+        jobsInSameCoy: jbs,
+      });
     }
-}
+  },
+};
 </script>
 
 <style>
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.button {
+  padding: 0;
+  min-height: auto;
+}
+
+.image {
+  width: 100%;
+  display: block;
+}
 </style>

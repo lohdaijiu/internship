@@ -1,0 +1,271 @@
+[33mcommit de15ae17b197fdc9a2f4fb912bf11f4a78615c5b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Wed Mar 30 10:59:45 2022 +0800
+
+    Show chat
+
+[33mcommit b9a5c19080f8e815d8d9d803f7f9388e36660d2e[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Wed Mar 30 09:31:29 2022 +0800
+
+    Added send message functionality
+
+[33mcommit 104e2e5d438aaa6bed82ea4e2becaaeb9087d934[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Tue Mar 29 22:15:38 2022 +0800
+
+    Added create chat and select chat functionality
+
+[33mcommit ab104c9eba13e79cd175d36c96626c632544016a[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Tue Mar 29 16:16:58 2022 +0800
+
+    fixed student viewlisting table no data bug
+
+[33mcommit b92e6fdbe60ccd30b4ccfcd1f9cabb42345f5efc[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Tue Mar 29 13:55:56 2022 +0800
+
+    CSS ViewListing
+
+[33mcommit 1705a239c9adc438f01013ccc0168462096f3d22[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Tue Mar 29 13:18:26 2022 +0800
+
+    studentViewListing input data
+
+[33mcommit 9686276c9dfb4a0f3831797255343050acd9f0a4[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Tue Mar 29 11:55:01 2022 +0800
+
+    Fixed Search Bug
+
+[33mcommit 00030b5ced17148ead74222b8a773fe257c23176[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Tue Mar 29 11:04:02 2022 +0800
+
+    Added delete job functionality
+
+[33mcommit 2bfba30c21e7c49ee86c52c8743019265b3b4eda[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Tue Mar 29 02:01:16 2022 +0800
+
+    Create blank page for resources
+
+[33mcommit 4c1bb8345cbe91257526f0248ee0000f029b4a3f[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Tue Mar 29 01:49:25 2022 +0800
+
+    UI for alerts
+
+[33mcommit 8899dbd4e713b2ac2e70a69dcac8545499efe90d[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Tue Mar 29 00:33:37 2022 +0800
+
+    Small UI changes
+
+[33mcommit 47dbb7a7d98b6f7269dbc120a2e224dbee706298[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Tue Mar 29 00:33:26 2022 +0800
+
+    Created UI for Employee Register
+
+[33mcommit 79f515a2281ddfc8dad3649475b7c3678d0f90da[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Mon Mar 28 23:52:39 2022 +0800
+
+    Fixed data duplication bug
+
+[33mcommit 5a43cc0b2c379824896acf88cf4e45961133399a[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Mon Mar 28 15:01:17 2022 +0800
+
+    Added apply job page functionalities (button css requires fixing)
+
+[33mcommit 99ddde0bc0492f069f3f654a60a89e9fe44e22bb[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Mon Mar 28 11:08:53 2022 +0800
+
+    StudentApplyJob page UI
+
+[33mcommit 977ec60733d270a63dedc1af328e9cd243db8c7d[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Mon Mar 28 00:11:23 2022 +0800
+
+    fixed table showing multiple rows
+
+[33mcommit 82749341cf71b0562de8a091d76e3f7cefe5e909[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sun Mar 27 23:57:15 2022 +0800
+
+    input job listing data into table and tabs
+
+[33mcommit abbf489ca23a3ae3fd32f6a8c77c9541ce29456a[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sun Mar 27 22:53:13 2022 +0800
+
+    retrieve data in listing page successfully
+
+[33mcommit 7532e92481119595ea6a3f9a4b5b411accbd6933[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Sun Mar 27 15:44:18 2022 +0800
+
+    Use query instead of params for view applicants
+
+[33mcommit 9c9991492a2300b5be82e5ea0f3cd94a65a3cfbc[m
+Merge: 67cc824 70f59cf
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Sun Mar 27 12:15:54 2022 +0800
+
+    Merge branch 'main' of https://github.com/lohdaijiu/internship
+
+[33mcommit 67cc824bfbe8b91353eed3a740cd5338a46c30f4[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Sun Mar 27 12:15:47 2022 +0800
+
+    Added functionality for employers to view student profiles
+
+[33mcommit 70f59cf1922905b9eef22649854a4185c9516030[m
+Author: yjlim2022 <yj_lim2020@outlook.com>
+Date:   Sun Mar 27 12:00:25 2022 +0800
+
+    changed writeup font
+
+[33mcommit 2bb07ffbb3f8d339842a207852b5e9acd9fc403e[m
+Author: yjlim2022 <yj_lim2020@outlook.com>
+Date:   Sun Mar 27 11:21:23 2022 +0800
+
+    Fixed refreshing bugs, cleaned up profile loading during render
+
+[33mcommit eb149ac85a24ecbf776badcbb9372e9933103dbf[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Sat Mar 26 23:53:43 2022 +0800
+
+    Debug Job Board.vue
+
+[33mcommit c1e0ce29853ce9332603a375d160daf6fb33b462[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Sat Mar 26 23:33:11 2022 +0800
+
+    Added Chat Selection Page and Debug View Job Listing
+
+[33mcommit 2e5161814c5af8b272bf3dcd216f02ca86a195cb[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sat Mar 26 22:30:29 2022 +0800
+
+    fixed chartkick dependencies error
+
+[33mcommit 5149dc10c0147f2c616153593c85e1d3bde97490[m
+Merge: 60f372c f9f586f
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sat Mar 26 22:22:18 2022 +0800
+
+    Merge branch 'main' of https://github.com/lohdaijiu/internship
+
+[33mcommit 60f372c5a3ec9b4ef2a475c76edc3346e70c952c[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sat Mar 26 22:17:14 2022 +0800
+
+    debugging pass of data between jobboard and listing page
+
+[33mcommit f9f586ffaa76c32859584df9272abc027d5bc351[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Sat Mar 26 22:14:14 2022 +0800
+
+    Added Brand Image to Student Register View
+
+[33mcommit b7fb28ddd02eff7ac2edf8840f13a8b09497ef2d[m
+Merge: fed4b6f 75b07c4
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Sat Mar 26 21:57:37 2022 +0800
+
+    Merge branch 'login-ui'
+
+[33mcommit 75b07c4ebdadeeb05faef74ef798abc4a28e5657[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Sat Mar 26 21:57:19 2022 +0800
+
+    Fixed bugs in filtering
+
+[33mcommit fed4b6f990ec070a1ef4485eb43c188f2c1ae101[m
+Merge: ee2a4ee 77c9373
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Sat Mar 26 21:43:15 2022 +0800
+
+    Fixed Merge conflicts
+
+[33mcommit 77c9373cf789147d8f153d3285bd6bbe622c301f[m
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Sat Mar 26 21:36:55 2022 +0800
+
+    Added functionality for company and duration filters
+
+[33mcommit dfaf3f656cf847e5a449bc4e1f60c758171617d5[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sat Mar 26 20:57:17 2022 +0800
+
+    jobboard get clicked row listing
+
+[33mcommit ee2a4eee39aaaceadfc51ced95512cee1cd43e1d[m
+Merge: 4de76b1 c2d9013
+Author: Roopa Niedu <bitznobel@gmail.com>
+Date:   Sat Mar 26 19:11:18 2022 +0800
+
+    Merge branch 'main' of https://github.com/lohdaijiu/internship
+
+[33mcommit c2d90132ce457a0ef7c9f626c878325142075b06[m
+Author: lohdaijiu <lohdaijiu@gmail.com>
+Date:   Sat Mar 26 16:15:15 2022 +0800
+
+    Handle student accept/reject offer logic
+
+[33mcommit b3fa31b4a3269ac6efa668f5b5a2a0697975cf3d[m
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sat Mar 26 14:17:53 2022 +0800
+
+    jobboard navigation to listing page
+
+[33mcommit 7aff76c6414a87159adebabf6af1fd2896e1843d[m
+Merge: 1322f45 08d22b5
+Author: lohdaijiu <77648872+lohdaijiu@users.noreply.github.com>
+Date:   Sat Mar 26 11:47:04 2022 +0800
+
+    Merge pull request #3 from kk-hue/main
+    
+    update the homepage with dummy data
+
+[33mcommit f898191f37a6c9fb5b63558e33921573a54d025d[m
+Merge: fcf5ac1 1322f45
+Author: zhangyu <xzy.zhangyu@gmail.com>
+Date:   Sat Mar 26 11:35:11 2022 +0800
+
+    Merge branch 'main' of https://github.com/lohdaijiu/internship
+
+[33mcommit 08d22b5750c51b8d3afa003d479dab2d43cfca2c[m
+Author: kk-hue <70795164+kk-hue@users.noreply.github.com>
+Date:   Sat Mar 26 11:34:51 2022 +0800
+
+    second commit
+
+[33mcommit f6a7ad297513cc2f0c7d1af4ccf59d5b119c326c[m
+Author: kk-hue <70795164+kk-hue@users.noreply.github.com>
+Date:   Sat Mar 26 11:27:57 2022 +0800
+
+    second commit
+
+[33mcommit a9a74b2eb15567d7e62875fe96bac3712af70a62[m
+Author: kk-hue <70795164+kk-hue@users.noreply.github.com>
+Date:   Sat Mar 26 11:15:35 2022 +0800
+
+    first commit
+
+[33mcommit 1322f4500dd5fc9070d1f79087cb5a1f4509ebb1[m
+Merge: d695764 afdc4c3
+Author: lohdaijiu <77648872+lohdaijiu@users.noreply.github.com>
+Date:   Fri Mar 25 23:35:44 2022 +0800
+
+    Merge pull request #2 from lohdaijiu/revert-1-main
+    
+    Revert "StudentHomepage(dummy data)"
+
+[33mcommit afdc4c30af8815a70d6
