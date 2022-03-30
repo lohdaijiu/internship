@@ -12,7 +12,6 @@
       row-key="id"
       default-expand-all
     >
-      <el-table-column width="180" />
       <el-table-column prop="title" label="Job" width="180" />
       <el-table-column prop="date" label="Date Applied" width="180" />
       <el-table-column prop="name" label="Applicant Name" width="180" />
@@ -24,10 +23,13 @@
           </template>
       </el-table-column>
       
-      <el-table-column prop="talk" label="Communicate" width="180" >
+      <el-table-column prop="talk" label="Communicate" width="360" >
           <template #default="scope">
             <el-button size="small" type="info" @click="createRoom(scope.row)" v-if="rendered(scope.row)"
               >Create Chat</el-button
+            >
+            <el-button size="small" type="info" @click="videoCall(scope.row)" v-if="rendered(scope.row)"
+              >Video Call</el-button
             >
             </template>
       </el-table-column>    
@@ -74,7 +76,7 @@
 import { getAuth } from "firebase/auth";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc, updateDoc, setDoc, arrayUnion, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
 import NavBar from "../../components/EmployerNav.vue"
 // import {
 //   Delete
@@ -112,7 +114,17 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },        
+        },
+        
+        async videoCall(x) {
+            const id = getAuth().currentUser.uid
+            const db = getFirestore(firebaseApp);
+            const docRef1 = doc(db, "User", id)
+            const docSnap = await getDoc(docRef1)
+            const employerName = docSnap.data().CompanyName
+            const room = employerName.concat(" - ", x.name)
+            this.$router.push({path: '/employervideo', query: { roomName: room }})
+        },
 
         async createRoom(x) {
             const id = getAuth().currentUser.uid
@@ -126,12 +138,13 @@ export default {
             } else {
                 const data = {created : true}
                 await setDoc(docRef4, data);
+                console.log("asdf")
                 const docRef5 = doc(db, "User", id)
                 const docRef6 = doc(db, "User", x.uid)
                 await updateDoc(docRef5, {Chats: arrayUnion(x.uid)})
                 await updateDoc(docRef6, {Chats: arrayUnion(id)})
-                this.$router.push('/employerchatselection')
-                await deleteDoc(doc(db, docName, "firstDoc"));
+                //this.$router.push('/employerchatselection')
+                //await deleteDoc(doc(db, docName, "firstDoc"));
 
             }
 

@@ -19,7 +19,6 @@
     "vue-chartkick": "^1.1.0",
     "vue-google-charts": "^0.3.3",
     "vue-router": "^4.0.14",
-    "vue-webrtc": "^3.0.0",
     "vuetify": "^2.6.4"
   },
   "devDependencies": {

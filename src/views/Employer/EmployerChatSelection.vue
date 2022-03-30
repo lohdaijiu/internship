@@ -49,6 +49,7 @@ export default {
   },
 
   async beforeCreate() {
+
     const id = getAuth().currentUser.uid;
     const db = getFirestore(firebaseApp);
     const docRef = doc(db, "User", id);
@@ -57,8 +58,10 @@ export default {
     const employerName = docSnap.data().CompanyName;
 
     const chats = docSnap.data().Chats;
+    
     for (var i = 0; i < chats.length; i++) {
       const currChat = chats[i];
+      console.log(i)
       const docRef1 = doc(db, "User", currChat);
       const docSnap1 = await getDoc(docRef1);
 
@@ -66,8 +69,8 @@ export default {
       const jobsApplied = docSnap1.data().JobsApplied;
       var jbs = "";
 
-      for (i = 0; i < jobsApplied.length; i++) {
-        const curr = jobsApplied[i];
+      for (var j = 0; j < jobsApplied.length; j++) {
+        const curr = jobsApplied[j];
         const arr = curr.split(" - ");
         if (arr[0] == employerName) {            
           jbs = jbs.concat(arr[1], ", ");
@@ -83,6 +86,7 @@ export default {
         jobsInSameCoy: jbs,
       });
     }
+    console.log(this.chatArr)
   },
 };
 </script>

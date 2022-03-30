@@ -21,6 +21,8 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
+
+
 const app = createApp(App);
 app.use(router);
 app.use(ElementPlus);

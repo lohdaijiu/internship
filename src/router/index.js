@@ -35,7 +35,11 @@ import EmployerChatSelection from '@/views/Employer/EmployerChatSelection.vue';
 import ViewProfile from '@/views/Employer/ViewProfile.vue';
 import StudentChat from '@/views/Student/StudentChat.vue';
 import EmployerChat from '@/views/Employer/EmployerChat.vue';
-import VideoCall from '@/views/test.vue'
+
+import VideoList from '@/views/Student/ViewVideoCallsList.vue';
+import StudentVideo from '@/views/Student/StudentVideo.vue';
+import EmployerVideo from '@/views/Employer/EmployerVideo.vue';
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -280,9 +284,19 @@ const router = createRouter({
       }
     },
     {
-      path: '/videocall',
-      name: 'VideoCall',
-      component: VideoCall
+      path: '/studentvideo',
+      name: 'StudentVideo',
+      component: StudentVideo
+    },
+    {
+      path: '/employervideo',
+      name: 'EmployerVideo',
+      component: EmployerVideo
+    },
+    {
+      path: '/videolist',
+      name: 'videolist',
+      component: VideoList
     }
   ]
 });
