@@ -3,14 +3,16 @@
     <section>
       <el-table
         :data="messages"
-        style="width: 30%; margin: auto; margin-top: 3%"
+        style="width: 50%; margin: auto; margin-top: 3%; "
         :row-class-name="tableRowClassName"
         align="center"
         margin-top="100px"
         size="large"
+        max-height="700"
+        ref = "table"
       >
-        <el-table-column prop="sender" width="250" />
-        <el-table-column prop="receiver" width="250" align="right" />
+        <el-table-column prop="sender" width="400" />
+        <el-table-column prop="receiver" width="400" align="right" />
       </el-table>
 
       <div>
@@ -18,9 +20,10 @@
           v-model="message"
           size="large"
           placeholder="Enter your message!"
-          style="width: 26%; margin-left:35%"
+          style="width: 26%; margin-left:35%; margin-top: 1%"
+          maxlength="50"
         />
-        <el-button size="large" type="info" @click="goToChat(scope.row.uid)"
+        <el-button size="large" type="info" @click="sendMessage"
           >Send</el-button
         >
       </div>
@@ -86,10 +89,6 @@ export default {
     };
   },
   methods: {
-    sentOrReceived(userUID) {
-      const id = getAuth().currentUser.uid;
-      return userUID === id ? "sent" : "received";
-    },
     async sendMessage() {
       const id = getAuth().currentUser.uid;
       const db = getFirestore(firebaseApp);
