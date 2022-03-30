@@ -31,9 +31,30 @@
       </div>
     </div>
   </div>
+  
   <div id="buttonContainer">
-    <button id="applyButton" @click="apply">Apply</button>
-    <button id="cancelButton" @click="goBack">Cancel</button>
+      <el-row
+        ><el-col :span="6"
+                  class="applycol"
+          ><el-button
+            id="applyButton"
+            @click="apply()"
+            color="#d4d381"
+            ><p class="btn-text">Submit</p></el-button
+          ></el-col
+        >
+        <!-- <el-col :span="2"><div class="grid-content" /></el-col> -->
+        <el-col :span="6"
+                class="cancelcol"
+          ><el-button
+            id="cancelButton"
+            @click="goBack()"
+            color="#9b948e"
+            ><p class="btn-text">Cancel</p></el-button
+          ></el-col
+        >
+      </el-row>    
+
   </div>
 </template>
 
@@ -190,99 +211,42 @@ h3 {
 }
 
 .box-card {
+  margin-top: 10px;
   width: 80%;
   height: 160px;
   font-family: "Poppins";
 }
 
-#buttonContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin-left: 73.5%;
-  max-width: 15%;
-  padding-right: 3%;
-  min-height: 200px;
+.applycol {
+    margin-left: 33%;
+    width: 15%;
+    /* padding-right: 2%; */
+
+}
+.cancelcol {
+    width: 15%;
+    /* padding-left: 2%; */
+    /* min-height: 200px; */
+    /* float: right; */
+    /* justify-content: flex-end; */
+
 }
 
-span:hover {
-  background-color: #ccc;
-}
-
-span {
-  border-radius: 15px;
-  min-width: 0.5%;
-  text-align: center;
-}
-
-#applyButton {
-  border-radius: 10px;
-
-  padding-left: 50%;
-  padding-right: 50%;
-  padding-top: 24%;
-  padding-bottom: 24%;
-  text-align: center;
-
-  font-weight: bold;
-  background-color: #d4d381;
-  border-style: solid;
-  border-color: #96c67f;
-}
-
-#cancelButton {
-  border-radius: 10px;
-  margin-left: 30%;
-
-  padding-left: 40%;
-  padding-right: 40%;
-  padding-top: 20%;
-  padding-bottom: 20%;
-  text-align: center;
-  font-weight: bold;
-  background-color: #d4d381;
-  border-style: solid;
-  border-color: #96c67f;
-}
-#applyButton:hover {
-  background-color: #50e655;
-}
-#applyButton:active {
-  transform: translateY(1px);
-}
-
-#cancelButton:hover {
-  background-color: #50e655;
-}
-#cancelButton:active {
-  transform: translateY(1px);
-}
-input {
+.writeup {
   border: #ccc;
   background-color: #f8f8f8;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: sans-serif;
   font-weight: 600;
   color: #1f1d2a;
-  font-size: 16px;
+  font-size: 15px;
   border-radius: 15px;
-  max-width: 30%;
+  /* max-width: 30%; */
 }
 
-/* .writeup {
-    width: 100%;
-    height: 150px;
-    padding: 12px 20px;
-    box-sizing:border-box;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #f8f8f8;
-    font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    color: #1f1d2a;
-    font-size: 16px;
-    resize: none;
-} */
+#buttonContainer {
+  margin-bottom: 40px;
+}
 
 #contentContainer {
   display: flex;
@@ -301,7 +265,7 @@ input {
   align-items: flex-start;
   flex-direction: row;
   width: 80%;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   margin-bottom: 1%;
   margin-left: 9.5%;
   margin-right: 5%;

@@ -99,6 +99,7 @@ export default {
                     const docRef1 = doc(db, "Application", jobArr[i]);
                     const document1 = await getDoc(docRef1);
                     const jobInfo = document1.data();
+                    // console.log(jobInfo)
                     tableData.push({
                         companyname : jobInfo.CompanyName,
                         jobpos : jobInfo.Position,
@@ -121,5 +122,8 @@ export default {
 </script>
 
 <style>
-
+h1 {
+    font-family: "Poppins";
+    text-align: center;
+}
 </style>
