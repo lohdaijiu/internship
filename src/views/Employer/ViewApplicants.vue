@@ -59,6 +59,7 @@
               size="small"
               type="success"
               @click="viewListing(scope.row)"
+              v-if="canView(scope.row)"
               >View Job</el-button
             >
           </template>
@@ -202,6 +203,13 @@ export default {
         },
         deleted(x) {
             if (x.date == null && x.deletion == false) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        canView(x) {
+            if (x.date == null) {
                 return true;
             } else {
                 return false;
