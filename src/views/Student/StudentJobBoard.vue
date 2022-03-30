@@ -107,7 +107,7 @@
 
   <el-row class="table-container">
     <el-col :span="2"></el-col>
-    
+
     <el-col :span="20">
       <el-table
         ref="tableRef"
@@ -125,24 +125,12 @@
         <el-table-column prop="duration" label="Work Duration" />
         <el-table-column prop="yos" label="Year of Study"> </el-table-column>
         <el-table-column prop="range" label="Date Range" />
-
         <el-table-column>
           <template #default="scope">
-            <el-button
-              size="default"
-              type="success"
-              @click="applyJob(scope.row)"
+            <el-button size="medium" type="success" @click="applyJob(scope.row)"
               >Apply</el-button
             >
-          </template>
-        </el-table-column>
-
-        <el-table-column>
-          <template #default="scope">
-            <el-button
-              size="default"
-              type="success"
-              @click="viewListing(scope.row)"
+            <el-button size="medium" @click="viewListing(scope.row)"
               >Details</el-button
             >
           </template>
@@ -257,7 +245,7 @@ export default {
       companyValue: ref([]),
       options1,
       loading,
-      multipleSelection : ref([])
+      multipleSelection: ref([]),
     };
   },
 
@@ -391,10 +379,9 @@ export default {
 
     handleSelectionChange(x) {
       this.multipleSelection.value = x;
-      console.log(this.multipleSelection)
-    }
+      console.log(this.multipleSelection);
+    },
   },
-    
 
   async beforeMount() {
     async function getData() {
