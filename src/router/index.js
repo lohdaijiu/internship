@@ -35,7 +35,7 @@ import EmployerChatSelection from '@/views/Employer/EmployerChatSelection.vue';
 import ViewProfile from '@/views/Employer/ViewProfile.vue';
 import StudentChat from '@/views/Student/StudentChat.vue';
 import EmployerChat from '@/views/Employer/EmployerChat.vue';
-import VideoCall from '@/views/VideoCall.vue'
+import VideoCall from '@/views/test.vue'
 
 const router = createRouter({
   history: createWebHistory(),
