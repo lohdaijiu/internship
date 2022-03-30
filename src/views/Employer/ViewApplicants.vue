@@ -60,7 +60,7 @@
 import { getAuth } from "firebase/auth";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc, updateDoc, setDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc, arrayUnion, deleteDoc } from "firebase/firestore";
 import NavBar from "../../components/EmployerNav.vue"
 
 var tableData = []
@@ -95,6 +95,8 @@ export default {
                 await updateDoc(docRef5, {Chats: arrayUnion(x.uid)})
                 await updateDoc(docRef6, {Chats: arrayUnion(id)})
                 this.$router.push('/employerchatselection')
+                await deleteDoc(doc(db, docName, "firstDoc"));
+
             }
 
             //create collection for chats
