@@ -104,9 +104,9 @@ export default {
                 const docName = employerName.concat(" - ", x.title)
 
                 this.$router.push({
-                path: "/viewpostedlisting",
+                    path: "/viewpostedlisting",
 
-                query: { jobId: docName },
+                    query: { jobId: docName },
                 });
             } catch (error) {
                 console.log(error);

@@ -6,7 +6,6 @@
     <el-col :span="8">
 
         <div id="general_info">
-                <h2>{{company_name}}</h2>
                 <h3> {{job_title}}</h3>
         </div>
     </el-col>
@@ -19,7 +18,7 @@
         ><el-button
             id="editbtn"
             @click="editJob()"
-            color="#d4d381"
+            color="#A5A6F6"
             type="primary"
             ><p class="btn-text">Edit</p></el-button
         ></el-col
@@ -44,7 +43,7 @@
         <el-table
             ref="tableRef"
             :data="tableData"
-            height="100"
+            height="120"
             style="width: 100%"
             align="center"
         >
@@ -61,7 +60,7 @@
 
     <!-- Full Description -->
     <div id="details"
-        align="left">
+        >
         <div class="tabbable"
             align="left">
             <!-- Tabs -->
@@ -85,14 +84,13 @@
 
 <script>
 import EmployerNav from '../../components/EmployerNav.vue'
+import firebaseApp from "../../main.js";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 
-// dummy data
-const tableData = [{
-    yr: '2',
-    duration: '3 months',
-    loc: 'remote',
-    pay: "20000"
-}]
+var listingName = "";
+var listingData = [];
+var tableData = [];
+var onlyListing = [];
 
 export default {
     name: 'EmployerViewListing',
@@ -103,36 +101,96 @@ export default {
 
     data() {
         return {
-            // data to get from firebase
+            listingName,
+            listingData,
+            onlyListing,
             tableData,
-            img: '../../assets/',
-            job_title: "Software Engineer",
-            job_descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…",
-            tech_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu…TECH COMPETENCY",
-            soft_compet: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ir\
-                        ure dolor in reprehende rit in voluptate velit esse cillum dolore eu fu… SOFT COMPETENCY",
-            location: "location"
+            job_title: "",
+            job_descr: "",
+            tech_compet: "",
+            location: "",
         }
     },
 
     methods: {
-        editListing() {
-            // direct to create/edit listing page
-            this.$router.push({ path: "/EditListing" });
+        editJob() {
+            // TODO direct to edit listing page
+            this.$router.push({ path: "/editjoblisting" });
 
         },
-        deleteListing() {
-            return;
-            // remove listing from database
 
-        }
+        async deleteJob() {
+            const db = getFirestore(firebaseApp);
+            const docName = this.$route.query.jobId
+
+            await updateDoc(doc(db, "Job", docName), {
+                Deleted : true
+            });
+
+
+        },
         
     },
+
+    async created() {
+
+        console.log('Query: ', this.$route.query.jobId);
+        listingName = this.$route.query.jobId;
+
+        listingData = [];
+        const db = getFirestore(firebaseApp);
+
+        const docName = listingName
+        const docRef = doc(db, "Job", docName);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log("exists")
+            try {
+                listingData.push({
+                    jobpos: docSnap.data().InternshipTitle,
+                    postdate: docSnap.data().CreatedAt.toDate().toString().slice(4, 15),
+                    duration: docSnap.data().Duration,
+                    yos: docSnap.data().Year,
+                    worklocation: docSnap.data().Type,
+                    range: docSnap
+                    .data()
+                    .DateRange[0].toDate()
+                    .toString()
+                    .slice(4, 15)
+                    .concat(
+                        " - ",
+                        docSnap.data().DateRange[1].toDate().toString().slice(4, 15)
+                    ),
+                    compensation: docSnap.data().Renumeration,
+                    description: docSnap.data().JobDescription,
+                    competency: docSnap.data().PreferredCompetencies
+                    
+                })
+
+                tableData = [];
+
+                onlyListing = Object.entries(listingData[0]).map((e) => ( { [e[0]]: e[1] } ));
+                console.log(onlyListing);
+                this.tableData.push({
+                    "yos": onlyListing[3]["yos"], 
+                    "duration": onlyListing[2]["duration"],
+                    "compensation": onlyListing[6]["compensation"],
+                    "postdate": onlyListing[1]["postdate"],
+                    "range": onlyListing[5]["range"]
+                })
+                
+            } catch (error) {
+                console.log(error)
+            }  
+        }   
+        
+        this.job_descr = listingData[0]["description"]
+        this.job_title = listingData[0]["jobpos"]
+        this.tech_compet = listingData[0]["competency"]
+        this.location = listingData[0]["worklocation"]
+
+    }, 
 }
 
     
@@ -145,9 +203,9 @@ export default {
 
     }
 
-    #table-container {
-        margin-top: 40px;
-        margin-bottom: 40px;
+    #table-container, #details {
+        margin: 40px 20px 40px 20px;
+
     }
 
     .tabbable {
@@ -180,6 +238,11 @@ export default {
         font-weight: bold;
         border-style: solid;
         width: 75%;
+    }
+
+    .el-table__header tr {
+        color: #A5A6F6;
+
     }
 /* 
     #editbtn:hover {

@@ -94,7 +94,6 @@ export default {
             job_title: "",
             job_descr: "",
             tech_compet: "",
-            soft_compet: "",
             location: "",
             company_name: "",
     
@@ -115,7 +114,7 @@ export default {
 
     async created() {
 
-        console.log('Query: ', this.$route.query.jobId);
+        // console.log('Query: ', this.$route.query.jobId);
         listingName = this.$route.query.jobId;
 
         listingData = [];
