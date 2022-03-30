@@ -44,12 +44,25 @@
       <el-table-column prop="status" label="Status" width="180"/>
       <el-table-column width="180">
           <template #default="scope">
-        <el-button size="small" type="danger" @click="deleteJob(scope.row)" v-if="deleted(scope.row)"
+            <el-button size="small" type="danger" @click="deleteJob(scope.row)" v-if="deleted(scope.row)"
               >Delete</el-button
             >
+            <!-- <el-button type="danger" icon="Delete" circle @click="deleteJob(scope.row)" v-if="deleted(scope.row)"/> -->
+
             <small v-if="alreadyDeleted(scope.row)"> Deleted </small>
             </template>
         </el-table-column>
+
+        <el-table-column width="180">
+          <template #default="scope">
+            <el-button
+              size="small"
+              type="success"
+              @click="viewListing(scope.row)"
+              >View Job</el-button
+            >
+          </template>
+        </el-table-column>        
     
     </el-table>
     </el-row>
@@ -62,6 +75,9 @@ import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc, updateDoc, setDoc, arrayUnion, deleteDoc } from "firebase/firestore";
 import NavBar from "../../components/EmployerNav.vue"
+// import {
+//   Delete
+// } from '@element-plus/icons-vue'
 
 var tableData = []
 
@@ -74,9 +90,28 @@ export default {
         }
     },
     components : {
-        NavBar
+        NavBar,
     },
     methods :{
+
+        async viewListing(x) {
+            try {
+                const id = getAuth().currentUser.uid
+                const db = getFirestore(firebaseApp);
+                const docRef = doc(db, "User", id);
+                const docSnap = await getDoc(docRef);
+                const employerName = docSnap.data().CompanyName;
+                const docName = employerName.concat(" - ", x.title)
+
+                this.$router.push({
+                path: "/viewpostedlisting",
+
+                query: { jobId: docName },
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },        
 
         async createRoom(x) {
             const id = getAuth().currentUser.uid
