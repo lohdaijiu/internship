@@ -4,7 +4,7 @@
         <div id = 'introductionContainer'>
             <div id ='picture'>
                 <br>
-                <img :src="image">
+                <img :src="image" id = 'avatar'>
                 <br>
                 <h2>{{companyName}}</h2>
             </div>
@@ -76,6 +76,14 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+
+#avatar {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+
+}
 
 #resumeLink {
     text-decoration: none;

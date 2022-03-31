@@ -4,7 +4,7 @@
         <div id = 'introductionContainer'>
             <div id ='picture'>
                 <br>
-                <img :src="image">
+                <img :src="image" id ='avatar'>
                 <br>
                 <h2>{{name}}</h2>
             </div>
@@ -92,6 +92,12 @@ export default {
     font-weight: 300;
     color: #1f1d2a;
     font-size: 18px;
+}
+
+#avatar {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
 }
 
 a:hover {
