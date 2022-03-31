@@ -1,5 +1,7 @@
 <template>
   <StudentNav />
+  <br />
+  <h1>Resources</h1>
   <el-container class="container">
     <el-main class="container-main">
       <!-- <h1>resources</h1> -->
@@ -52,27 +54,25 @@
                 <span class="helper"></span>
                 <el-image
                   class="card-image"
-                  :src="require('../../assets/' + url)"
+                  :src="require('../../assets/' + cover_url)"
                   :fit="fit"
                 />
               </el-col>
 
               <el-col :span="16" class="card-right-container">
-                <h3 class="card-title">
-                  How to stand out in a competitive job market
-                </h3>
+                <h3 class="card-title">Level up your cover letter</h3>
                 <p class="card-text">
-                  The VMock SMART resume platform will analyze your Resume from
-                  EVERY possible angle and help you arrive at a perfect version
-                  of yourself!
+                  A winning cover letter, along with your resume, can boost your
+                  chances of landing an interview for your dream job.
                 </p>
                 <p class="card-text">
-                  VMock's algorithm helps you to create an impressive resume
-                  that can wow the ai resume screening softwares used.
+                  When skilfully crafted, it showcases your personality and
+                  explains how and why you are a great fit for the job –
+                  something a resume alone might not do.
                 </p>
                 <el-link
                   class="card-link"
-                  href="https://www.vmock.com/"
+                  href="https://nus.edu.sg/cfg/students/career-resources/cover-letter"
                   target="_blank"
                   type="primary"
                   >Find out more</el-link
@@ -92,27 +92,27 @@
                 <span class="helper"></span>
                 <el-image
                   class="card-image"
-                  :src="require('../../assets/' + url)"
+                  :src="require('../../assets/' + interview_url)"
                   :fit="fit"
                 />
               </el-col>
 
               <el-col :span="16" class="card-right-container">
-                <h3 class="card-title">
-                  How to stand out in a competitive job market
-                </h3>
+                <h3 class="card-title">Interviews are the key to success</h3>
                 <p class="card-text">
-                  The VMock SMART resume platform will analyze your Resume from
-                  EVERY possible angle and help you arrive at a perfect version
-                  of yourself!
+                  A job interview is an opportunity for the employer to evaluate
+                  your skills, personal motivations, interest in their work and
+                  your fit for their organisation. At the same time, it is an
+                  opportunity for you to determine if the job aligns with your
+                  interest and goals
                 </p>
                 <p class="card-text">
-                  VMock's algorithm helps you to create an impressive resume
-                  that can wow the ai resume screening softwares used.
+                  To showcase the best version of yourself, it is important to
+                  go into an interview well prepared.
                 </p>
                 <el-link
                   class="card-link"
-                  href="https://www.vmock.com/"
+                  href="https://nus.edu.sg/cfg/students/career-resources/interview/ace-your-job-interviews"
                   target="_blank"
                   type="primary"
                   >Find out more</el-link
@@ -143,6 +143,8 @@ export default {
       fit: "cover",
       fill,
       url: "vmock-logo.jpg",
+      cover_url: "cover-letter.svg",
+      interview_url: "interview.svg",
     };
   },
 };
@@ -150,13 +152,17 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap");
+h1 {
+  font-family: "Poppins";
+  text-align: center;
+}
 .card-link {
   font-family: "Poppins", sans-serif;
 
   font-size: 12px;
 }
 .top-row {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .helper {
   display: inline-block;
