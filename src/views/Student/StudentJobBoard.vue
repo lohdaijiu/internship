@@ -13,8 +13,8 @@
     </i>
   </div> -->
   <el-row class="search-container">
-    <el-col :span="2"></el-col>
-    <el-col :span="14">
+    <el-col :span="3"></el-col>
+    <el-col :span="12">
       <el-input
         v-model="keyword"
         size="large"
@@ -24,7 +24,7 @@
     </el-col>
     <el-col :span="6" class="search-btn-container">
       <i class="searchicon">
-        <el-button type="primary" size="large" @click="searchResult()">
+        <el-button type="success" size="large" @click="searchResult()">
           <el-icon style="vertical-align: middle">
             <Search />
           </el-icon>
@@ -32,10 +32,10 @@
         </el-button>
       </i>
     </el-col>
-    <el-col :span="2"></el-col>
+    <el-col :span="3"></el-col>
   </el-row>
   <el-row>
-    <el-col :span="2"></el-col>
+    <el-col :span="3"></el-col>
     <el-col :span="3" id="companySelect">
       <el-select
         v-model="companyValue"
@@ -102,13 +102,13 @@
         format="DD/MM/YYYY"
       />
     </el-col>
-    <el-col :span="10"></el-col>
+    <el-col :span="9"></el-col>
   </el-row>
 
   <el-row class="table-container">
-    <el-col :span="2"></el-col>
+    <el-col :span="3"></el-col>
 
-    <el-col :span="20">
+    <el-col :span="18">
       <el-table
         ref="tableRef"
         :data="queriedData"
@@ -116,28 +116,32 @@
         style="width: 100%"
         max-height="550"
         @selection-change="handleSelectionChange()"
+        :table-layout="auto"
+        :header-row-style="headerStyle"
+        :row-style="dataStyle"
+        :header-cell-style="headerCellStyle"
       >
         <!-- @row-click="viewListing(row)" -->
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="companyname" label="Company Name" width="180" />
+        <el-table-column prop="companyname" label="Company Name" width="150" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
         <el-table-column prop="postdate" label="Date Posted" sortable />
-        <el-table-column prop="duration" label="Work Duration" />
+        <el-table-column prop="duration" label="Duration" />
         <el-table-column prop="yos" label="Year of Study"> </el-table-column>
         <el-table-column prop="range" label="Date Range" />
-        <el-table-column>
+        <el-table-column fixed="right">
           <template #default="scope">
-            <el-button size="medium" type="success" @click="applyJob(scope.row)"
+            <el-button size="small" type="success" @click="applyJob(scope.row)"
               >Apply</el-button
             >
-            <el-button size="medium" @click="viewListing(scope.row)"
+            <el-button size="small" @click="viewListing(scope.row)"
               >Details</el-button
             >
           </template>
         </el-table-column>
       </el-table>
     </el-col>
-    <el-col :span="2"></el-col>
+    <el-col :span="3"></el-col>
   </el-row>
 
   <div v-for="(f, index) of searchResult" :key="index">
@@ -246,6 +250,22 @@ export default {
       options1,
       loading,
       multipleSelection: ref([]),
+      headerStyle: {
+        color: "#808080",
+        "font-family": "Poppins",
+        "font-weight": 500,
+        "font-size": "14px",
+      },
+      headerCellStyle: {
+        "background-color": "#96C67F",
+        color: "#1F1D2A",
+        "margin-bottom": "20px ",
+      },
+      dataStyle: {
+        "font-family": "Poppins",
+        "font-weight": 300,
+        "font-size": "13px",
+      },
     };
   },
 
@@ -480,6 +500,18 @@ export default {
 <style>
 .el-table_1_column_7 .el-table__cell {
   text-align: center;
+}
+.el-table .sort-caret.ascending {
+  border-bottom-color: #fafafa !important;
+}
+.el-table .sort-caret.descending {
+  border-top-color: #fafafa !important;
+}
+.el-table .descending .sort-caret.descending {
+  border-top-color: #1f1d2a !important;
+}
+.el-table .ascending .sort-caret.ascending {
+  border-bottom-color: #1f1d2a !important;
 }
 </style>
 
