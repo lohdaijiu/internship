@@ -1,6 +1,7 @@
 <template>
   <StudentNav />
-
+  <br />
+  <h1>Find Internships</h1>
   <!-- <div class="searchbar" style="width: 100%">
     <input type="text" placeholder="Search for an internship..." v-model="searchQuery"/>
     <i class="searchicon">
@@ -20,6 +21,7 @@
         size="large"
         placeholder="Search for an internship..."
         :suffix-icon="Search"
+        clearable
       />
     </el-col>
     <el-col :span="6" class="search-btn-container">
@@ -40,6 +42,8 @@
       <el-select
         v-model="companyValue"
         multiple
+        collapse-tags
+        collapse-tags-tooltip
         filterable
         remote
         reserve-keyword
@@ -123,13 +127,19 @@
       >
         <!-- @row-click="viewListing(row)" -->
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="companyname" label="Company Name" width="150" />
+        <el-table-column prop="companyname" label="Company Name" width="180" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
-        <el-table-column prop="postdate" label="Date Posted" sortable />
-        <el-table-column prop="duration" label="Duration" />
-        <el-table-column prop="yos" label="Year of Study"> </el-table-column>
-        <el-table-column prop="range" label="Date Range" />
-        <el-table-column fixed="right">
+        <el-table-column
+          prop="postdate"
+          label="Date Posted"
+          sortable
+          width="150"
+        />
+        <el-table-column prop="duration" label="Duration" width="100" />
+        <el-table-column prop="yos" label="Year of Study" min-width="190">
+        </el-table-column>
+        <el-table-column prop="range" label="Date Range" min-width="200" />
+        <el-table-column fixed="right" width="190">
           <template #default="scope">
             <el-button size="small" type="success" @click="applyJob(scope.row)"
               >Apply</el-button
@@ -495,6 +505,10 @@ export default {
 }
 #companySelect .el-select__tags {
   top: 40% !important;
+}
+h1 {
+  font-family: "Poppins";
+  text-align: center;
 }
 </style>
 <style>
