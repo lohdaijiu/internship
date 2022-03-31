@@ -196,7 +196,7 @@ export default {
     
 </script>
 
-<style>
+<style scoped>
     #general_info, #details, #table-container {
         font-family: "Poppins";
         text-align: center;
@@ -240,7 +240,7 @@ export default {
         width: 75%;
     }
 
-    .el-table__header tr {
+    >>> .el-table__header tr {
         color: #A5A6F6;
 
     }
