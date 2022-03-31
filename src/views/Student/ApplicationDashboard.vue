@@ -5,8 +5,8 @@
     <br />
 
     <el-row>
-      <el-col :span="2"></el-col>
-      <el-col :span="20">
+      <el-col :span="6"></el-col>
+      <el-col :span="12">
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -151,7 +151,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 h1 {
   font-family: "Poppins";
   text-align: center;

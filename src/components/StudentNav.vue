@@ -89,4 +89,10 @@ export default {
 .routerlink:hover {
   border-bottom: 2px solid #96c67f;
 }
+
+.router-link-active {
+    color: #96c67f !important;
+    font-weight: 500;
+  
+}
 </style>

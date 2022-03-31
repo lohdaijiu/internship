@@ -4,7 +4,7 @@
         <div id = 'introductionContainer'>
             <div id ='picture'>
                 <br>
-                <img :src="image">
+                <img :src="image" id ='avatar'>
                 <br>
                 <h2>{{name}}</h2>
             </div>
@@ -94,6 +94,12 @@ export default {
     font-size: 18px;
 }
 
+#avatar {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+}
+
 a:hover {
     
     border-bottom: solid 1px #1f1d2a;
@@ -127,10 +133,12 @@ h2{
     color: #1f1d2a;
     font-size: 20px;
 }
+
 #about {
     display: flex;
     flex: 1 1 auto;
     padding-left: 2%;
+    padding-right: 3%;
     justify-content: left;
     align-items: left;
     text-align: left;
@@ -139,7 +147,6 @@ h2{
     font-weight: 600;
     color: #1f1d2a;
     font-size: 22px;
-
 }
 
 

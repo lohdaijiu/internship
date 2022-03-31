@@ -188,7 +188,7 @@ export default {
     
 </script>
 
-<style>
+<style scoped>
 
     #general_info {
         font-family: "Poppins";
@@ -250,6 +250,11 @@ export default {
 
     #applybtn:hover {
         background-color: #D4D381;
+
+    }
+
+    >>> .el-table__header tr {
+        color: #96C67F;
 
     }
 

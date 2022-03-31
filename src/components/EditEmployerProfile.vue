@@ -4,7 +4,7 @@
         <div id = 'uploadContainer'>
             <div id ='picture'>
                 <h2>My Profile</h2>
-                <img :src='image'>
+                <img :src='image' id = 'avatar'>
                 <br>
                 <button id = 'uploadButton' @click="onPickFile">Upload Image</button>
                 <input type="file" ref= "fileInput" style="display: none" accept="image/*" @change="onFilePicked">
@@ -177,6 +177,14 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+
+#avatar {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    margin-left: 8%;
+}
 
 h2 {
     font-family: "Poppins";

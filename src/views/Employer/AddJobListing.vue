@@ -1,20 +1,29 @@
 
 <template>
   <NavBar/>
+  <h2>Create an Internship Listing</h2>
 
-  <br><br>
 
-  <el-form :model="form" label-width="120px" >
+  <div id="mainContainer">
+
+  <el-form :model="form" label-position="top">
     <el-form-item label="Internship Title">
-      <el-input v-model="form.internshipTitle" />
+      <el-input v-model="form.internshipTitle" 
+      :autosize="{ minRows: 2, maxRows: 4}"
+        type="textarea"
+/>
     </el-form-item>
 
     <el-form-item label="Job Description">
-      <el-input v-model="form.jobDesc" type="textarea" />
+      <el-input v-model="form.jobDesc"
+      :autosize="{ minRows: 3, maxRows: 6}"
+        type="textarea"/>
     </el-form-item>
 
     <el-form-item label="Preferred Competencies">
-      <el-input v-model="form.preferredCom" type="textarea" />
+      <el-input v-model="form.preferredCom" 
+            :autosize="{ minRows: 3, maxRows: 6}"
+        type="textarea"/>
     </el-form-item>
 
     <el-form-item label="Undergraduate Year" >
@@ -53,15 +62,33 @@
       </el-radio-group>
     </el-form-item>
 
-    <el-form-item label="Renumeration" >
+    <el-form-item label="Renumeration" size="large">
       <el-input v-model="form.renum"/>
     </el-form-item>
 
-    <el-form-item>
-      <el-button type="primary" @click="addJob()">Create</el-button>
-    </el-form-item>
-
   </el-form>
+
+  </div>
+
+    
+  <div id="buttonContainer">        
+    <el-row>
+      <el-col :span="10"></el-col>
+      <el-col :span="4">
+        <el-button
+          @click="addJob()"
+          class="add-btn"
+          size="large"
+          color="#A5A6F6"
+          ><p class="btn-text">Create</p>
+        </el-button
+        >
+      </el-col>
+      <el-col :span="10"></el-col> 
+    </el-row>
+
+  </div>
+
 </template>
 
 <script>
@@ -113,21 +140,6 @@ export default {
   },
 
   methods: {
-
-    // async getCompanyName() {
-    //   const db = getFirestore(firebaseApp);
-    //   if (getAuth().currentUser == null) {
-    //     return null;
-    //   }
-    //   const docRef = doc(db, "User", getAuth().currentUser.uid);
-    //   const docSnap = await getDoc(docRef);
-
-    //   try {
-    //     return docSnap.data().CompanyName;
-    //   } catch {
-    //     console.log("error")
-    //   }  
-    // },
 
     async addJob() {
 
@@ -189,70 +201,67 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
+h2 {
+  font-family: "Poppins";
+  text-align: center;
+  font-weight: 500;
+  color: #1f1d2a;
+  margin-top: 2%;
+  font-size: 25px;
+}
+
+#mainContainer {
+  width: 80%;
+  margin: 2% 10% 2% 10%;
+  align-self: center;
+
+  padding-top: 2%;
+  /* height: max-content; */
+  min-height: 500px;
+  border-radius: 30px;
+  background-color: white;
+  /* position: relative; */
+  display: flex;
+  justify-content: center; /* align horizontal */
+}
+
+#buttonContainer {
+  margin-bottom: 40px;
+}
+
 .btn-text {
   color: #1f1d2a;
   font-weight: 600;
 }
-.login-btns {
+.add-btn {
   width: 100%;
-  border: 1px solid black;
+  border: 1px #99a9bf;
 }
-.register-btns {
-  margin-top: 20px;
-  width: 100%;
+
+.el-form {
+  /* position: relative; */
+
+  align-items: center;
+  /* color: #A5A6F6; */
+  size: "large";
+  width: 90%;
 }
-.header-row {
-  margin-top: 20px;
+
+.el-form .el-form-item {
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    width: 90%;
+    text-decoration-color: #A5A6F6;
+    size: "large";
 }
-.header-brand {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  color: #1f1d2a;
-  margin: 0;
-  font-size: 28px;
-  text-align: center;
+
+>>> .el-input__inner {
+    /* line-height: 200px; */
+    /* height: 200px; */
+    /* padding: 24px 30px 24px 20px; */
+
+
 }
-.el-header {
-  background-color: #96c67f;
-  height: 80px;
-}
-.el-row {
-  /* margin-top: 20px; */
-}
-.el-row:last-child {
-  margin-bottom: 0;
-}
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-/* .grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-} */
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  background-color: #fafafa;
-}
-</style>
-<style>
-.input-labels .el-form-item__label {
-  font-family: "Poppins", sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-}
+
 </style>

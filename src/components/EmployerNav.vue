@@ -77,4 +77,9 @@ export default {
 .routerlink:hover {
     border-bottom: 2px solid #A5A6F6;
 }
+
+.router-link-active {
+    color: #A5A6F6 !important;
+    font-weight: 500;
+}
 </style>
