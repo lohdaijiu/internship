@@ -18,7 +18,7 @@
           <el-table-column prop="companyname" label="Company" width="180" />
           <el-table-column prop="jobpos" label="Job Position" width="180" />
           <el-table-column prop="date" label="Date Applied" />
-          <el-table-column prop="progress" label="Progress" />
+          <el-table-column prop="status" label="Progress" />
           <el-table-column prop="status" label="Accept/Reject Offer">
             <template #default="scope">
               <el-button

@@ -13,7 +13,7 @@
 
 <script>
 import firebaseApp from "../../main.js";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, setDoc, doc, updateDoc, arrayUnion, onSnapshot, query, collection, where } from "firebase/firestore";
 
 export default {
   name: "Webrtc",
@@ -37,7 +37,7 @@ export default {
   },
   async created() {
     this.db = getFirestore(firebaseApp);
-    await this.startWebcam();
+    //await this.startWebcam();
     await this.createCall();
   },
   mounted() {
@@ -76,15 +76,17 @@ export default {
       this.webcamVideo.srcObject = this.localStream;
       this.remoteVideo.srcObject = this.remoteStream;
     },
+
     async createCall() {
       // Firestoreのcallsコレクションにドキュメントを新規追加
-      const callDoc = this.db.collection("calls").doc();
-      const offerCandidates = callDoc.collection("offerCandidates");
-      const answerCandidates = callDoc.collection("answerCandidates");
-
+      const callDoc = doc(this.db, "calls", this.$route.query.roomName);
+      await setDoc(callDoc, {offerCandidates : [], answerCandidates : []})
+      // const offerCandidates = addDoc(callDoc, collection(this.db, "offerCandidates"));
+      // const answerCandidates = callDoc.collection("answerCandidates");
+      // console.log("Hello")
       // Candidateを取得
       this.pc.onicecandidate = (event) => {
-        event.candidate && offerCandidates.add(event.candidate.toJSON());
+        event.candidate && updateDoc(callDoc, {offerCandidates : arrayUnion(event.candidate.toJSON()), changeToOffer : true});
       };
 
       // offerの作成
@@ -97,22 +99,23 @@ export default {
       };
 
       // Firebaseに追加
-      await callDoc.set({ offer });
-      await callDoc.update({ name: this.$route.query.name });
+      await updateDoc(callDoc, offer)
+      await updateDoc(callDoc, {name : this.$route.query.roomName})
 
       // Remote answerを読み込み
-      callDoc.onSnapshot((snapshot) => {
+      const q = query(collection(this.db, "calls"))
+      onSnapshot(q, (snapshot) => {
         const data = snapshot.data();
         if (!this.pc.currentRemoteDescription && data?.answer) {
           const answerDescription = new RTCSessionDescription(data.answer);
           this.pc.setRemoteDescription(answerDescription);
         }
       });
-
+      const q1 = query(collection(this.db, "calls"), where ("name", "==", this.$route.query.roomName))
       // answerに要素が追加された時読み込みFirebaseに追加
-      answerCandidates.onSnapshot((snapshot) => {
+      onSnapshot(q1, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
+          if (change.type === "added" && change.doc.data() != null) {
             const candidate = new RTCIceCandidate(change.doc.data());
             this.pc.addIceCandidate(candidate);
           }

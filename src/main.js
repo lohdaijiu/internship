@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import VueChartkick from 'vue-chartkick';
 import 'chartkick/chart.js';
+import * as io from 'socket.io-client'
 // import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap"
 
@@ -20,7 +21,7 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-
+window.io = io
 
 
 const app = createApp(App);
