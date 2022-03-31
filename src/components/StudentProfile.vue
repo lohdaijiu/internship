@@ -127,10 +127,12 @@ h2{
     color: #1f1d2a;
     font-size: 20px;
 }
+
 #about {
     display: flex;
     flex: 1 1 auto;
     padding-left: 2%;
+    padding-right: 3%;
     justify-content: left;
     align-items: left;
     text-align: left;
@@ -139,7 +141,6 @@ h2{
     font-weight: 600;
     color: #1f1d2a;
     font-size: 22px;
-
 }
 
 
