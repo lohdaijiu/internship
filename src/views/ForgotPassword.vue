@@ -84,6 +84,7 @@ export default {
       form: reactive({
         email: "",
       }),
+      status: false,
     };
   },
 
@@ -91,12 +92,13 @@ export default {
     async forgetPassword() {
       try {
         await sendPasswordResetEmail(getAuth(), this.form.email)
-          //.then(this.$router.push("/employerhome"))
+          .then((this.status = true))
           .catch((error) => {
             alertMsg("error", error.message);
+            this.status = false;
           });
 
-        if (!status) {
+        if (this.status) {
           alertMsg(
             "success",
             "An email has been sent to your email address to reset your password."
