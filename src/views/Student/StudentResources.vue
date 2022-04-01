@@ -1,7 +1,7 @@
 <template>
   <StudentNav />
   <br />
-  <h1>Resources</h1>
+  <h1>Internship Resources</h1>
   <el-container class="container">
     <el-main class="container-main">
       <!-- <h1>resources</h1> -->

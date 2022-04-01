@@ -5,91 +5,97 @@
     <br /><br />
 
     <el-row>
-      <el-table
-        :data="tableData"
-        style="width: 100%; margin-bottom: 20px"
-        row-key="id"
-        default-expand-all
-      >
-        <el-table-column prop="title" label="Job" width="180" />
-        <el-table-column prop="date" label="Date Applied" width="180" />
-        <el-table-column prop="name" label="Applicant Name" width="180" />
-        <el-table-column width="180">
-          <template #default="scope">
-            <el-button
-              size="small"
-              type="info"
-              @click="viewProfile(scope.row)"
-              v-if="rendered(scope.row)"
-              >View Profile</el-button
-            >
-          </template>
-        </el-table-column>
+      <el-col :span="3"></el-col>
+      <el-col :span="18">
+        <el-table
+          :data="tableData"
+          style="width: 100%; margin-bottom: 20px"
+          row-key="id"
+          :header-row-style="headerStyle"
+          :row-style="dataStyle"
+          :header-cell-style="headerCellStyle"
+        >
+          <el-table-column prop="title" label="Job" />
+          <el-table-column prop="date" label="Date Applied" />
+          <el-table-column prop="name" label="Applicant Name" />
+          <el-table-column>
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="info"
+                @click="viewProfile(scope.row)"
+                v-if="rendered(scope.row)"
+                >View Profile</el-button
+              >
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="talk" label="Communicate" width="360">
-          <template #default="scope">
-            <el-button
-              size="small"
-              type="info"
-              @click="createRoom(scope.row)"
-              v-if="rendered(scope.row)"
-              >Create Chat</el-button
-            >
-            <el-button
-              size="small"
-              type="info"
-              @click="videoCall(scope.row)"
-              v-if="rendered(scope.row)"
-              >Video Call</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column width="180" label="Decision">
-          <template #default="scope">
-            <el-button
-              size="small"
-              type="success"
-              @click="offer(scope.row)"
-              v-if="rendered(scope.row)"
-              >Offer</el-button
-            >
-            <el-button
-              size="small"
-              type="warning"
-              @click="reject(scope.row)"
-              v-if="rendered(scope.row)"
-              >Reject</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column prop="status" label="Status" width="180" />
-        <el-table-column width="180">
-          <template #default="scope">
-            <el-button
-              size="small"
-              type="danger"
-              @click="deleteJob(scope.row)"
-              v-if="deleted(scope.row)"
-              >Delete</el-button
-            >
-            <!-- <el-button type="danger" icon="Delete" circle @click="deleteJob(scope.row)" v-if="deleted(scope.row)"/> -->
+          <el-table-column prop="talk" label="Communicate">
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="info"
+                @click="createRoom(scope.row)"
+                v-if="rendered(scope.row)"
+                >Create Chat</el-button
+              >
+              <el-button
+                size="small"
+                type="info"
+                @click="videoCall(scope.row)"
+                v-if="rendered(scope.row)"
+                >Video Call</el-button
+              >
+            </template>
+          </el-table-column>
+          <el-table-column label="Decision">
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="success"
+                @click="offer(scope.row)"
+                v-if="rendered(scope.row)"
+                >Offer</el-button
+              >
+              <el-button
+                size="small"
+                type="warning"
+                @click="reject(scope.row)"
+                v-if="rendered(scope.row)"
+                >Reject</el-button
+              >
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="Status" />
+          <el-table-column>
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="danger"
+                @click="deleteJob(scope.row)"
+                v-if="deleted(scope.row)"
+                >Delete</el-button
+              >
+              <!-- <el-button type="danger" icon="Delete" circle @click="deleteJob(scope.row)" v-if="deleted(scope.row)"/> -->
 
-            <small v-if="alreadyDeleted(scope.row)"> Deleted </small>
-          </template>
-        </el-table-column>
+              <small v-if="alreadyDeleted(scope.row)"> Deleted </small>
+            </template>
+          </el-table-column>
 
-        <el-table-column width="180">
-          <template #default="scope">
-            <el-button
-              size="small"
-              type="success"
-              @click="viewListing(scope.row)"
-              v-if="canView(scope.row)"
-              >View Job</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table>
+          <el-table-column width="180">
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="success"
+                @click="viewListing(scope.row)"
+                v-if="canView(scope.row)"
+                >View Job</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-col>
+      <el-col :span="3"></el-col>
     </el-row>
   </div>
 </template>
@@ -113,6 +119,22 @@ export default {
       tableData,
       empty: false,
       done: false,
+      headerStyle: {
+        color: "#808080",
+        "font-family": "Poppins",
+        "font-weight": 500,
+        "font-size": "14px",
+      },
+      headerCellStyle: {
+        "background-color": "#a5a6f6 ",
+        color: "#1F1D2A",
+        "margin-bottom": "20px ",
+      },
+      dataStyle: {
+        "font-family": "Poppins",
+        "font-weight": 300,
+        "font-size": "13px",
+      },
     };
   },
   components: {
