@@ -8,6 +8,7 @@
       <el-col :span="3"></el-col>
       <el-col :span="18">
         <el-table
+          default-expand-all
           :data="tableData"
           style="width: 100%; margin-bottom: 20px"
           row-key="id"
@@ -15,9 +16,9 @@
           :row-style="dataStyle"
           :header-cell-style="headerCellStyle"
         >
-          <el-table-column prop="title" label="Job" />
-          <el-table-column prop="date" label="Date Applied" />
-          <el-table-column prop="name" label="Applicant Name" />
+          <el-table-column prop="title" label="Job" width="200px" />
+          <el-table-column prop="date" label="Date Applied" width="200px" />
+          <el-table-column prop="name" label="Applicant Name" width="200px" />
           <el-table-column>
             <template #default="scope">
               <el-button
@@ -30,7 +31,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="talk" label="Communicate">
+          <el-table-column prop="talk" label="Communicate" width="150px">
             <template #default="scope">
               <el-button
                 size="small"
@@ -48,7 +49,7 @@
               >
             </template>
           </el-table-column>
-          <el-table-column label="Decision">
+          <el-table-column label="Decision" width="150px">
             <template #default="scope">
               <el-button
                 size="small"
@@ -67,7 +68,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="status" label="Status" />
-          <el-table-column>
+          <el-table-column fixed="right" width="180">
             <template #default="scope">
               <el-button
                 size="small"
@@ -76,14 +77,6 @@
                 v-if="deleted(scope.row)"
                 >Delete</el-button
               >
-              <!-- <el-button type="danger" icon="Delete" circle @click="deleteJob(scope.row)" v-if="deleted(scope.row)"/> -->
-
-              <small v-if="alreadyDeleted(scope.row)"> Deleted </small>
-            </template>
-          </el-table-column>
-
-          <el-table-column width="180">
-            <template #default="scope">
               <el-button
                 size="small"
                 type="success"
