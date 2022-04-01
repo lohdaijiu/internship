@@ -11,7 +11,7 @@
                 <br>
                 Number Of Listed Roles
                 <br>
-                {{employerData.numOfListedRoles}}
+                {{numOfListedRoles}}
             </div>
             <div class="jobType">
                 Number of Applicants for each job listing
@@ -29,9 +29,7 @@ import { getAuth } from "firebase/auth";
 
 import EmployerJobListChart from '@/components/EmployerJobListChart.vue'
 
-const employerData = {
-    numOfListedRoles:"5"
-  }
+//var numOfListedRoles = 0
 
 export default {
     components: {
@@ -39,18 +37,23 @@ export default {
     },
     data() {
             return { keyword: "", 
-            employerData,
+            numOfListedRoles: " ",
             name: ''};
 
     },
     async created() {
+            
             const db = getFirestore(firebaseApp);
             const auth = getAuth()
-            const uid = auth.currentUser.uid
-            const docRef = doc(db, "User", "" + uid);
+            const id = auth.currentUser.uid
+            const docRef = doc(db, "User", "" + id);
             const docSnap = await getDoc(docRef);
-            
             this.name = docSnap.data().CompanyName;
+            const jobArr = docSnap.data().Jobs;
+            console.log(jobArr)
+            
+            this.numOfListedRoles = jobArr.length;
+           
     },
 
     methods: {

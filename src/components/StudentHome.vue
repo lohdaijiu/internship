@@ -18,13 +18,13 @@
                 <br>
                 Application in progress
                 <br>
-                {{studentData.appInProgress}}
+                {{studentData.appInProgress.toString()}}
             </div>
             <div class="appComp">
                 <br>
                 Applications Completed
                 <br>
-                {{studentData.appComp}}
+                {{studentData.appComp.toString()}}
             </div>
             <div class="jobType">
                 Job Types of My Application
@@ -40,6 +40,7 @@
     </body>
    
 </template>
+
 <script>
 import firebaseApp from '../main.js'
 import { getFirestore} from "firebase/firestore";
@@ -49,11 +50,8 @@ import { getAuth } from "firebase/auth";
 import StudentJobTypeChart from '@/components/StudentJobTypeChart.vue'
 import StudentCompDistributionChart from '@/components/StudentCompDistributionChart.vue'
 
-const studentData = {
-    numberOfRejections: '3',
-    appInProgress: '11',
-    appComp: '14'
-  }
+//const studentData = {numberOfRejections:0, appInProgress:0,  appComp: 0}
+//var rej = 0
 
 export default {
     components: {
@@ -62,28 +60,55 @@ export default {
     },
     data() {
             return { keyword: "", 
-            studentData,
+            numberOfRejections: '',
+            appInProgress:'',
+            appComp: '',
             name: ''};
-
     },
+
     async created() {
             const db = getFirestore(firebaseApp);
             const auth = getAuth()
-            const uid = auth.currentUser.uid
-            const docRef = doc(db, "User", "" + uid);
+            const id = auth.currentUser.uid
+            const docRef = doc(db, "User", "" + id);
             const docSnap = await getDoc(docRef);
-            let newData = docSnap.data().ProfileData
-            this.about = newData.slice(0,1)[0]
-            this.name = docSnap.data().Name
-            this.profileData = newData.slice(1)
-            this.image = docSnap.data().photoURL
-            this.resumeURL = docSnap.data().resumeURL
-
-    },
-
+            this.name = docSnap.data().Name;
+            const jobArr = docSnap.data().JobsApplied;
+            
+                
+            for (var i = 0; i < jobArr.length; i++) {
+                const docRef1 = doc(db, "Application", jobArr[i]);
+                const document1 = await getDoc(docRef1);
+                const jobInfo = document1.data();
+                    
+                if (jobInfo.Status.toString() == "Rejected") {
+                    //rej = rej + 1;
+                    this.numberOfRejections = this.numberOfRejections + 1;
+                    //console.log(rej)
+                    //studentData.numberOfRejections = rej
+                    //console.log(studentData.numberOfRejections)
+                }
+                        
+                if (jobInfo.Status.toString() == "Pending") {
+                    //console.log("Pending")
+                    this.appInProgress = this.appInProgress + 1;
+                    //console.log(studentData.appInProgress)
+                }
+                        
+                if (jobInfo.Status.toString() == "Accepted"){
+                    //console.log("Accepted")
+                    this.appComp = this.appComp + 1;
+                }
+                        
+                }
+            
+            console.log("done")
+            
+        },
+    
     methods: {
-        
-    } 
+
+    }
 }  
 
 </script>
