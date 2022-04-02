@@ -141,12 +141,13 @@
         <el-table-column prop="range" label="Date Range" min-width="200" />
         <el-table-column fixed="right" width="190">
           <template #default="scope">
-            <el-button size="small" type="success" @click="applyJob(scope.row)"
+            <el-button size="small" type="success" @click="applyJob(scope.row)" v-if="showApply(scope.row)"
               >Apply</el-button
             >
-            <el-button size="small" @click="viewListing(scope.row)"
+            <el-button size="small" @click="viewListing(scope.row)" v-if="showApply(scope.row)"
               >Details</el-button
             >
+            <medium v-if="!showApply(scope.row)">Job applied!</medium>
           </template>
         </el-table-column>
       </el-table>
@@ -358,6 +359,11 @@ export default {
       // }
     },
 
+    showApply(x) {
+      const id = getAuth().currentUser.uid;
+      return !x.applicants.includes(id);
+    },
+
     async appliedBoolean(x) {
       const db = getFirestore(firebaseApp);
       const id = getAuth().currentUser.uid;
@@ -412,6 +418,7 @@ export default {
                 yos: doc.data().Year,
                 worklocation: doc.data().Type,
                 dateRange: doc.data().DateRange,
+                applicants : doc.data().Applicants,
                 range: doc
                   .data()
                   .DateRange[0].toDate()

@@ -85,7 +85,7 @@
                 v-if="deleted(scope.row)"
                 >View Job</el-button
               >
-              <small v-if="alreadyDeleted(scope.row)"> Deleted </small>
+              <medium v-if="alreadyDeleted(scope.row)"> Deleted </medium>
             </template>
           </el-table-column>
         </el-table>
