@@ -35,7 +35,7 @@
   <div id="buttonContainer">
     <el-row
       ><el-col :span="6" class="applycol"
-        ><el-button id="applyButton" @click="apply()" color="#d4d381"
+        ><el-button id="applyButton" @click="apply().then(window.location.reload())" color="#d4d381"
           ><p class="btn-text">Submit</p></el-button
         ></el-col
       >
@@ -151,7 +151,11 @@ export default {
             JobsApplied: arrayUnion(applicationName),
           });
           alertMsg("success", "Job applied!");
+
+          
+
           this.$router.push("/applicationdashboard");
+
         } catch (error) {
           alertMsg("error", "There was an error processing the application");
           console.log(error);
