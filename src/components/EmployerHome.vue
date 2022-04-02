@@ -50,15 +50,14 @@ export default {
             const docSnap = await getDoc(docRef);
             this.name = docSnap.data().CompanyName;
             const jobArr = docSnap.data().Jobs;
-            console.log(jobArr)
-            
+            //console.log(jobArr)
             this.numOfListedRoles = jobArr.length;
            
     },
 
     methods: {
         
-    } 
+    }
 }  
 
 </script>

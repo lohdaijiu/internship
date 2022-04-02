@@ -12,19 +12,19 @@
                 <br>
                 Number Of Rejections
                 <br>
-                {{studentData.numberOfRejections}}
+                {{numberOfRejections}}
             </div>
             <div class="appInProgress">
                 <br>
                 Application in progress
                 <br>
-                {{studentData.appInProgress.toString()}}
+                {{appInProgress}}
             </div>
             <div class="appComp">
                 <br>
                 Applications Completed
                 <br>
-                {{studentData.appComp.toString()}}
+                {{appComp}}
             </div>
             <div class="jobType">
                 Job Types of My Application
@@ -51,7 +51,6 @@ import StudentJobTypeChart from '@/components/StudentJobTypeChart.vue'
 import StudentCompDistributionChart from '@/components/StudentCompDistributionChart.vue'
 
 //const studentData = {numberOfRejections:0, appInProgress:0,  appComp: 0}
-//var rej = 0
 
 export default {
     components: {
@@ -59,10 +58,10 @@ export default {
         StudentCompDistributionChart
     },
     data() {
-            return { keyword: "", 
-            numberOfRejections: '',
-            appInProgress:'',
-            appComp: '',
+            return { keyword: '', 
+            numberOfRejections: 0,
+            appInProgress: 0,
+            appComp: 0,
             name: ''};
     },
 
@@ -74,35 +73,30 @@ export default {
             const docSnap = await getDoc(docRef);
             this.name = docSnap.data().Name;
             const jobArr = docSnap.data().JobsApplied;
+            this.jobType = new Map();
             
-                
             for (var i = 0; i < jobArr.length; i++) {
                 const docRef1 = doc(db, "Application", jobArr[i]);
                 const document1 = await getDoc(docRef1);
                 const jobInfo = document1.data();
-                    
+                //console.log(jobInfo);
+
                 if (jobInfo.Status.toString() == "Rejected") {
-                    //rej = rej + 1;
                     this.numberOfRejections = this.numberOfRejections + 1;
-                    //console.log(rej)
-                    //studentData.numberOfRejections = rej
-                    //console.log(studentData.numberOfRejections)
                 }
                         
                 if (jobInfo.Status.toString() == "Pending") {
-                    //console.log("Pending")
+
                     this.appInProgress = this.appInProgress + 1;
-                    //console.log(studentData.appInProgress)
                 }
                         
                 if (jobInfo.Status.toString() == "Accepted"){
-                    //console.log("Accepted")
                     this.appComp = this.appComp + 1;
                 }
                         
                 }
             
-            console.log("done")
+            //console.log("done")
             
         },
     
