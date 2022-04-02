@@ -1,8 +1,10 @@
 !<template>
-    <div v-if="done">
+    
   <NavBar/>
 
   <br><br>
+
+  <div v-if="done">
 
 <el-row>
 

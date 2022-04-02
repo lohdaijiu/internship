@@ -4,10 +4,10 @@
     ref="webrtc"
     width="500%"
     height="100%"
-    :roomId="roomId"
+    :roomId="roomID"
     v-on:joined-room="logEvent"
     v-on:left-room="logEvent"
-    v-on:opened-room="logEvent"
+    v-on:opened-room="log"
     v-on:share-started="logEvent"
     v-on:share-stopped="logEvent"
     @error="onError"
@@ -24,7 +24,9 @@ export default {
     "vue-webrtc": VueWebRTC,
   },
   data() {
-    return {};
+    return {
+      roomID : "asdf"
+    };
   },
   mounted: function () {},
   computed: {},
@@ -41,6 +43,9 @@ export default {
     },
     logEvent(event) {
       console.log("Event : ", event);
+    },
+    log(event) {
+      console.log("asdf : ", event);
     },
   },
 };
