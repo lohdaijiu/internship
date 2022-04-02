@@ -23,7 +23,7 @@
 </template>
 <script>
 import { getAuth, signOut } from "firebase/auth";
-
+import { alertMsg } from "../functions/alertMsg";
 export default {
   methods: {
     logout() {
@@ -33,7 +33,7 @@ export default {
           this.$router.push("/");
         })
         .catch((error) => {
-          alert(error.message);
+          alertMsg("error", error.message);
         });
     },
   },
@@ -91,8 +91,7 @@ export default {
 }
 
 .router-link-active {
-    color: #96c67f !important;
-    font-weight: 500;
-  
+  color: #96c67f !important;
+  font-weight: 500;
 }
 </style>

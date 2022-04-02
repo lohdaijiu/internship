@@ -31,30 +31,21 @@
       </div>
     </div>
   </div>
-  
-  <div id="buttonContainer">
-      <el-row
-        ><el-col :span="6"
-                  class="applycol"
-          ><el-button
-            id="applyButton"
-            @click="apply()"
-            color="#d4d381"
-            ><p class="btn-text">Submit</p></el-button
-          ></el-col
-        >
-        <!-- <el-col :span="2"><div class="grid-content" /></el-col> -->
-        <el-col :span="6"
-                class="cancelcol"
-          ><el-button
-            id="cancelButton"
-            @click="goBack()"
-            color="#9b948e"
-            ><p class="btn-text">Cancel</p></el-button
-          ></el-col
-        >
-      </el-row>    
 
+  <div id="buttonContainer">
+    <el-row
+      ><el-col :span="6" class="applycol"
+        ><el-button id="applyButton" @click="apply()" color="#d4d381"
+          ><p class="btn-text">Submit</p></el-button
+        ></el-col
+      >
+      <!-- <el-col :span="2"><div class="grid-content" /></el-col> -->
+      <el-col :span="6" class="cancelcol"
+        ><el-button id="cancelButton" @click="goBack()" color="#9b948e"
+          ><p class="btn-text">Cancel</p></el-button
+        ></el-col
+      >
+    </el-row>
   </div>
 </template>
 
@@ -72,31 +63,7 @@ import {
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
 import { ref } from "vue";
-import { ElMessage } from "element-plus";
-import { h } from "vue";
-
-const alertMsg = (msg) => {
-  ElMessage({
-    message: h("p", null, [
-      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
-    ]),
-    type: "error",
-    offset: 30,
-    showClose: true,
-    duration: 3000,
-  });
-};
-const alertSuccessMsg = (msg) => {
-  ElMessage({
-    message: h("p", null, [
-      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
-    ]),
-    type: "success",
-    offset: 30,
-    showClose: true,
-    duration: 3000,
-  });
-};
+import { alertMsg } from "../../functions/alertMsg";
 var text = ref("");
 var textarea = ref("");
 
@@ -113,7 +80,7 @@ export default {
       range: "",
       writeup: "",
       textarea,
-      text
+      text,
     };
   },
 
@@ -135,16 +102,14 @@ export default {
       .slice(4, 15);
     this.range = startDate.concat(" - ", endDate);
     this.textarea = "";
-    this.text=""
-    this.$refs.writeup.value = ""
+    this.text = "";
+    this.$refs.writeup.value = "";
   },
 
   async created() {
     this.textarea = "";
-    this.text=""
-
+    this.text = "";
   },
-
 
   methods: {
     goBack() {
@@ -166,7 +131,7 @@ export default {
       const docRef2 = doc(db, "User", id);
 
       if (docSnap.exists()) {
-        alertMsg("You have already applied for this position");
+        alertMsg("error", "You have already applied for this position");
       } else {
         try {
           //Add document into application db
@@ -185,14 +150,13 @@ export default {
           await updateDoc(docRef2, {
             JobsApplied: arrayUnion(applicationName),
           });
-          alertSuccessMsg("Job applied!");
+          alertMsg("success", "Job applied!");
           this.$router.push("/applicationdashboard");
         } catch (error) {
-          alertMsg("There was an error processing the application");
+          alertMsg("error", "There was an error processing the application");
           console.log(error);
         }
       }
-
     },
   },
 };
@@ -218,18 +182,16 @@ h3 {
 }
 
 .applycol {
-    margin-left: 33%;
-    width: 15%;
-    /* padding-right: 2%; */
-
+  margin-left: 33%;
+  width: 15%;
+  /* padding-right: 2%; */
 }
 .cancelcol {
-    width: 15%;
-    /* padding-left: 2%; */
-    /* min-height: 200px; */
-    /* float: right; */
-    /* justify-content: flex-end; */
-
+  width: 15%;
+  /* padding-left: 2%; */
+  /* min-height: 200px; */
+  /* float: right; */
+  /* justify-content: flex-end; */
 }
 
 .writeup {

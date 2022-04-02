@@ -88,19 +88,7 @@ import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { reactive } from "vue";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import firebaseApp from "../../main.js";
-import { ElMessage } from "element-plus";
-import { h } from "vue";
-const alertMsg = (msg) => {
-  ElMessage({
-    message: h("p", null, [
-      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
-    ]),
-    type: "error",
-    offset: 30,
-    showClose: true,
-    duration: 3000,
-  });
-};
+import { alertMsg } from "../../functions/alertMsg";
 export default {
   data() {
     return {
@@ -132,7 +120,7 @@ export default {
         )
           //.then(this.$router.push("/employerhome"))
           .catch((error) => {
-            alertMsg(error.message);
+            alertMsg("error", error.message);
           });
 
         const db = getFirestore(firebaseApp);
@@ -143,12 +131,12 @@ export default {
         if (status) {
           this.$router.push("/employerhome");
         } else {
-          alertMsg("No such employer account found");
+          alertMsg("error", "No such employer account found");
           signOut(getAuth());
         }
       } catch {
         (error) => {
-          alertMsg(error.message);
+          alertMsg("error", error.message);
         };
       }
     },

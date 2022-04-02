@@ -168,30 +168,13 @@
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
-import { ElMessage } from "element-plus";
-import { h } from "vue";
-
-const alertMsg = (msg) => {
-  ElMessage({
-    message: h("p", null, [
-      h("span", { style: 'font-family: "Poppins", sans-serif;' }, msg),
-    ]),
-    type: "error",
-    offset: 30,
-    showClose: true,
-    duration: 3000,
-  });
-};
+import { alertMsg } from "../../functions/alertMsg";
 import {
   getDocs,
-  // setDoc,
   collection,
   getDoc,
   getFirestore,
-  // updateDoc,
-  // arrayUnion,
   doc,
-  // serverTimestamp,
 } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
@@ -340,7 +323,7 @@ export default {
         const jobName = x.companyname.concat(" - ", x.jobpos);
         this.$router.push({ path: "/applyjob", query: { job: jobName } });
       } else {
-        alertMsg("Job already applied");
+        alertMsg("error", "Job already applied");
       }
       // console.log(x);
       //

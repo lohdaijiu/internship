@@ -66,6 +66,7 @@
 <script>
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { reactive } from "vue";
+import { alertMsg } from "../functions/alertMsg";
 export default {
   data() {
     return {
@@ -83,6 +84,7 @@ export default {
       form: reactive({
         email: "",
       }),
+      status: false,
     };
   },
 
@@ -90,20 +92,24 @@ export default {
     async forgetPassword() {
       try {
         await sendPasswordResetEmail(getAuth(), this.form.email)
-          //.then(this.$router.push("/employerhome"))
+          .then((this.status = true))
           .catch((error) => {
-            alert(error.message);
+            alertMsg("error", error.message);
+            this.status = false;
           });
 
-        if (!status) {
-          alert("An email has been sent to your email to reset your password.");
+        if (this.status) {
+          alertMsg(
+            "success",
+            "An email has been sent to your email address to reset your password."
+          );
           this.$router.go(-1);
         } else {
           console.log("error");
         }
       } catch {
         (error) => {
-          alert(error.message);
+          alertMsg("error", error.message);
         };
       }
     },
