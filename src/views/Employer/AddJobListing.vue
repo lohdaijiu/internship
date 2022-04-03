@@ -259,6 +259,7 @@ export default {
 
           alertMsg("success", "Job Created!");
           this.resetAllFields();
+          this.$router.push("/viewapplicants")
         } catch (error) {
           console.error(error);
           errorboolean = false;

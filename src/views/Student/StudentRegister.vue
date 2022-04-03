@@ -170,6 +170,7 @@ export default {
         } catch (error) {
           console.error(error);
         }
+        alertMsg("success", "Registration Successful!")
         this.$router.push("/studentlogin");
       }
     },
