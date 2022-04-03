@@ -137,14 +137,14 @@ var rules = reactive({
   jobDesc: [
     {
       required: true,
-      message: "Please select Activity zone",
+      message: "Please select Job Description",
       trigger: "blur",
     },
   ],
   preferredCom: [
     {
       required: true,
-      message: "Please select Activity zone",
+      message: "Please input Preferred Competencies",
       trigger: "blur",
     },
   ],
@@ -152,14 +152,14 @@ var rules = reactive({
     {
       type: "array",
       required: true,
-      message: "Please select at least one activity type",
+      message: "Please select at least one undergraduate year",
       trigger: "change",
     },
   ],
   duration: [
     {
       required: true,
-      message: "Please select Activity zone",
+      message: "Please choose Work Duration",
       trigger: "change",
     },
   ],
@@ -173,14 +173,14 @@ var rules = reactive({
   type: [
     {
       required: true,
-      message: "Please select activity resource",
+      message: "Please choose Nature of Work",
       trigger: "change",
     },
   ],
   renum: [
     {
       required: true,
-      message: "Please input Internship Title",
+      message: "Please input Renumeration",
       trigger: "blur",
     },
   ],
@@ -258,8 +258,9 @@ export default {
           });
 
           alertMsg("success", "Job Created!");
-          this.resetAllFields();
           this.$router.push("/viewapplicants")
+          
+
         } catch (error) {
           console.error(error);
           errorboolean = false;

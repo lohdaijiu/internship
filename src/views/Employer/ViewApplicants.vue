@@ -17,7 +17,7 @@
           :row-style="dataStyle"
           :header-cell-style="headerCellStyle"
         >
-          <el-table-column prop="title" label="Job" width="200px" />
+          <el-table-column prop="title" label="Job" width="220px" />
           <el-table-column prop="date" label="Date Applied" width="200px" />
           <el-table-column prop="name" label="Applicant Name" width="200px" />
           <el-table-column>
@@ -124,6 +124,7 @@ export default {
         "background-color": "#a5a6f6 ",
         color: "#1F1D2A",
         "margin-bottom": "20px ",
+        
       },
       dataStyle: {
         "font-family": "Poppins",
