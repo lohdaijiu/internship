@@ -1,7 +1,9 @@
 <template>
 
   <bar-chart class="user" width=500px :data = "chartData"></bar-chart>
+  <!--
   <button @click= "updateMe()">Click to update the stats</button>
+  -->
 </template>
  
 <script>
@@ -49,6 +51,7 @@ export default {
     }
      console.log(this.chartData);
      */
+    this.updateMe();
   },
   methods:{
     updateMe: function() {
