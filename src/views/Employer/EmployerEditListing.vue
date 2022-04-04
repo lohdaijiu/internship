@@ -337,5 +337,71 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
+h2 {
+  font-family: "Poppins";
+  text-align: center;
+  font-weight: 500;
+  color: #1f1d2a;
+  margin-top: 2%;
+  font-size: 25px;
+}
+
+.card {
+  margin: 2% 10% 2% 10%;
+  align-self: center;
+
+  padding: 30px 50px;
+  /* height: max-content; */
+  min-height: 500px;
+  border-radius: 30px;
+  background-color: white;
+  justify-content: center; /* align horizontal */
+}
+#mainContainer {
+  width: 80%;
+  margin: 2% 10% 2% 10%;
+  align-self: center;
+
+  padding-top: 2%;
+  /* height: max-content; */
+  min-height: 500px;
+  border-radius: 30px;
+  background-color: white;
+  /* position: relative; */
+  display: flex;
+  justify-content: center; /* align horizontal */
+}
+
+#buttonContainer {
+  margin-bottom: 40px;
+}
+
+.btn-text {
+  color: #1f1d2a;
+  font-weight: 600;
+}
+.add-btn {
+  width: 100%;
+  border: 1px #99a9bf;
+}
+
+.el-form {
+  /* position: relative; */
+
+  align-items: center;
+  /* color: #A5A6F6; */
+  size: "large";
+  /* width: 90%; */
+}
+
+.el-form .el-form-item {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  /* width: 90%; */
+  text-decoration-color: #a5a6f6;
+  size: "large";
+}
 </style>
