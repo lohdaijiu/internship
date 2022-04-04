@@ -115,8 +115,12 @@ export default {
 
   methods: {
     editJob() {
-      // TODO direct to edit listing page
-      this.$router.push({ path: "/editjoblisting" });
+      console.log("Pass to edit", this.$route.query.jobId)
+      this.$router.push({
+          path: "/editlisting",
+
+          query: { jobId: this.$route.query.jobId },
+        });
     },
 
     async deleteJob(x) {

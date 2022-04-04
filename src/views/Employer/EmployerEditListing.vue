@@ -1,10 +1,10 @@
 
 <template>
   <NavBar />
-  <h1>Create an Internship Listing</h1>
+  <h1>Edit Internship Listing</h1>
   <el-row>
-    <el-col :span="3"></el-col>
-    <el-col :span="18">
+    <el-col :span="2"></el-col>
+    <el-col :span="20">
       <el-card class="card" shadow="hover">
         <el-form
           :model="form"
@@ -81,7 +81,7 @@
                 class="add-btn"
                 size="large"
                 color="#A5A6F6"
-                ><p class="btn-text">Create</p>
+                ><p class="btn-text">Confirm</p>
               </el-button>
             </el-col>
             <el-col :span="10"></el-col>
@@ -94,7 +94,7 @@
           <el-col :span="10"></el-col>
           <el-col :span="4">
             <el-button
-              @click="addJob()"
+              @click="updateJob()"
               class="add-btn"
               size="large"
               color="#A5A6F6"
@@ -106,7 +106,7 @@
       </div> -->
     </el-col>
   </el-row>
-  <el-col :span="3"></el-col>
+  <el-col :span="2"></el-col>
 </template>
 
 <script>
@@ -116,7 +116,7 @@ import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import {
   doc,
-  setDoc,
+//   setDoc,
   getDoc,
   updateDoc,
   arrayUnion,
@@ -187,6 +187,8 @@ var rules = reactive({
 });
 
 export default {
+    name: "EmployerEditListing",
+
   data() {
     return {
       ruleFormRef: ref<FormInstance>(),
@@ -213,8 +215,39 @@ export default {
     };
   },
 
+    async created() {
+        const db = getFirestore(firebaseApp);
+        const auth = getAuth();
+        const uid = auth.currentUser.uid;
+        const docRef1 = doc(db, "User", "" + uid);
+        console.log(getDoc(docRef1))
+
+        // const companyName1 = await getDoc(docRef1);
+        // console.log("company name", this.form.internshipTitle, companyName1);
+
+        const listingName = this.$route.query.jobId;
+        // const docName = listingName;
+
+        const docRef = doc(db, "Job", listingName);
+        const docSnap = await getDoc(docRef);
+        console.log("listing", docSnap.data())
+
+        let arrayData = docSnap.data();
+        console.log("InternshipTitle", arrayData["InternshipTitle"]);
+
+        this.form.internshipTitle = arrayData["InternshipTitle"],
+        this.form.jobDesc = arrayData["JobDescription"],
+        this.form.preferredCom=  arrayData["PreferredCompetencies"],
+        this.form.year= arrayData["Year"],
+        this.form.duration= arrayData["Duration"],
+        this.form.type= arrayData["Type"],
+        this.form.renum= arrayData["Renumeration"],
+        this.form.daterange= arrayData["DateRange"]
+        // console.log(this.jobDesc)
+    },
+
   methods: {
-    async addJob() {
+    async updateJob() {
       const db = getFirestore(firebaseApp);
       const docRef1 = doc(db, "User", getAuth().currentUser.uid);
 
@@ -223,7 +256,7 @@ export default {
       const companyName = companyName1.data().CompanyName;
       let docName = companyName.concat(" - ", this.form.internshipTitle);
       const docRef = doc(db, "Job", docName);
-      const docSnap = await getDoc(docRef);
+    //   const docSnap = await getDoc(docRef);
       const id = getAuth().currentUser.uid;
       var errorboolean = true;
 
@@ -231,7 +264,7 @@ export default {
       //   this.validStatus = valid;
       // });
 
-      if (docSnap.exists() == false) {
+    //   if (docSnap.exists() == false) {
         const data = {
           InternshipTitle: this.form.internshipTitle,
           JobDescription: this.form.jobDesc,
@@ -241,7 +274,7 @@ export default {
           Type: this.form.type,
           CompanyName: companyName,
           Renumeration: this.form.renum,
-          Applicants: [],
+        //   Applicants: [],
           CreatedAt: serverTimestamp(),
           DateRange: this.form.daterange,
           Deleted: false,
@@ -250,14 +283,15 @@ export default {
         //   this.validStatus = false;
         //   console.log("insdie if", this.validStatus);
         try {
-          const docRef1 = doc(db, "Job", docName);
+        //   const docRef1 = doc(db, "Job", docName);
           const docRef2 = doc(db, "User", id);
-          await setDoc(docRef1, data);
+          await updateDoc(docRef, data);
+        //   await setDoc(docRef1, data);
           await updateDoc(docRef2, {
             Jobs: arrayUnion(this.form.internshipTitle),
           });
 
-          alertMsg("success", "Job Created!");
+          alertMsg("success", "Internship Updated!");
           this.$router.push("/viewapplicants")
           
 
@@ -265,26 +299,23 @@ export default {
           console.error(error);
           errorboolean = false;
         }
-        // } else {
-        //   alertMsg("error", "Fill up the missing fields");
-        // }
 
         if (!errorboolean) {
           //this.$router.push("/employerhome")
         }
         return;
-      } else {
-        //same internship title
-        alertMsg("warning", "Please choose a new internship title");
-        return false;
-      }
+    //   } else {
+    //     //same internship title
+    //     alertMsg("warning", "Please choose a new internship title");
+    //     return false;
+    //   }
     },
     submitClick() {
       this.$refs.ruleFormRef
         .validate((valid) => {
           if (valid) {
             console.log("submit!");
-            this.addJob();
+            this.updateJob();
           } else {
             console.log("error submit!");
             return false;
@@ -306,71 +337,5 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-h2 {
-  font-family: "Poppins";
-  text-align: center;
-  font-weight: 500;
-  color: #1f1d2a;
-  margin-top: 2%;
-  font-size: 25px;
-}
-
-.card {
-  margin: 2% 10% 2% 10%;
-  align-self: center;
-
-  padding: 30px 50px;
-  /* height: max-content; */
-  min-height: 500px;
-  border-radius: 30px;
-  background-color: white;
-  justify-content: center; /* align horizontal */
-}
-#mainContainer {
-  width: 80%;
-  margin: 2% 10% 2% 10%;
-  align-self: center;
-
-  padding-top: 2%;
-  /* height: max-content; */
-  min-height: 500px;
-  border-radius: 30px;
-  background-color: white;
-  /* position: relative; */
-  display: flex;
-  justify-content: center; /* align horizontal */
-}
-
-#buttonContainer {
-  margin-bottom: 40px;
-}
-
-.btn-text {
-  color: #1f1d2a;
-  font-weight: 600;
-}
-.add-btn {
-  width: 100%;
-  border: 1px #99a9bf;
-}
-
-.el-form {
-  /* position: relative; */
-
-  align-items: center;
-  /* color: #A5A6F6; */
-  size: "large";
-  /* width: 90%; */
-}
-
-.el-form .el-form-item {
-  font-family: "Poppins", sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  /* width: 90%; */
-  text-decoration-color: #a5a6f6;
-  size: "large";
-}
 </style>

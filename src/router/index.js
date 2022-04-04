@@ -28,6 +28,8 @@ import AddJobListing from "@/views/Employer/AddJobListing.vue";
 import ApplicationDashboard from "@/views/Student/ApplicationDashboard.vue";
 
 import StudentApplyJob from "@/views/Student/StudentApplyJob.vue";
+import EmployerEditListing from "@/views/Employer/EmployerEditListing.vue";
+
 
 import ViewApplicants from "@/views/Employer/ViewApplicants.vue";
 import StudentChatSelection from "@/views/Student/StudentChatSelection.vue";
@@ -207,6 +209,15 @@ const router = createRouter({
       path: "/viewpostedlisting",
       name: "EmployerViewListing",
       component: EmployerViewListing,
+      meta: {
+        requiresAuth: true,
+        employer: true,
+      },
+    },
+    {
+      path: "/editlisting",
+      name: "EmployerEditListing",
+      component: EmployerEditListing,
       meta: {
         requiresAuth: true,
         employer: true,
