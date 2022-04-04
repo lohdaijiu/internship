@@ -124,7 +124,7 @@
 // @flow
 import { getAuth } from "firebase/auth";
 import firebaseApp from "../../main.js";
-import { getFirestore } from "firebase/firestore";
+import { arrayRemove, getFirestore } from "firebase/firestore";
 import {
   doc,
   setDoc,
@@ -224,6 +224,7 @@ export default {
       daterange: "",
       rules,
       validStatus: false,
+      orginalTitle: "",
     };
   },
 
@@ -244,7 +245,9 @@ export default {
         this.form.duration= arrayData["Duration"],
         this.form.type= arrayData["Type"],
         this.form.renum= arrayData["Renumeration"],
-        this.form.daterange= arrayData["DateRange"]
+        this.form.daterange= arrayData["DateRange"];
+        this.orginalTitle = this.form.internshipTitle
+
     },
 
   methods: {
@@ -252,7 +255,7 @@ export default {
     goBack() {
       this.$router.push("/viewapplicants");
     },      
-    
+
     async updateJob() {
         const db = getFirestore(firebaseApp);
         const docRef1 = doc(db, "User", getAuth().currentUser.uid);
@@ -262,7 +265,6 @@ export default {
         const companyName = companyName1.data().CompanyName;
         let docName = companyName.concat(" - ", this.form.internshipTitle);
         const docRef = doc(db, "Job", docName);
-        //   const docSnap = await getDoc(docRef);
         const id = getAuth().currentUser.uid;
         var errorboolean = true;
 
@@ -285,13 +287,11 @@ export default {
           Deleted: false,
         };
         try {
-        //   const docRef1 = doc(db, "Job", docName);
           const docRef2 = doc(db, "User", id);
           await setDoc(docRef, data);
-        //   await setDoc(docRef1, data);
-            // await deleteDoc(docRef2, {
-            //     Jobs: this.$route.query.jobId
-            // });
+          await updateDoc(docRef2, {
+              Jobs: arrayRemove(this.orginalTitle),
+          });
           await updateDoc(docRef2, {
             Jobs: arrayUnion(this.form.internshipTitle),
           });
@@ -304,10 +304,6 @@ export default {
           console.error(error);
           errorboolean = false;
         }
-        // } else {
-        //   alertMsg("error", "Fill up the missing fields");
-        // }
-
         if (!errorboolean) {
           //this.$router.push("/employerhome")
         }
