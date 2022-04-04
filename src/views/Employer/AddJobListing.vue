@@ -74,7 +74,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-col :span="10"></el-col>
+            <el-col :span="7"></el-col>
             <el-col :span="4">
               <el-button
                 @click="submitClick()"
@@ -84,7 +84,18 @@
                 ><p class="btn-text">Create</p>
               </el-button>
             </el-col>
-            <el-col :span="10"></el-col>
+            <el-col :span="2"></el-col>
+            
+            <el-col :span="4">
+              <el-button
+                @click="goBack()"
+                class="add-btn"
+                size="large"
+                color="#99a9bf"
+                ><p class="btn-text">Cancel</p>
+              </el-button>
+            </el-col>                 
+            <el-col :span="7"></el-col>
           </el-form-item>
         </el-form>
       </el-card>
@@ -214,6 +225,9 @@ export default {
   },
 
   methods: {
+    goBack() {
+      this.$router.push("/viewapplicants");
+    },       
     async addJob() {
       const db = getFirestore(firebaseApp);
       const docRef1 = doc(db, "User", getAuth().currentUser.uid);

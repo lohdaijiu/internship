@@ -74,7 +74,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-col :span="10"></el-col>
+            <el-col :span="7"></el-col>
             <el-col :span="4">
               <el-button
                 @click="submitClick()"
@@ -84,7 +84,18 @@
                 ><p class="btn-text">Confirm</p>
               </el-button>
             </el-col>
-            <el-col :span="10"></el-col>
+            <el-col :span="2"></el-col>
+            
+            <el-col :span="4">
+              <el-button
+                @click="goBack()"
+                class="add-btn"
+                size="large"
+                color="#99a9bf"
+                ><p class="btn-text">Cancel</p>
+              </el-button>
+            </el-col>            
+            <el-col :span="7"></el-col>
           </el-form-item>
         </el-form>
       </el-card>
@@ -116,11 +127,12 @@ import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import {
   doc,
-//   setDoc,
+  setDoc,
   getDoc,
   updateDoc,
   arrayUnion,
   serverTimestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import { reactive, ref } from "vue";
 import NavBar from "../../components/EmployerNav.vue";
@@ -236,24 +248,27 @@ export default {
     },
 
   methods: {
+
+    goBack() {
+      this.$router.push("/viewapplicants");
+    },      
     async updateJob() {
-      const db = getFirestore(firebaseApp);
-      const docRef1 = doc(db, "User", getAuth().currentUser.uid);
+        const db = getFirestore(firebaseApp);
+        const docRef1 = doc(db, "User", getAuth().currentUser.uid);
 
-      const companyName1 = await getDoc(docRef1);
-      console.log(this.form.internshipTitle, companyName1);
-      const companyName = companyName1.data().CompanyName;
-      let docName = companyName.concat(" - ", this.form.internshipTitle);
-      const docRef = doc(db, "Job", docName);
-    //   const docSnap = await getDoc(docRef);
-      const id = getAuth().currentUser.uid;
-      var errorboolean = true;
+        const companyName1 = await getDoc(docRef1);
+        console.log(this.form.internshipTitle, companyName1);
+        const companyName = companyName1.data().CompanyName;
+        let docName = companyName.concat(" - ", this.form.internshipTitle);
+        const docRef = doc(db, "Job", docName);
+        //   const docSnap = await getDoc(docRef);
+        const id = getAuth().currentUser.uid;
+        var errorboolean = true;
 
-      // this.$refs.ruleFormRef.validate((valid) => {
-      //   this.validStatus = valid;
-      // });
+        const listingName = this.$route.query.jobId;
 
-    //   if (docSnap.exists() == false) {
+        await deleteDoc(doc(db, "Job", listingName));
+
         const data = {
           InternshipTitle: this.form.internshipTitle,
           JobDescription: this.form.jobDesc,
@@ -263,19 +278,19 @@ export default {
           Type: this.form.type,
           CompanyName: companyName,
           Renumeration: this.form.renum,
-        //   Applicants: [],
+          Applicants: [],
           CreatedAt: serverTimestamp(),
           DateRange: this.form.daterange,
           Deleted: false,
         };
-        // if (this.validStatus == true) {
-        //   this.validStatus = false;
-        //   console.log("insdie if", this.validStatus);
         try {
         //   const docRef1 = doc(db, "Job", docName);
           const docRef2 = doc(db, "User", id);
-          await updateDoc(docRef, data);
+          await setDoc(docRef, data);
         //   await setDoc(docRef1, data);
+            // await deleteDoc(docRef2, {
+            //     Jobs: this.$route.query.jobId
+            // });
           await updateDoc(docRef2, {
             Jobs: arrayUnion(this.form.internshipTitle),
           });
@@ -288,17 +303,16 @@ export default {
           console.error(error);
           errorboolean = false;
         }
+        // } else {
+        //   alertMsg("error", "Fill up the missing fields");
+        // }
 
         if (!errorboolean) {
           //this.$router.push("/employerhome")
         }
         return;
-    //   } else {
-    //     //same internship title
-    //     alertMsg("warning", "Please choose a new internship title");
-    //     return false;
-    //   }
-    },
+    },      
+
     submitClick() {
       this.$refs.ruleFormRef
         .validate((valid) => {
