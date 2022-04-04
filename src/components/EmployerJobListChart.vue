@@ -10,6 +10,7 @@ import { getFirestore} from "firebase/firestore";
 import { doc , getDoc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
+const numOfApplicants = [];
 const jobNameArr = [];
 export default {
   name: "EmployerJobListChart",
@@ -22,33 +23,52 @@ export default {
     const db = getFirestore(firebaseApp);
     const auth = getAuth()
     const id = auth.currentUser.uid
-    const docRef = doc(db, "User", "" + id);
+    const docRef = doc(db, "User", id);
     const docSnap = await getDoc(docRef);
+  
     const jobArr = docSnap.data().Jobs;
-   
+    const companyName = docSnap.data().CompanyName;
+    //console.log(jobArr);
+    //console.log(companyName);
     for (var i = 0; i < jobArr.length; i++) {
-          jobNameArr.push(jobArr[i]);
+          
+      let docName = companyName.concat(" - ", jobArr[i]);
+      const docRef = doc(db, "Job", docName);
+      const docSnap = await getDoc(docRef);
+      //console.log(docSnap);
+      const applicantsArr = docSnap.data().Applicants;
+      //console.log(applicantsArr);
+      numOfApplicants[i] = applicantsArr.length;
+      jobNameArr.push(jobArr[i]);
     }
+    //console.log(jobNameArr);
+    /*
+    for (var k = 0; k < jobNameArr.length; k++){
+              
+              this.chartData[jobNameArr[i]] = numOfApplicants[i];
+    }
+     console.log(this.chartData);
+     */
   },
   methods:{
     updateMe: function() {
-            //console.log(jobArr);
+          
           this.chartData = {}
-          for (var i = 0; i < jobNameArr.length; i++)
-              if (jobNameArr[i] in this.chartData){
-                  const temp = this.chartData[jobNameArr[i]];
-                  this.chartData[jobNameArr[i]] = temp + 1;
-              } else {
-                  this.chartData[jobNameArr[i]] = 1;
-                  //console.log(this.chartData[jobNameArr[i]]);
-              }
-          console.log(this.chartData);  
+          //console.log(jobNameArr);
+          for (var i = 0; i < jobNameArr.length; i++){
+              
+              this.chartData[jobNameArr[i]] = numOfApplicants[i];
+          }
+          
+          console.log(this.chartData);
+    }
+          
           //console.log(this.chartData.Target);         
     }
            
 
         }
-  }
+
 </script>
 
 <style scoped>
