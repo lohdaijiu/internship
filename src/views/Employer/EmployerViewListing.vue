@@ -72,6 +72,9 @@ import firebaseApp from "../../main.js";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
+import { alertMsg } from "../../functions/alertMsg";
+
+
 var listingName = "";
 var listingData = [];
 var tableData = [];
@@ -115,7 +118,9 @@ export default {
 
   methods: {
     editJob() {
-      console.log("Pass to edit", this.$route.query.jobId)
+        alertMsg("warning", "Please note that editing a listing will result in loss of all applicants");
+      
+      // console.log("Pass to edit", this.$route.query.jobId)
       this.$router.push({
           path: "/editlisting",
 

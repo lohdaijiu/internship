@@ -252,6 +252,7 @@ export default {
     goBack() {
       this.$router.push("/viewapplicants");
     },      
+    
     async updateJob() {
         const db = getFirestore(firebaseApp);
         const docRef1 = doc(db, "User", getAuth().currentUser.uid);
