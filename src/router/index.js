@@ -20,6 +20,9 @@ import EditStudentProfile from "@/views/Student/EditStudentProfile.vue";
 import StudentJobBoard from "@/views/Student/StudentJobBoard.vue";
 import StudentViewListing from "@/views/Student/StudentViewListing.vue";
 
+import NotFoundPage from "@/views/NotFoundPage.vue";
+
+
 import EmployerViewListing from "@/views/Employer/EmployerViewListing.vue";
 import EmployerProfile from "@/views/Employer/EmployerProfile.vue";
 import EditEmployerProfile from "@/views/Employer/EditEmployerProfile.vue";
@@ -222,6 +225,10 @@ const router = createRouter({
         requiresAuth: true,
         employer: true,
       },
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: NotFoundPage
     },
     {
       path: "/employerprofile",

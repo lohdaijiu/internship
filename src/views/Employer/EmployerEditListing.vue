@@ -217,23 +217,13 @@ export default {
 
     async created() {
         const db = getFirestore(firebaseApp);
-        const auth = getAuth();
-        const uid = auth.currentUser.uid;
-        const docRef1 = doc(db, "User", "" + uid);
-        console.log(getDoc(docRef1))
-
-        // const companyName1 = await getDoc(docRef1);
-        // console.log("company name", this.form.internshipTitle, companyName1);
 
         const listingName = this.$route.query.jobId;
-        // const docName = listingName;
-
         const docRef = doc(db, "Job", listingName);
         const docSnap = await getDoc(docRef);
-        console.log("listing", docSnap.data())
 
         let arrayData = docSnap.data();
-        console.log("InternshipTitle", arrayData["InternshipTitle"]);
+        // console.log("InternshipTitle", arrayData["InternshipTitle"]);
 
         this.form.internshipTitle = arrayData["InternshipTitle"],
         this.form.jobDesc = arrayData["JobDescription"],
@@ -243,7 +233,6 @@ export default {
         this.form.type= arrayData["Type"],
         this.form.renum= arrayData["Renumeration"],
         this.form.daterange= arrayData["DateRange"]
-        // console.log(this.jobDesc)
     },
 
   methods: {
