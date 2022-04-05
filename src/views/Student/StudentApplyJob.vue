@@ -1,52 +1,71 @@
 <template>
   <StudentNav />
-  <h2>Job Application</h2>
+  <br />
+  <h1>Job Application</h1>
 
-  <div id="mainContainer">
-    <div id="contentContainer">
-      <!-- Cards -->
-      <el-card class="box-card">
-        <div id="company_name">Company Name : {{ company_name }}</div>
-        <br />
-        <div id="jobpos">Job Position : {{ jobpos }}</div>
-        <br />
+  <el-row class="content-container">
+    <el-col :span="3"></el-col>
+    <!-- <div id="contentContainer"> -->
+    <!-- Cards -->
+    <el-col :span="18">
+      <el-card shadow="hover">
+        <el-row class="table-container">
+          <el-col :span="3"></el-col>
+          <el-col :span="18">
+            <el-table
+              ref="tableRef"
+              :data="tableData"
+              style="width: 100%"
+              max-height="550"
+              :table-layout="auto"
+              :header-row-style="headerStyle"
+              :row-style="dataStyle"
+              :header-cell-style="headerCellStyle"
+            >
+              <!-- @row-click="viewListing(row)" -->
+              <el-table-column prop="company_name" label="Company Name" />
+              <el-table-column prop="jobpos" label="Job Position" />
+              <el-table-column prop="range" label="Date Range" />
+            </el-table>
+          </el-col>
+          <el-col :span="3"></el-col>
+        </el-row>
+        <div id="subContainer">
+          <h3>Short Writeup</h3>
 
-        <div id="range">Date Range : {{ range }}</div>
+          <el-input
+            class="writeup"
+            v-model="textarea"
+            maxlength="300"
+            placeholder="Please enter here"
+            show-word-limit
+            type="textarea"
+            :rows="6"
+            ref="writeup"
+          />
+          <!-- <textarea type="text" placeholder="Please enter here"> </textarea> -->
+        </div>
+        <!-- </div> -->
+        <el-row class="button-container">
+          <el-col :span="6" class="applycol"
+            ><el-button
+              id="applyButton"
+              @click="apply().then(window.location.reload())"
+              color="#96C67F"
+              ><p class="btn-text">Submit</p></el-button
+            ></el-col
+          >
+          <!-- <el-col :span="2"><div class="grid-content" /></el-col> -->
+          <el-col :span="6" class="cancelcol"
+            ><el-button id="cancelButton" @click="goBack()" color="#9b948e"
+              ><p class="btn-text">Cancel</p></el-button
+            ></el-col
+          >
+        </el-row>
       </el-card>
-
-      <div id="subContainer">
-        <h3>Short Writeup</h3>
-
-        <el-input
-          class="writeup"
-          v-model="textarea"
-          maxlength="500"
-          placeholder="Please enter here"
-          show-word-limit
-          type="textarea"
-          :rows="10"
-          ref="writeup"
-        />
-        <!-- <textarea type="text" placeholder="Please enter here"> </textarea> -->
-      </div>
-    </div>
-  </div>
-
-  <div id="buttonContainer">
-    <el-row
-      ><el-col :span="6" class="applycol"
-        ><el-button id="applyButton" @click="apply().then(window.location.reload())" color="#d4d381"
-          ><p class="btn-text">Submit</p></el-button
-        ></el-col
-      >
-      <!-- <el-col :span="2"><div class="grid-content" /></el-col> -->
-      <el-col :span="6" class="cancelcol"
-        ><el-button id="cancelButton" @click="goBack()" color="#9b948e"
-          ><p class="btn-text">Cancel</p></el-button
-        ></el-col
-      >
-    </el-row>
-  </div>
+    </el-col>
+    <el-col :span="3"></el-col>
+  </el-row>
 </template>
 
 <script>
@@ -81,6 +100,23 @@ export default {
       writeup: "",
       textarea,
       text,
+      tableData: [],
+      headerStyle: {
+        color: "#808080",
+        "font-family": "Poppins",
+        "font-weight": 500,
+        "font-size": "14px",
+      },
+      headerCellStyle: {
+        "background-color": "#96C67F",
+        color: "#1F1D2A",
+        "margin-bottom": "20px ",
+      },
+      dataStyle: {
+        "font-family": "Poppins",
+        "font-weight": 300,
+        "font-size": "13px",
+      },
     };
   },
 
@@ -104,6 +140,11 @@ export default {
     this.textarea = "";
     this.text = "";
     this.$refs.writeup.value = "";
+    this.tableData.push({
+      company_name: this.company_name,
+      jobpos: this.jobpos,
+      range: this.range,
+    });
   },
 
   async created() {
@@ -152,10 +193,7 @@ export default {
           });
           alertMsg("success", "Job applied!");
 
-          
-
           this.$router.push("/applicationdashboard");
-
         } catch (error) {
           alertMsg("error", "There was an error processing the application");
           console.log(error);
@@ -168,6 +206,21 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+.content-container {
+  margin-top: 40px;
+}
+
+.table-container {
+  margin-top: 30px;
+}
+.button-container {
+  margin-bottom: 30px;
+}
+.job-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  margin: 20px;
+}
 
 h2 {
   font-family: "Poppins";
@@ -252,7 +305,7 @@ span {
   margin-top: 2%;
   margin-left: 4%;
   margin-right: 4%;
-  margin-bottom: 1%;
+  margin-bottom: 50px;
   text-align: left;
   width: 90%;
   resize: none;
