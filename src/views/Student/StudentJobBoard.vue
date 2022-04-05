@@ -77,7 +77,7 @@
         />
       </el-select>
     </el-col>
-    <el-col :span="3">
+    <el-col :span="3" id="remoteSelect">
       <el-select
         multiple
         collapse-tags
@@ -119,14 +119,13 @@
         :default-sort="{ prop: 'postdate', order: descending }"
         style="width: 100%"
         max-height="550"
-        @selection-change="handleSelectionChange()"
         :table-layout="auto"
         :header-row-style="headerStyle"
         :row-style="dataStyle"
         :header-cell-style="headerCellStyle"
       >
         <!-- @row-click="viewListing(row)" -->
-        <el-table-column type="selection" width="55" />
+
         <el-table-column prop="companyname" label="Company Name" width="180" />
         <el-table-column prop="jobpos" label="Job Position" width="180" />
         <el-table-column
@@ -141,10 +140,17 @@
         <el-table-column prop="range" label="Date Range" min-width="200" />
         <el-table-column fixed="right" width="190">
           <template #default="scope">
-            <el-button size="small" type="success" @click="applyJob(scope.row)" v-if="showApply(scope.row)"
+            <el-button
+              size="small"
+              type="success"
+              @click="applyJob(scope.row)"
+              v-if="showApply(scope.row)"
               >Apply</el-button
             >
-            <el-button size="small" @click="viewListing(scope.row)" v-if="showApply(scope.row)"
+            <el-button
+              size="small"
+              @click="viewListing(scope.row)"
+              v-if="showApply(scope.row)"
               >Details</el-button
             >
             <medium v-if="!showApply(scope.row)">Job applied!</medium>
@@ -283,25 +289,57 @@ export default {
       }
     },
     searchResult() {
-      const { jobData, keyword, workLocation, durationValue, companyValue } =
-        this;
-      console.log(jobData, keyword);
+      const {
+        jobData,
+        keyword,
+        workLocation,
+        durationValue,
+        companyValue,
+        value1,
+      } = this;
+
+      // console.log(value1.length)
+      console.log(jobData, value1[0].toString().slice(4, 15));
+
+      const searchStartDate = value1[0].toString().slice(4, 15).slice(4, 6);
+      const searchEndDate = value1[1].toString().slice(4, 15);
+      console.log(searchStartDate, searchEndDate);
 
       console.log(
         jobData.filter(
-          ({ jobpos, worklocation, duration, companyname }) =>
+          ({ jobpos, worklocation, duration, range, companyname }) =>
             jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
             (workLocation.includes(worklocation) || workLocation.length == 0) &&
             (durationValue.includes(duration) || durationValue.length == 0) &&
-            (companyValue.includes(companyname) || companyValue.length == 0)
+            (companyValue.includes(companyname) || companyValue.length == 0) &&
+            (value1.length == 0 ||
+              this.dateCompare1(
+                this.getSearchStartDate(value1),
+                this.getStartDate(range)
+              )) &&
+            (value1.length == 0 ||
+              this.dateCompare2(
+                this.getSearchEndDate(value1),
+                this.getEndDate(range)
+              ))
         )
       );
       this.queriedData = jobData.filter(
-        ({ jobpos, worklocation, duration, companyname }) =>
+        ({ jobpos, worklocation, duration, companyname, range }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
           (workLocation.includes(worklocation) || workLocation.length == 0) &&
           (durationValue.includes(duration) || durationValue.length == 0) &&
-          (companyValue.includes(companyname) || companyValue.length == 0)
+          (companyValue.includes(companyname) || companyValue.length == 0) &&
+          (value1.length == 0 ||
+            this.dateCompare1(
+              this.getSearchStartDate(value1),
+              this.getStartDate(range)
+            )) &&
+          (value1.length == 0 ||
+            this.dateCompare2(
+              this.getSearchEndDate(value1),
+              this.getEndDate(range)
+            ))
       );
     },
     // async getStudentName() {
@@ -396,9 +434,122 @@ export default {
       }
     },
 
-    handleSelectionChange(x) {
-      this.multipleSelection.value = x;
-      console.log(this.multipleSelection);
+    // handleSelectionChange(x) {
+    //   this.multipleSelection.value = x;
+    //   console.log(this.multipleSelection);
+    // },
+    // isDateSame(x, y) {
+    //   return x === y;
+    // },
+
+    dateCompare1(x, y) {
+      //returns true if x is earlier or same as y
+      //convert month into number
+      const monthArr = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      var monthOfX = 0;
+      var monthOfY = 0;
+      for (var i = 0; i < monthArr.length; i++) {
+        if (this.getMonth(x) === monthArr[i]) {
+          monthOfX = i + 1;
+        }
+        if (this.getMonth(y) === monthArr[i]) {
+          monthOfY = i + 1;
+        }
+      }
+
+      if (x === y) {
+        //same date
+        return true;
+      } else if (this.getYear(x) != this.getYear(y)) {
+        //different year
+        return this.getYear(y) > this.getYear(x);
+      } else if (monthOfX != monthOfY) {
+        return monthOfY > monthOfX;
+      } else {
+        return this.getDay(y) > this.getDay(x);
+      }
+    },
+
+    dateCompare2(x, y) {
+      //returns true if x is later or same as y
+      //convert month into number
+      const monthArr = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      var monthOfX = 0;
+      var monthOfY = 0;
+      for (var i = 0; i < monthArr.length; i++) {
+        if (this.getMonth(x) === monthArr[i]) {
+          monthOfX = i + 1;
+        }
+        if (this.getMonth(y) === monthArr[i]) {
+          monthOfY = i + 1;
+        }
+      }
+
+      if (x === y) {
+        //same date
+        return true;
+      } else if (this.getYear(x) != this.getYear(y)) {
+        //different year
+        return this.getYear(y) < this.getYear(x);
+      } else if (monthOfX != monthOfY) {
+        return monthOfY < monthOfX;
+      } else {
+        return this.getDay(y) < this.getDay(x);
+      }
+    },
+
+    getYear(x) {
+      return parseInt(x.slice(7, 11));
+    },
+
+    getMonth(x) {
+      return x.slice(0, 3);
+    },
+
+    getDay(x) {
+      return parseInt(x.slice(4, 6));
+    },
+
+    getStartDate(x) {
+      return x.split(" - ")[0];
+    },
+
+    getEndDate(x) {
+      return x.split(" - ")[1];
+    },
+
+    getSearchStartDate(x) {
+      return x[0].toString().slice(4, 15);
+    },
+
+    getSearchEndDate(x) {
+      return x[1].toString().slice(4, 15);
     },
   },
 
@@ -418,7 +569,7 @@ export default {
                 yos: doc.data().Year,
                 worklocation: doc.data().Type,
                 dateRange: doc.data().DateRange,
-                applicants : doc.data().Applicants,
+                applicants: doc.data().Applicants,
                 range: doc
                   .data()
                   .DateRange[0].toDate()
@@ -518,4 +669,3 @@ h1 {
   border-bottom-color: #1f1d2a !important;
 }
 </style>
-
