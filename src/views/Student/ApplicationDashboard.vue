@@ -5,8 +5,8 @@
     <br />
 
     <el-row>
-      <el-col :span="6"></el-col>
-      <el-col :span="12">
+      <el-col :span="4"></el-col>
+      <el-col :span="16">
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -15,11 +15,16 @@
           :row-style="dataStyle"
           :header-cell-style="headerCellStyle"
         >
-          <el-table-column prop="companyname" label="Company" width="180" />
-          <el-table-column prop="jobpos" label="Job Position" width="180" />
-          <el-table-column prop="date" label="Date Applied" />
-          <el-table-column prop="status" label="Progress" />
-          <el-table-column prop="status" label="Accept/Reject Offer">
+          <el-table-column prop="companyname" label="Company" width="200" />
+          <el-table-column prop="jobpos" label="Job Position" min-width="220" />
+          <el-table-column prop="date" label="Date Applied" min-width="150" />
+          <el-table-column prop="status" label="Progress" min-width="150" />
+          <el-table-column
+            prop="status"
+            label="Accept/Reject Offer"
+            fixed="right"
+            width="170"
+          >
             <template #default="scope">
               <el-button
                 size="small"
