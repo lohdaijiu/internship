@@ -6,8 +6,8 @@
     <el-main class="container-main">
       <!-- <h1>resources</h1> -->
       <el-row class="top-row">
-        <el-col :span="6"> </el-col>
-        <el-col :span="12">
+        <el-col :span="5"> </el-col>
+        <el-col :span="14">
           <el-card class="card" shadow="hover">
             <el-row class="card-body-row">
               <el-col :span="8" class="card-left-container">
@@ -43,11 +43,11 @@
             </el-row>
           </el-card>
         </el-col>
-        <el-col :span="6"> </el-col>
+        <el-col :span="5"> </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6"> </el-col>
-        <el-col :span="12">
+        <el-col :span="5"> </el-col>
+        <el-col :span="14">
           <el-card class="card" shadow="hover">
             <el-row class="card-body-row">
               <el-col :span="8" class="card-left-container">
@@ -81,11 +81,11 @@
             </el-row>
           </el-card>
         </el-col>
-        <el-col :span="6"> </el-col>
+        <el-col :span="5"> </el-col>
       </el-row>
       <el-row>
-        <el-col :span="6"> </el-col>
-        <el-col :span="12">
+        <el-col :span="5"> </el-col>
+        <el-col :span="14">
           <el-card class="card" shadow="hover">
             <el-row class="card-body-row">
               <el-col :span="8" class="card-left-container">
@@ -121,7 +121,7 @@
             </el-row>
           </el-card>
         </el-col>
-        <el-col :span="6"> </el-col>
+        <el-col :span="5"> </el-col>
       </el-row>
     </el-main>
   </el-container>

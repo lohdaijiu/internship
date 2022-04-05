@@ -41,7 +41,7 @@
                     @click="forgetPassword()"
                     class="login-btns"
                     size="large"
-                    color="#96C67F"
+                    color="#407BFF"
                     ><p class="btn-text">Send Email</p></el-button
                   >
                 </el-col>
@@ -79,7 +79,7 @@ export default {
         "box-shadow": "0 0 0 0.5",
         "margin-botton": "20px",
       },
-      url: "student-login-pic.png",
+      url: "forget-password.png",
       brand_url: "brand-black.png",
       form: reactive({
         email: "",
@@ -112,6 +112,10 @@ export default {
           alertMsg("error", error.message);
         };
       }
+    },
+
+    async mounted() {
+      console.log("hiii");
     },
   },
 };
@@ -146,7 +150,7 @@ body {
   justify-content: center; */
 }
 .bg-green {
-  background-color: #b5d7a5;
+  background-color: #79a2ff;
 }
 .btn-text {
   color: #1f1d2a;
