@@ -123,7 +123,7 @@ export default {
     },
     async register() {
       if (this.form.password != this.form.password1) {
-        alertMsg("error", "Password is different");
+        alertMsg("error", "Passwords are different");
         return;
       }
 
@@ -170,7 +170,7 @@ export default {
         } catch (error) {
           console.error(error);
         }
-        alertMsg("success", "Registration Successful!")
+        alertMsg("success", "Registration Successful!");
         this.$router.push("/studentlogin");
       }
     },

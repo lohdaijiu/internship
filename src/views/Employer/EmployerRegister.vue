@@ -118,7 +118,7 @@ export default {
     },
     async register() {
       if (this.form.password != this.form.password1) {
-        alertMsg("error", "Password is different");
+        alertMsg("error", "Passwords are different");
         return;
       }
 
@@ -156,13 +156,13 @@ export default {
             companyProfileData: this.companyProfileData,
             Employer: true,
             Jobs: [],
-            NumberOfDeletes: 0
+            NumberOfDeletes: 0,
           });
           console.log(docRef);
         } catch (error) {
           console.error(error);
         }
-        alertMsg("success", "Registration Successful!")
+        alertMsg("success", "Registration Successful!");
         this.$router.push("/employerlogin");
       }
     },
