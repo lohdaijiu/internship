@@ -298,12 +298,12 @@ export default {
         value1,
       } = this;
 
-      // console.log(value1.length)
-      console.log(jobData, value1[0].toString().slice(4, 15));
+      console.log(value1)
+      // console.log(jobData, value1[0].toString().slice(4, 15));
 
-      const searchStartDate = value1[0].toString().slice(4, 15).slice(4, 6);
-      const searchEndDate = value1[1].toString().slice(4, 15);
-      console.log(searchStartDate, searchEndDate);
+      // const searchStartDate = value1[0].toString().slice(4, 15).slice(4, 6);
+      // const searchEndDate = value1[1].toString().slice(4, 15);
+      // console.log(searchStartDate, searchEndDate);
 
       console.log(
         jobData.filter(
@@ -312,12 +312,12 @@ export default {
             (workLocation.includes(worklocation) || workLocation.length == 0) &&
             (durationValue.includes(duration) || durationValue.length == 0) &&
             (companyValue.includes(companyname) || companyValue.length == 0) &&
-            (value1.length == 0 ||
+            (value1 == null ||
               this.dateCompare1(
                 this.getSearchStartDate(value1),
                 this.getStartDate(range)
               )) &&
-            (value1.length == 0 ||
+            (value1 == null ||
               this.dateCompare2(
                 this.getSearchEndDate(value1),
                 this.getEndDate(range)
@@ -330,12 +330,12 @@ export default {
           (workLocation.includes(worklocation) || workLocation.length == 0) &&
           (durationValue.includes(duration) || durationValue.length == 0) &&
           (companyValue.includes(companyname) || companyValue.length == 0) &&
-          (value1.length == 0 ||
+          (value1 == null ||
             this.dateCompare1(
               this.getSearchStartDate(value1),
               this.getStartDate(range)
             )) &&
-          (value1.length == 0 ||
+          (value1 == null ||
             this.dateCompare2(
               this.getSearchEndDate(value1),
               this.getEndDate(range)
