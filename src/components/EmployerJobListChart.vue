@@ -12,16 +12,18 @@ import { getFirestore} from "firebase/firestore";
 import { doc , getDoc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-const numOfApplicants = [];
-const jobNameArr = [];
+
+
 export default {
   name: "EmployerJobListChart",
   data() {
     return {
-      chartData: { }
+      chartData: { },
+      numOfApplicants: [],
+      jobNameArr: []
     }
   },
-  async created() {
+  async beforeMount() {
     const db = getFirestore(firebaseApp);
     const auth = getAuth()
     const id = auth.currentUser.uid
@@ -40,8 +42,8 @@ export default {
       //console.log(docSnap);
       const applicantsArr = docSnap.data().Applicants;
       //console.log(applicantsArr);
-      numOfApplicants[i] = applicantsArr.length;
-      jobNameArr.push(jobArr[i]);
+      this.numOfApplicants[i] = applicantsArr.length;
+      this.jobNameArr.push(jobArr[i]);
     }
     this.updateMe();
   },
@@ -50,9 +52,10 @@ export default {
           
           this.chartData = {}
           //console.log(jobNameArr);
-          for (var i = 0; i < jobNameArr.length; i++){
-              
-              this.chartData[jobNameArr[i]] = numOfApplicants[i];
+          //console.log(numOfApplicants)
+          for (var i = 0; i < this.jobNameArr.length; i++){
+              // console.log(numOfApplicants[i])
+              this.chartData[this.jobNameArr[i]] = this.numOfApplicants[i];
           }
           
           console.log(this.chartData);
