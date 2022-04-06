@@ -638,6 +638,7 @@ export default {
 }
 .table-container {
   margin-top: 40px;
+  margin-bottom: 20px;
 }
 </style>
 <style>

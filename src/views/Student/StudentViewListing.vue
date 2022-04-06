@@ -2,8 +2,27 @@
   <div>
     <StudentNav />
 
-    <div id="general_info">
-      <h2>{{ company_name }}</h2>
+
+
+    <el-row id="general_info">
+      <el-col :span="6"></el-col> 
+      <el-col :span="12">
+           
+        <h2>{{ company_name }}</h2>
+      </el-col>
+    <el-col :span="6"></el-col> 
+    </el-row>
+
+    <el-row id="general_info1">
+      <el-col :span="10"></el-col> 
+
+      <el-col :span="4" id="viewbtn_container">
+        <el-button id="viewbtn" type="success" plain @click="seeEmployer()">Company Profile</el-button>
+      </el-col>
+      <el-col :span="10"></el-col>      
+    </el-row>
+    
+    <div id="general_info2">
       <h3>{{ job_title }}</h3>
     </div>
 
@@ -48,11 +67,7 @@
 
     <!--  APPLY  -->
     <el-col :span="6" class="apply-btn-container">
-      <el-button id="applybtn" @click="apply()">Apply</el-button>
-    </el-col>
-
-    <el-col :span="6" class="apply-btn-container">
-      <el-button id="applybtn" @click="seeEmployer()">See employer profile</el-button>
+      <el-button id="applybtn" type="success" plain @click="apply()">Apply</el-button>
     </el-col>
   </div>
   <!-- </div> -->
@@ -199,22 +214,29 @@ export default {
 </script>
 
 <style scoped>
-#general_info {
+#general_info, #general_info1, #general_info2 {
   font-family: "Poppins";
   text-align: center;
+
 }
 
+#viewbtn_container {
+  text-align: center;
+  align-content: center;
+}
+#viewbtn {
+  border-radius: 10px;
+  /* margin-top: 25px; */
+  margin-left: 10px;
+  text-align: center;
+  font-weight: bold;
+  border-style: solid;
+
+}
 .table-container {
   margin-top: 40px;
   margin-bottom: 40px;
 }
-
-/* .details {
-        position: center;
-        align-content: center;
-        margin-left: 40px;
-        margin-right: 40px;
-    } */
 
 .tabbable {
   width: 80%;
@@ -245,18 +267,16 @@ export default {
   padding-top: 24%;
   padding-bottom: 24%;
   text-align: center;
-
+  margin-right: 20px;
   font-weight: bold;
-  background-color: #96c67f;
   border-style: solid;
-  border-color: #d4d381;
   justify-content: flex-end;
   float: right;
 }
 
-#applybtn:hover {
+/* #applybtn:hover {
   background-color: #d4d381;
-}
+} */
 
 >>> .el-table__header tr {
   color: #96c67f;
