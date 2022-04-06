@@ -1,21 +1,23 @@
 !<template>
-  <NavBar/>
+  <NavBar />
 
-  <Chat/>
+  <Chat id="chat" />
 </template>
 
 <script>
-import NavBar from "../../components/EmployerNav.vue"
-import Chat from "../../components/Chat.vue"
+import NavBar from "../../components/EmployerNav.vue";
+import Chat from "../../components/Chat.vue";
 
 export default {
-    components : {
-        NavBar,
-        Chat
-    }
-}
+  components: {
+    NavBar,
+    Chat,
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+#chat {
+  margin-top: 40px;
+}
 </style>
