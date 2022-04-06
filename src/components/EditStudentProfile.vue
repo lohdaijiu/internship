@@ -264,7 +264,10 @@ h2 {
 }
 
 #addButton:hover {
-    background-color: #91c379;
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
+
 
 }
 #addButton:active {
@@ -314,7 +317,10 @@ span {
 }
 
 #uploadButton:hover {
-    background-color: #91c379;
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
+
 
 }
 
@@ -352,7 +358,9 @@ span {
     border-color: #9b948e;
 }
 #applyButton:hover {
-    background-color: #91c379;
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
 
 }
 #applyButton:active {
@@ -360,7 +368,9 @@ span {
 }
 
 #cancelButton:hover {
-    background-color: #a29891;
+    background-color: #b9b5b1;
+    border-color: #b9b5b1;
+    transition: 0.2s;
 
 }
 #cancelButton:active {
