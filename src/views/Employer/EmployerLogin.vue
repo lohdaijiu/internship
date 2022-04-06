@@ -177,7 +177,7 @@ body {
   font-weight: 400;
   /* color: #1f1d2a !important; */
   font-size: 15px;
-  text-decoration: underline;
+  text-decoration: none;
 }
 .text-center {
   text-align: center !important;

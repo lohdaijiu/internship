@@ -94,4 +94,12 @@ export default {
   color: #96c67f !important;
   font-weight: 500;
 }
+
+.routerlink:visited {
+  color: grey;
+}
+
+.routerlink:link {
+  color: grey;
+}
 </style>
