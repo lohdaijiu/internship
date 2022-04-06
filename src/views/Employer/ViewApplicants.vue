@@ -183,7 +183,7 @@ export default {
         const docRef6 = doc(db, "User", x.uid);
         await updateDoc(docRef5, { Chats: arrayUnion(x.uid) });
         await updateDoc(docRef6, { Chats: arrayUnion(id) });
-        //this.$router.push('/employerchatselection')
+        this.$router.push('/employerchatselection')
         //await deleteDoc(doc(db, docName, "firstDoc"));
       }
 
