@@ -1,5 +1,5 @@
 <template>
-  <NavBar />
+  <StudentNav />
 
   <body>
     <div id="mainContainer">
@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import NavBar from "../../components/EmployerNav.vue";
+import StudentNav from "../../components/StudentNav.vue";
 import { getFirestore} from "firebase/firestore";
 import { doc , getDoc} from "firebase/firestore";
 import firebaseApp from '../../main.js'
 
 export default {
   components: {
-    NavBar,
+    StudentNav,
   },
   data() {
     return {
