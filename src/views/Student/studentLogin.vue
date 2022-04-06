@@ -183,6 +183,9 @@ body {
   font-weight: 400;
   /* color: #1f1d2a !important; */
   font-size: 15px;
+  text-decoration: underline;
+}
+.form-link-text:hover {
   text-decoration: none;
 }
 .text-center {
