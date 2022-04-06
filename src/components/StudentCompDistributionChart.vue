@@ -1,7 +1,9 @@
 <template>
 
   <pie-chart class="user" width=500px :data = "chartData"></pie-chart>
+  <!--
   <button @click= "updateMe()">Click to update the stats</button>
+  -->
 </template>
 
 <script>
@@ -34,6 +36,7 @@ export default {
                 console.log(compName);
                 compArr.push(compName);
     }
+    this.updateMe();
   },
   methods:{
     updateMe: function() {
@@ -61,6 +64,7 @@ export default {
 <style scoped>
 .user{
   margin: auto;
-  border: 3px solid grey;
+  border: 3px solid white;
+  color: #96C67F;
 }
 </style>

@@ -2,7 +2,7 @@
         <div id ='welcome'>
                 <h1>Welcome, {{name}}!</h1>
         </div>
-        <div id ='analytics'>
+        <div class ='analytics'>
                 <h2>Analytics</h2>
         </div>
     
@@ -10,12 +10,15 @@
             <div class="numOfListedRoles">
                 <br>
                 Number Of Listed Roles
-                <br>
+                <br><br>
+            <div class='number'>
                 {{numOfListedRoles}}
             </div>
+            </div>
             <div class="jobType">
-                Number of Applicants for each job listing
                 <br>
+                Number of Applicants for each job listing
+                <br><br>
                 <EmployerJobListChart></EmployerJobListChart>
             </div>
         </div>
@@ -65,7 +68,7 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 .analytics {
-    text-align: right;
+    text-align: center;
     justify-content: space-between;
     font-family: "Poppins", sans-serif;
     color: #1f1d2a;
@@ -75,7 +78,7 @@ export default {
 .statistics {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px 100px;
+    grid-template-rows: 80px 80px;
     grid-gap: 30px;
     text-align: center;
     justify-content: space-between;
@@ -87,13 +90,23 @@ export default {
 .numOfListedRoles {
     grid-column: 1;
     grid-row: 1/3;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 
 .jobType {
     grid-column: 2/4;
     grid-row: 1/4;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 
+.number {
+    color: #A5A6F6;
+    font-size: 25px;
+    text-align: center;
+    justify-content: space-between;
+    font-family: "Poppins", sans-serif,;
+    font-weight: bold;
+}
 </style>

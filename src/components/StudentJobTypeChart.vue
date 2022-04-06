@@ -1,7 +1,9 @@
 <template>
   
-  <pie-chart class="user" width=500px :data="chartData"></pie-chart>
+  <pie-chart class="user" width=500px style="--p:60;--b:10px;--c:purple;" :data="chartData"></pie-chart>
+  <!--
   <button @click= "updateMe()">Click to update the stats</button>
+  -->
 
 </template>
  
@@ -35,6 +37,7 @@ export default {
                 //console.log(jobName);
                 jobNameArr.push(jobName);
     }
+    this.updateMe();
   },
   methods:{
     updateMe: function() {
@@ -61,7 +64,9 @@ export default {
 <style scoped>
 .user{
   margin: auto;
-  border: 3px solid grey;
+  border: 3px solid white;
   size-adjust: auto;
+  color-adjust: #96C67F;
+  caret-color: #96C67F;
 }
 </style>
