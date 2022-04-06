@@ -132,6 +132,11 @@ export default {
         return;
       }
 
+      if (!this.isStrongEnough(this.form.password)) {
+        alertMsg("error", "Please ensure that you have at least 8 characters and at least 1 capital letter, smaller case letter, number, special character in your password!");
+        return;
+      }
+
       const auth = getAuth();
       const db = getFirestore(firebaseApp);
       let status = true;
@@ -166,6 +171,50 @@ export default {
         this.$router.push("/employerlogin");
       }
     },
+    isStrongEnough(password) {
+      const passwordArr = password.split("")
+      if (passwordArr.length < 8) {
+        return false
+      } else {
+        return (this.containsSmallLetters(passwordArr) && this.containsCapitalLetters(passwordArr) && this.containsNumber(password) && this.containsSpecialChar(passwordArr))
+      }
+    },
+    containsCapitalLetters(arr) {
+      const checker = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+      for (var i = 0; i < checker.length; i ++) {
+        if (arr.includes(checker[i])) {
+          return true;
+        }
+      }
+      return false
+    },
+    containsSmallLetters(arr) {
+      const checker = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+      for (var i = 0; i < checker.length; i ++) {
+        if (arr.includes(checker[i])) {
+          return true;
+        }
+      }
+      return false
+    },
+    containsNumber(arr) {
+      const checker = ['1', '2', '3', '4', '5', '6', '7', '8' , '9']
+      for (var i = 0; i < checker.length; i ++) {
+        if (arr.includes(checker[i])) {
+          return true;
+        }
+      }
+      return false
+    },
+    containsSpecialChar(arr) {
+      const checker = ['!', '~', '`', '@', '#', '$', ' ', '%', '^', '&', '*', '(', ')', '"', "'", '-', '_', '+', '=', '{', '}', '[', ']', ':', ";", '?', '/', '.', '>', '<', ","]
+      for (var i = 0; i < checker.length; i ++) {
+        if (arr.includes(checker[i])) {
+          return true;
+        }
+      }
+      return false
+    }
   },
 };
 </script>
