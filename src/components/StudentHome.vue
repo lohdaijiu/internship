@@ -1,40 +1,50 @@
 <template>
     <body>
-        <div id ='welcome'>
+        <div class ='welcome'>
                 <h1>Welcome, {{name}}!</h1>
         </div>
-        <div id ='analytics'>
+        <div class ='analytics'>
                 <h2>Analytics</h2>
         </div>
     
         <div class="statistics" data="studentData">
             <div class="numberOfRejections">
-                <br>
+                <br><br>
                 Number Of Rejections
-                <br>
+                <br><br>
+                <div class ="number">
                 {{numberOfRejections}}
+                </div>
             </div>
             <div class="appInProgress">
-                <br>
+                <br><br>
                 Application in progress
-                <br>
+                <br><br>
+                <div class ="number">
                 {{appInProgress}}
+                </div>
             </div>
             <div class="appComp">
-                <br>
+                <br><br>
                 Applications Completed
-                <br>
+                <br><br>
+                <div class ="number">
                 {{appComp}}
+                </div>
             </div>
             <div class="jobType">
-                Job Types of My Application
                 <br>
+                Job Types of My Application
+                <br><br>
                 <StudentJobTypeChart></StudentJobTypeChart>
+                <br>
                 </div>
             <div class="companyDistri">
-                Company Distribution of My Application
                 <br>
+                Company Distribution of My Application
+                <br><br>
                 <StudentCompDistributionChart></StudentCompDistributionChart>
+                <br>
             </div>
         </div>
     </body>
@@ -109,8 +119,15 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+.welcome {
+    text-align: center;
+    justify-content: space-between;
+    font-family: "Poppins", sans-serif;
+    color: #1f1d2a;
+    font-size: 20px;
+}
 .analytics {
-    text-align: right;
+    text-align: center;
     justify-content: space-between;
     font-family: "Poppins", sans-serif;
     color: #1f1d2a;
@@ -121,39 +138,53 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 100px 100px;
-    grid-gap: 30px;
+    grid-gap: 50px;
     text-align: center;
     justify-content: space-between;
     font-family: "Poppins", sans-serif;
     color: #1f1d2a;
-    font-size: 16px;
+    font-size: 20px;
+}
+
+.number {
+    color: #96C67F;
+    font-size: 25px;
+    text-align: center;
+    justify-content: space-between;
+    font-family: "Poppins", sans-serif,;
+    font-weight: bold;
 }
 
 .numberOfRejections {
     grid-column: 1;
     grid-row: 1/3;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 
 .appInProgress {
     grid-column: 1;
     grid-row: 3/5;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 .appComp {
     grid-column: 1;
     grid-row: 5/7;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 .jobType {
     grid-column: 2/4;
     grid-row: 1/4;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 
 .companyDistri {
     grid-column: 2/4;
     grid-row: 4/7;
-    background-color: rgba(102, 97, 97, 0.397);
+    background-color: white;
+    border-radius: 20px;
 }
 </style>

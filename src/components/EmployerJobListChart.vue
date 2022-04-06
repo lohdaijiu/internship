@@ -43,14 +43,6 @@ export default {
       numOfApplicants[i] = applicantsArr.length;
       jobNameArr.push(jobArr[i]);
     }
-    //console.log(jobNameArr);
-    /*
-    for (var k = 0; k < jobNameArr.length; k++){
-              
-              this.chartData[jobNameArr[i]] = numOfApplicants[i];
-    }
-     console.log(this.chartData);
-     */
     this.updateMe();
   },
   methods:{
@@ -77,6 +69,7 @@ export default {
 <style scoped>
 .user{
   margin: auto;
-  border: 3px solid grey;
+  border: 3px solid white;
+  color: #A5A6F6;
 }
 </style>
