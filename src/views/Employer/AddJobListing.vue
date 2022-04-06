@@ -259,6 +259,7 @@ export default {
           CreatedAt: serverTimestamp(),
           DateRange: this.form.daterange,
           Deleted: false,
+          Companyuid : getAuth().currentUser.uid
         };
         // if (this.validStatus == true) {
         //   this.validStatus = false;

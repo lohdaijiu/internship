@@ -45,10 +45,20 @@ import VideoList from "@/views/Student/ViewVideoCallsList.vue";
 import StudentVideo from "@/views/Student/StudentVideo.vue";
 import EmployerVideo from "@/views/Employer/EmployerVideo.vue";
 import VideoTest from "@/views/VideoTest.vue";
+import ViewEmployerProfile from "@/views/Student/ViewEmployerProfile.vue"
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: "/viewemployerprofile",
+      name: "ViewEmployerProfile",
+      component: ViewEmployerProfile,
+      meta: {
+        requiresAuth: true,
+        employer: false,
+      },
+    },
     {
       path: "/studentresources",
       name: "StudentResources",

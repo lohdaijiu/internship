@@ -50,6 +50,10 @@
     <el-col :span="6" class="apply-btn-container">
       <el-button id="applybtn" @click="apply()">Apply</el-button>
     </el-col>
+
+    <el-col :span="6" class="apply-btn-container">
+      <el-button id="applybtn" @click="seeEmployer()">See employer profile</el-button>
+    </el-col>
   </div>
   <!-- </div> -->
 </template>
@@ -84,6 +88,7 @@ export default {
       tech_compet: "",
       location: "",
       company_name: "",
+      companyuid : "",
 
       onlyListing,
       headerStyle: {
@@ -112,6 +117,12 @@ export default {
         query: { job: this.$route.query.jobId },
       });
     },
+    seeEmployer() {
+      this.$router.push({
+        path: "/viewemployerprofile",
+        query: {id : this.companyuid}
+      })
+    }
   },
 
   async created() {
@@ -131,6 +142,7 @@ export default {
     if (docSnap.exists()) {
       console.log("exists");
       try {
+        this.companyuid = docSnap.data().Companyuid
         // console.log(docSnap.data().CompanyName)
         listingData.push({
           companyname: docSnap.data().CompanyName,
