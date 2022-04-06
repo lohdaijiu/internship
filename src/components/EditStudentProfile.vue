@@ -258,13 +258,16 @@ h2 {
     padding-bottom: 0.5%;
     margin-top: 2%;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #96C67F;
     border-style: solid;
     border-color: #96C67F;
 }
 
 #addButton:hover {
-    background-color: #50e655;
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
+
 
 }
 #addButton:active {
@@ -308,13 +311,16 @@ span {
     text-align: center;
     font-size: 16px;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #96C67F;
     border-style: solid;
     border-color: #96C67F;
 }
 
 #uploadButton:hover {
-    background-color: #50e655;
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
+
 
 }
 
@@ -332,7 +338,7 @@ span {
     text-align: center;
 
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #96C67F;
     border-style: solid;
     border-color: #96C67F;
 }
@@ -347,12 +353,14 @@ span {
     padding-bottom: 20%;
     text-align: center;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #9b948e;
     border-style: solid;
-    border-color: #96C67F;
+    border-color: #9b948e;
 }
 #applyButton:hover {
-    background-color: #50e655;
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
 
 }
 #applyButton:active {
@@ -360,7 +368,9 @@ span {
 }
 
 #cancelButton:hover {
-    background-color: #50e655;
+    background-color: #b9b5b1;
+    border-color: #b9b5b1;
+    transition: 0.2s;
 
 }
 #cancelButton:active {

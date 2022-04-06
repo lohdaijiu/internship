@@ -210,8 +210,9 @@ h2{
 }
 
 #editButton:hover {
-    background-color: #9698f5;
-
+    background-color: #accef6;
+    border-color: #accef6;
+    transition: 0.2s;
 }
 
 #editButton:active {

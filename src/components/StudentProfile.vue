@@ -211,14 +211,15 @@ h2{
     margin-bottom: 5%;
     color:black;
     font-weight: bold;
-    background-color: #D4D381;
+    background-color: #96C67F;
     border-style: solid;
     border-color: #96C67F;
 }
 
 #editButton:hover {
-    background-color: #50e655;
-
+    background-color: #9fd686;
+    border-color: #9fd686;
+    transition: 0.2s;
 }
 
 #editButton:active {
