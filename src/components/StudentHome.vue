@@ -95,12 +95,11 @@ export default {
                     this.numberOfRejections = this.numberOfRejections + 1;
                 }
                         
-                if (jobInfo.Status.toString() == "Pending") {
-
+                if ((jobInfo.Status.toString() == "Pending") || (jobInfo.Status.toString() == "Pending student reply")) {
                     this.appInProgress = this.appInProgress + 1;
                 }
                         
-                if (jobInfo.Status.toString() == "Accepted"){
+                if (jobInfo.Status.toString() == "Accepted by Student"){
                     this.appComp = this.appComp + 1;
                 }
                         
