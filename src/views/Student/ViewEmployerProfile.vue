@@ -31,6 +31,9 @@
         </template>
       </div>
     </div>
+    <div>
+    <button id ='editButton' @click='goBack'>Go Back</button>
+    </div>
   </body>
 </template>
 
@@ -65,6 +68,11 @@ export default {
     this.companyProfileData = newData.slice(1);
     this.image = docSnap.data().photoURL;
   },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
+  }
 };
 </script>
 
@@ -177,7 +185,7 @@ h2{
     margin-top: 2%;
     margin-left: 4%;
     margin-right: 4%;
-    margin-bottom: 1%;
+
     text-align: left;
     width: 90%;
     resize: none;
@@ -189,7 +197,7 @@ h2{
 #editButton {
     border-radius: 5px;
     margin-left: 80%;
-    margin-top: 1%;
+
     padding-left: 1.5%;
     padding-right: 1.5%;
     padding-top: 0.5%;
@@ -197,10 +205,10 @@ h2{
     padding-bottom: 0.5%;
     margin-bottom: 5%;
     font-weight: bold;
-    background-color: #A5A6F6;
+    background-color: #96c67f;
     border-style: solid;
     color:black;
-    border-color: #A5A6F6;
+    border-color: #96c67f;
 }
 
 #editButton:hover {
