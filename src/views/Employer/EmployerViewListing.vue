@@ -2,12 +2,12 @@
   <EmployerNav />
   <el-row>
     <!-- <el-col :span="2"><div class="grid-content" /></el-col> -->
-    <el-col :span="8">
+    <el-col :span="12">
       <div id="general_info">
         <h3>{{ job_title }}</h3>
       </div>
     </el-col>
-    <el-col :span="10"><div class="grid-content" /></el-col>
+    <el-col :span="6"><div class="grid-content" /></el-col>
 
     <!-- Edit & Delete Listing -->
 
@@ -51,7 +51,7 @@
   <div id="details">
     <div class="tabbable" align="left">
       <!-- Tabs -->
-      <el-tabs tab-position="left" stretch="true">
+      <el-tabs tab-position="left" stretch>
         <el-tab-pane label="Job Description">
           {{ job_descr }}
         </el-tab-pane>

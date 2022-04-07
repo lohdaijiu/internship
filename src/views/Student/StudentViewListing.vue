@@ -13,7 +13,7 @@
       <el-col :span="12" id="viewbtn_container">
         <el-button id="viewbtn" type="text" @click="seeEmployer()">{{ company_name }}</el-button>
       </el-col>      
-    <el-col :span="6"></el-col> 
+      <el-col :span="6"></el-col> 
     </el-row>
     
     <div id="general_info2">
@@ -35,7 +35,8 @@
           <el-table-column prop="duration" label="Duration" />
           <el-table-column prop="compensation" label="Compensation" />
           <el-table-column prop="range" label="Date Range" />
-          <el-table-column prop="postdate" label="Date Posted" />
+          <el-table-column prop="postdate" label="Date Posted">
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="4"></el-col>
@@ -59,10 +60,21 @@
       </div>
     </div>
 
+
+    <el-row>
+      <el-col :span="18"></el-col>  
+
     <!--  APPLY  -->
-    <el-col :span="6" class="apply-btn-container">
+    <el-col :span="2" class="apply-btn-container">
       <el-button id="applybtn" type="success" @click="apply()">Apply</el-button>
     </el-col>
+      <!-- <el-col :span="2"></el-col> -->
+    <el-col :span="2" class="apply-btn-container">
+    <el-button id ='backbtn' type="info" @click='goBack'>Back</el-button>
+    </el-col>
+      <el-col :span="2"></el-col>  
+    
+    </el-row>
   </div>
   <!-- </div> -->
 </template>
@@ -113,6 +125,9 @@ export default {
     };
   },
   methods: {
+    goBack() {
+      this.$router.go(-1)
+    },    
     async apply() {
       this.$router.push({
         path: "/applyjob",
@@ -210,6 +225,7 @@ export default {
   size: 100%;
   font-size: 25px;
   transition: color 0.1s;
+  text-decoration: underline;  
 
 }
 
@@ -228,29 +244,30 @@ export default {
   margin-right: 20px;
   position: middle;
   margin-bottom: 50px;
+  font-family: "Poppins";
+}
+.tabbable .el-tabs .el-tab-pane label {
+  color: #96c67f;
 }
 .apply-btn-container {
-  display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
-  margin-left: 73.5%;
+  /* margin-left: 73.5%; */
   padding-right: 3%;
   min-height: 200px;
   float: right;
   justify-content: flex-end;
 }
-#applybtn {
+#applybtn, #backbtn {
   border-radius: 5px;
   text-align: center;
-  margin-right: 40px;
-  font-weight: bold;
-  border-style: solid;
-  justify-content: flex-end;
-  float: right;
+  size: large;
+  /* margin-right: 40px; */
+  /* font-weight: bold; */
+  /* border-style: solid; */
+  /* justify-content: flex-end;
+  float: right; */
 }
-/* #applybtn:hover {
-  background-color: #d4d381;
-} */
+
 .el-table {
   :deep(.el-table__header tr {
     color: #96c67f;

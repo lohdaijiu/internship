@@ -32,7 +32,7 @@
       </div>
     </div>
     <div>
-    <button id ='editButton' @click='goBack'>Go Back</button>
+    <el-button id ='backbtn' type="success" plain @click='goBack'>Go Back</el-button>
     </div>
   </body>
 </template>
@@ -194,7 +194,7 @@ h2{
     
 }
 
-#editButton {
+#backbtn {
     border-radius: 5px;
     margin-left: 80%;
 
@@ -205,12 +205,10 @@ h2{
     padding-bottom: 0.5%;
     margin-bottom: 5%;
     font-weight: bold;
-    background-color: #96c67f;
     border-style: solid;
     color:black;
-    border-color: #96c67f;
 }
-
+/* 
 #editButton:hover {
     background-color: #accef6;
     border-color: #accef6;
@@ -219,5 +217,5 @@ h2{
 
 #editButton:active {
     transform: translateY(1px);
-}
+} */
 </style>
