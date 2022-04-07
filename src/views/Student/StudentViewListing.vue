@@ -268,12 +268,12 @@ export default {
   float: right; */
 }
 
-.el-table {
-  :deep(.el-table__header tr {
+/* .el-table { */
+  /* :deep(.el-table__header tr {
     color: #96c67f;
-  })
-/* >>> .el-table__header tr {
+  }) */
+>>> .el-table__header tr {
   color: #96c67f;
-} */
 }
+/* } */
 </style>
