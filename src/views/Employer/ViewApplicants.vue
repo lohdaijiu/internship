@@ -17,10 +17,10 @@
           :row-style="dataStyle"
           :header-cell-style="headerCellStyle"
         >
-          <el-table-column prop="title" label="Job" width="220px" />
-          <el-table-column prop="date" label="Date Applied" width="200px" />
+          <el-table-column prop="title" label="Job" width="300px" />
+          <el-table-column prop="date" label="Date Applied" width="150px" />
           <el-table-column prop="name" label="Applicant Name" width="150px" />
-          <el-table-column>
+          <el-table-column width="350px">
             <template #default="scope">
               <el-button
                 size="small"
@@ -29,11 +29,6 @@
                 v-if="rendered(scope.row)"
                 >View Profile</el-button
               >
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="talk" label="Communicate" width="150px">
-            <template #default="scope">
               <el-button
                 size="small"
                 type="info"
@@ -161,8 +156,11 @@ export default {
       const docRef1 = doc(db, "User", id);
       const docSnap = await getDoc(docRef1);
       const employerName = docSnap.data().CompanyName;
-      const room = employerName.concat(" - ", x.name);
-      this.$router.push({ path: "/employervideo", query: { roomName: room } });
+      const applicationID = employerName.concat(" - ", x.title, " - ", x.uid)
+      const docRef2 = doc(db, "Application", applicationID)
+      await updateDoc(docRef2, {VideoCall : true})
+
+      this.$router.push({ path: "/employervideocall", query: { id: applicationID } });
     },
 
     async createRoom(x) {

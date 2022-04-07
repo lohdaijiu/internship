@@ -1,4 +1,5 @@
-!<template>
+!
+<template>
   <div v-if="done">
     <NavBar /> <br />
     <h1>Application DashBoard</h1>
@@ -15,14 +16,13 @@
           :row-style="dataStyle"
           :header-cell-style="headerCellStyle"
         >
-          <el-table-column prop="companyname" label="Company" width="200" />
-          <el-table-column prop="jobpos" label="Job Position" min-width="220" />
-          <el-table-column prop="date" label="Date Applied" min-width="150" />
-          <el-table-column prop="status" label="Progress" min-width="150" />
+          <el-table-column prop="companyname" label="Company" width="180" />
+          <el-table-column prop="jobpos" label="Job Position" min-width="200" />
+          <el-table-column prop="date" label="Date Applied" min-width="130" />
+          <el-table-column prop="status" label="Progress" min-width="80" />
           <el-table-column
             prop="status"
             label="Accept/Reject Offer"
-            fixed="right"
             width="170"
           >
             <template #default="scope">
@@ -39,6 +39,17 @@
                 @click="reject(scope.row)"
                 v-if="rendered(scope.row)"
                 >Reject</el-button
+              >
+            </template>
+          </el-table-column>
+          <el-table-column prop="status"  min-width="55" fixed = "right">
+            <template #default="scope">
+              <el-button
+                size="small"
+                type="info"
+                @click="call(scope.row)"
+                v-if="haveVideo(scope.row)"
+                >Video Call</el-button
               >
             </template>
           </el-table-column>
@@ -91,6 +102,10 @@ export default {
       }
     },
 
+    haveVideo(x) {
+      return x.videocall;
+    },
+
     async accept(x) {
       const id = getAuth().currentUser.uid;
       const db = getFirestore(firebaseApp);
@@ -116,6 +131,11 @@ export default {
       alert("Offer Rejected");
       window.location.reload();
     },
+
+    call(x) {
+      const id = getAuth().currentUser.uid;
+      this.$router.push({ path: "/studentvideocall", query: { id: x.companyname.concat(" - ", x.jobpos, " - ", id) } })
+    }
   },
 
   async beforeCreate() {
@@ -140,6 +160,7 @@ export default {
             date: jobInfo.CreatedAt.toDate().toString().slice(4, 15),
             progress: jobInfo.Progress,
             status: jobInfo.Status,
+            videocall: jobInfo.VideoCall,
           });
         }
         console.log("done");

@@ -79,20 +79,15 @@ import StudentNav from "../../components/StudentNav.vue";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import { getDoc, doc } from "firebase/firestore";
-
 var listingName = "";
-
 var listingData = [];
 var tableData = [];
 var onlyListing = [];
-
 export default {
   name: "StudentViewListing",
-
   components: {
     StudentNav,
   },
-
   data() {
     return {
       listingData,
@@ -104,7 +99,6 @@ export default {
       location: "",
       company_name: "",
       companyuid : "",
-
       onlyListing,
       headerStyle: {
         color: "#808080",
@@ -124,7 +118,6 @@ export default {
       },
     };
   },
-
   methods: {
     async apply() {
       this.$router.push({
@@ -139,21 +132,16 @@ export default {
       })
     }
   },
-
   async created() {
     // console.log('Query: ', this.$route.query.jobId);
     listingName = this.$route.query.jobId;
-
     listingData = [];
-
     console.log("getting listing");
     const db = getFirestore(firebaseApp);
-
     const docName = listingName;
     console.log(docName);
     const docRef = doc(db, "Job", docName);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) {
       console.log("exists");
       try {
@@ -180,11 +168,8 @@ export default {
           competency: docSnap.data().PreferredCompetencies,
         });
         console.log(listingData);
-
         console.log(listingData[0]["competency"]);
-
         tableData = [];
-
         onlyListing = Object.entries(listingData[0]).map((e) => ({
           [e[0]]: e[1],
         }));
@@ -197,13 +182,11 @@ export default {
           range: onlyListing[6]["range"],
         });
         // console.log(tableData[0])
-
         // return ListingData;
       } catch (error) {
         console.log(error);
       }
     }
-
     this.job_descr = listingData[0]["description"];
     this.job_title = listingData[0]["jobpos"];
     this.tech_compet = listingData[0]["competency"];
@@ -217,9 +200,7 @@ export default {
 #general_info, #general_info1, #general_info2 {
   font-family: "Poppins";
   text-align: center;
-
 }
-
 #viewbtn_container {
   text-align: center;
   align-content: center;
@@ -231,13 +212,11 @@ export default {
   text-align: center;
   font-weight: bold;
   border-style: solid;
-
 }
 .table-container {
   margin-top: 40px;
   margin-bottom: 40px;
 }
-
 .tabbable {
   width: 80%;
   align-content: center;
@@ -246,7 +225,6 @@ export default {
   position: middle;
   margin-bottom: 50px;
 }
-
 .apply-btn-container {
   display: flex;
   flex-direction: row;
@@ -258,10 +236,8 @@ export default {
   float: right;
   justify-content: flex-end;
 }
-
 #applybtn {
   border-radius: 10px;
-
   padding-left: 50%;
   padding-right: 50%;
   padding-top: 24%;
@@ -273,11 +249,9 @@ export default {
   justify-content: flex-end;
   float: right;
 }
-
 /* #applybtn:hover {
   background-color: #d4d381;
 } */
-
 >>> .el-table__header tr {
   color: #96c67f;
 }

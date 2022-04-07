@@ -40,11 +40,8 @@ import EmployerChatSelection from "@/views/Employer/EmployerChatSelection.vue";
 import ViewProfile from "@/views/Employer/ViewProfile.vue";
 import StudentChat from "@/views/Student/StudentChat.vue";
 import EmployerChat from "@/views/Employer/EmployerChat.vue";
-
-import VideoList from "@/views/Student/ViewVideoCallsList.vue";
-import StudentVideo from "@/views/Student/StudentVideo.vue";
-import EmployerVideo from "@/views/Employer/EmployerVideo.vue";
-import VideoTest from "@/views/VideoTest.vue";
+import EmployerVideoCall from "@/views/Employer/EmployerVideoCall.vue";
+import StudentVideoCall from "@/views/Student/StudentVideoCall.vue";
 import ViewEmployerProfile from "@/views/Student/ViewEmployerProfile.vue"
 
 const router = createRouter({
@@ -311,25 +308,22 @@ const router = createRouter({
         employer: true,
       },
     },
-    {
-      path: "/studentvideo",
-      name: "StudentVideo",
-      component: StudentVideo,
+    { path: "/studentvideocall" ,
+      name: "StudentVideoCall",
+      component: StudentVideoCall,
+      meta: {
+        requiresAuth: true,
+        employer: false,
+      },
     },
-    {
-      path: "/employervideo",
-      name: "EmployerVideo",
-      component: EmployerVideo,
-    },
-    {
-      path: "/videolist",
-      name: "videolist",
-      component: VideoList,
-    },
-    { path: "/videotest" ,
-      name: "VideoTest",
-      component: VideoTest
-    },
+    { path: "/employervideocall" ,
+      name: "EmployerVideoCall",
+      component: EmployerVideoCall,
+      meta: {
+        requiresAuth: true,
+        employer: true
+      },
+    }
   ],
 });
 
