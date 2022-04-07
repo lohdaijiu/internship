@@ -251,9 +251,9 @@ export default {
   width: 75%;
 }
 
->>> .el-table__header tr {
+/* >>> .el-table__header tr {
   color: #a5a6f6;
-}
+} */
 /* 
     #editbtn:hover {
 

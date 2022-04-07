@@ -680,11 +680,11 @@ h1 {
 >>> .el-table tr {
   background-color: #fafafa;
 } */
->>> .el-table tr:hover {
+/* >>> .el-table tr:hover { */
     text-decoration: underline;
     /* background-color: #96c67f; */
-    color: #96c67f;
+    /* color: #96c67f; */
     /* text-decoration-color: #96c67f; */
 
-}
+/* } */
 </style>
