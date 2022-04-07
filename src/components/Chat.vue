@@ -1,9 +1,21 @@
 <template>
   <div class="wrapper">
     <el-row>
-      <el-col :span="6"> </el-col>
-      <el-col :span="12" class="chat-header"
-        ><div class="bg-purple-dark header-ele">
+      <el-col :span="8"> </el-col>
+      <el-col :span="8" class="chat-header"
+        ><div
+          class="header-ele"
+          :class="{
+            'bg-green': this.$route.query.prevPage.length > 0,
+            'bg-purple': this.$route.query.prevPage.length == 0,
+          }"
+        >
+          <el-avatar
+            class="avatar-img"
+            :src="avatarImg"
+            fit="cover"
+            :size="40"
+          />
           <h4 class="profile-name">{{ this.usersName }}</h4>
         </div>
         <div ref="chatArea" class="chat-area" id="chat-Area">
@@ -36,13 +48,17 @@
               type="info"
               @click="sendMessage"
               style="margin-left: 30px"
+              :class="{
+                'bg-green': this.$route.query.prevPage.length > 0,
+                'bg-purple': this.$route.query.prevPage.length == 0,
+              }"
               >Send</el-button
             >
           </el-col>
           <el-col :span="4"> </el-col>
         </el-row>
       </el-col>
-      <el-col :span="6"> </el-col>
+      <el-col :span="8"> </el-col>
     </el-row>
 
     <!-- <section>
@@ -99,7 +115,8 @@ export default {
       } else {
         this.usersName = docSnap2.data().CompanyName;
       }
-
+      this.avatarImg = docSnap2.data().photoURL;
+      console.log(this.avatarImg);
       if (this.employer) {
         this.collectionName = id.concat(" - ", this.$route.query.id);
       } else {
@@ -140,6 +157,8 @@ export default {
       employer: false,
       collectionName: "",
       usersName: "",
+      avatarImg: "",
+      fitVar: "fill",
     };
   },
   methods: {
@@ -161,21 +180,38 @@ export default {
 };
 </script>
 
+
 <style scoped>
+.bg-green {
+  background-color: #96c67f;
+}
+.bg-purple {
+  background-color: #a5a6f6;
+}
+.el-avatar {
+  /* --el-avatar-text-color: #fff; */
+  --el-avatar-bg-color: #fff !important;
+}
 .header-ele {
-  height: 50px;
+  height: 60px;
+  display: flex;
 }
-h4 {
+.avatar-img {
+  margin: auto 10px auto 10px;
+}
+/* h4 {
   margin: 0;
-}
+} */
 .profile-name {
-  padding: 15px;
+  /* padding: 15px; */
   font-family: "Poppins";
   font-size: 14px;
+  display: inline;
+  margin: auto 0;
 }
 .chat-header {
   height: 30px;
-  max-width: 800px;
+  /* max-width: 800px; */
   /* padding: 10px; */
   /* margin: 0 auto; */
 }
@@ -188,7 +224,7 @@ h4 {
   height: 50vh;
   padding: 10px;
   overflow: auto;
-  max-width: 800px;
+  /* max-width: 800px; */
   margin: 0 auto 2em auto;
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.3);
 }
@@ -209,5 +245,12 @@ h4 {
   background: #f1f0f0;
   color: black;
   margin-right: 70%;
+}
+</style>
+<style>
+el-avatar > img {
+  display: block;
+  /* height: 100%; */
+  width: 100% !important;
 }
 </style>

@@ -1,28 +1,25 @@
 <template>
   <NavBar />
 
-<div style="margin-top: 5%;">
-  <el-table
-    :data="chatArr"
-    style="width: 50%; margin-top: 5%; margin:auto"
-    row-key="id"
-    align = "center"
-    size = "large"
-  >
-    <el-table-column prop="nameid" label="Applicant Name" width="270" />
-    <el-table-column prop="jobsInSameCoy" label="Jobs Applied" width="540" />
-    <el-table-column width="120">
+  <div style="margin-top: 5%">
+    <el-table
+      :data="chatArr"
+      style="width: 50%; margin-top: 5%; margin: auto"
+      row-key="id"
+      align="center"
+      size="large"
+    >
+      <el-table-column prop="nameid" label="Applicant Name" width="270" />
+      <el-table-column prop="jobsInSameCoy" label="Jobs Applied" width="540" />
+      <el-table-column width="120">
         <template #default="scope">
-      <el-button
-        size="small"
-        type="info"
-        @click="goToChat(scope.row.uid)"
-        >View Message</el-button
-      >
+          <el-button size="small" type="info" @click="goToChat(scope.row.uid)"
+            >View Message</el-button
+          >
         </template>
-    </el-table-column>
-  </el-table>
-</div>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
@@ -44,7 +41,10 @@ export default {
 
   methods: {
     goToChat(x) {
-      this.$router.push({ path: "/studentchat", query: { id: x } });
+      this.$router.push({
+        path: "/studentchat",
+        query: { id: x, prevPage: "student" },
+      });
     },
   },
 
@@ -67,7 +67,7 @@ export default {
       for (i = 0; i < jobsApplied.length; i++) {
         const curr = jobsApplied[i];
         const arr = curr.split(" - ");
-        if (arr[0] == name) {            
+        if (arr[0] == name) {
           jbs = jbs.concat(arr[1], ", ");
         }
       }

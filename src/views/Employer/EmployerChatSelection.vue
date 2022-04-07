@@ -1,28 +1,25 @@
 <template>
   <NavBar />
 
-<div style="margin-top: 5%;">
-  <el-table
-    :data="chatArr"
-    style="width: 50%; margin-top: 5%; margin:auto"
-    row-key="id"
-    align = "center"
-    size = "large"
-  >
-    <el-table-column prop="nameid" label="Applicant Name" width="270" />
-    <el-table-column prop="jobsInSameCoy" label="Jobs Applied" width="540" />
-    <el-table-column width="120">
+  <div style="margin-top: 5%">
+    <el-table
+      :data="chatArr"
+      style="width: 50%; margin-top: 5%; margin: auto"
+      row-key="id"
+      align="center"
+      size="large"
+    >
+      <el-table-column prop="nameid" label="Applicant Name" width="270" />
+      <el-table-column prop="jobsInSameCoy" label="Jobs Applied" width="540" />
+      <el-table-column width="120">
         <template #default="scope">
-      <el-button
-        size="small"
-        type="info"
-        @click="goToChat(scope.row.uid)"
-        >View Message</el-button
-      >
+          <el-button size="small" type="info" @click="goToChat(scope.row.uid)"
+            >View Message</el-button
+          >
         </template>
-    </el-table-column>
-  </el-table>
-</div>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
@@ -44,12 +41,14 @@ export default {
 
   methods: {
     goToChat(x) {
-      this.$router.push({ path: "/employerchat", query: { id: x } });
+      this.$router.push({
+        path: "/employerchat",
+        query: { id: x, prevPage: "" },
+      });
     },
   },
 
   async beforeCreate() {
-
     const id = getAuth().currentUser.uid;
     const db = getFirestore(firebaseApp);
     const docRef = doc(db, "User", id);
@@ -58,10 +57,10 @@ export default {
     const employerName = docSnap.data().CompanyName;
 
     const chats = docSnap.data().Chats;
-    
+
     for (var i = 0; i < chats.length; i++) {
       const currChat = chats[i];
-      console.log(i)
+      console.log(i);
       const docRef1 = doc(db, "User", currChat);
       const docSnap1 = await getDoc(docRef1);
 
@@ -72,13 +71,12 @@ export default {
       for (var j = 0; j < jobsApplied.length; j++) {
         const curr = jobsApplied[j];
         const arr = curr.split(" - ");
-        if (arr[0] == employerName) {            
+        if (arr[0] == employerName) {
           jbs = jbs.concat(arr[1], ", ");
         }
       }
 
       jbs = jbs.slice(0, -2);
-
 
       this.chatArr.push({
         uid: currChat,
@@ -86,7 +84,7 @@ export default {
         jobsInSameCoy: jbs,
       });
     }
-    console.log(this.chatArr)
+    console.log(this.chatArr);
   },
 };
 </script>

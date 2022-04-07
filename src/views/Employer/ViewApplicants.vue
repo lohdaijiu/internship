@@ -19,7 +19,7 @@
         >
           <el-table-column prop="title" label="Job" width="220px" />
           <el-table-column prop="date" label="Date Applied" width="200px" />
-          <el-table-column prop="name" label="Applicant Name" width="200px" />
+          <el-table-column prop="name" label="Applicant Name" width="150px" />
           <el-table-column>
             <template #default="scope">
               <el-button
@@ -124,7 +124,6 @@ export default {
         "background-color": "#a5a6f6 ",
         color: "#1F1D2A",
         "margin-bottom": "20px ",
-        
       },
       dataStyle: {
         "font-family": "Poppins",
@@ -183,7 +182,7 @@ export default {
         const docRef6 = doc(db, "User", x.uid);
         await updateDoc(docRef5, { Chats: arrayUnion(x.uid) });
         await updateDoc(docRef6, { Chats: arrayUnion(id) });
-        this.$router.push('/employerchatselection')
+        this.$router.push("/employerchatselection");
         //await deleteDoc(doc(db, docName, "firstDoc"));
       }
 
