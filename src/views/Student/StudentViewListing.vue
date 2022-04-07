@@ -6,20 +6,14 @@
 
     <el-row id="general_info">
       <el-col :span="6"></el-col> 
-      <el-col :span="12">
+      <!-- <el-col :span="10" id="name_col">
            
-        <h2>{{ company_name }}</h2>
-      </el-col>
+        <h2 onclick="seeEmployer()">{{ company_name }}</h2>
+      </el-col> -->
+      <el-col :span="12" id="viewbtn_container">
+        <el-button id="viewbtn" type="text" @click="seeEmployer()">{{ company_name }}</el-button>
+      </el-col>      
     <el-col :span="6"></el-col> 
-    </el-row>
-
-    <el-row id="general_info1">
-      <el-col :span="10"></el-col> 
-
-      <el-col :span="4" id="viewbtn_container">
-        <el-button id="viewbtn" type="success" plain @click="seeEmployer()">Company Profile</el-button>
-      </el-col>
-      <el-col :span="10"></el-col>      
     </el-row>
     
     <div id="general_info2">
@@ -67,7 +61,7 @@
 
     <!--  APPLY  -->
     <el-col :span="6" class="apply-btn-container">
-      <el-button id="applybtn" type="success" plain @click="apply()">Apply</el-button>
+      <el-button id="applybtn" type="success" @click="apply()">Apply</el-button>
     </el-col>
   </div>
   <!-- </div> -->
@@ -206,12 +200,21 @@ export default {
   align-content: center;
 }
 #viewbtn {
-  border-radius: 10px;
-  /* margin-top: 25px; */
+  font-family: "Poppins";  
+  /* border-radius: 10px; */
+  margin-top: 25px;
   margin-left: 10px;
   text-align: center;
   font-weight: bold;
-  border-style: solid;
+  color: #0e2503;
+  size: 100%;
+  font-size: 25px;
+  transition: color 0.1s;
+
+}
+#viewbtn:hover {
+  text-decoration: underline;
+  color: #96c67f;
 }
 .table-container {
   margin-top: 40px;
@@ -230,20 +233,15 @@ export default {
   flex-direction: row;
   justify-content: space-evenly;
   margin-left: 73.5%;
-  max-width: 15%;
   padding-right: 3%;
   min-height: 200px;
   float: right;
   justify-content: flex-end;
 }
 #applybtn {
-  border-radius: 10px;
-  padding-left: 50%;
-  padding-right: 50%;
-  padding-top: 24%;
-  padding-bottom: 24%;
+  border-radius: 5px;
   text-align: center;
-  margin-right: 20px;
+  margin-right: 40px;
   font-weight: bold;
   border-style: solid;
   justify-content: flex-end;
@@ -252,7 +250,12 @@ export default {
 /* #applybtn:hover {
   background-color: #d4d381;
 } */
->>> .el-table__header tr {
+.el-table {
+  :deep(.el-table__header tr {
+    color: #96c67f;
+  })
+/* >>> .el-table__header tr {
   color: #96c67f;
+} */
 }
 </style>
