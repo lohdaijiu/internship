@@ -1,7 +1,7 @@
 <template>
   <NavBar />
-
-  <div style="margin-top: 5%">
+  <h1 style="margin-bottom: 40px">Messages</h1>
+  <!-- <div>
     <el-table
       :data="chatArr"
       style="width: 50%; margin-top: 5%; margin: auto"
@@ -20,6 +20,47 @@
       </el-table-column>
     </el-table>
   </div>
+
+  <br /> -->
+  <el-row>
+    <el-col :span="7"></el-col>
+    <el-col :span="10" class="conversation-container">
+      <el-scrollbar>
+        <el-card
+          class="box-card"
+          shadow="hover"
+          v-for="user in chatArr"
+          :key="user"
+        >
+          <el-row>
+            <el-col :span="22"
+              ><div class="card-body" @click="goToChat(user.uid)">
+                <el-avatar :size="30" :src="user.imageURL" class="avatar-img" />
+                <h5 class="name-msg">{{ user.nameid }}</h5>
+              </div>
+              <div class="tags-container">
+                <el-scrollbar>
+                  <div class="scrollbar-flex-content">
+                    <el-tag
+                      v-for="job in user.jobsArray"
+                      :key="job"
+                      class="job-tag"
+                      >{{ job }}</el-tag
+                    >
+                  </div>
+                </el-scrollbar>
+              </div>
+            </el-col>
+            <el-col :span="2"
+              ><el-icon color="#DDE1E8" :size="30" class="chat-icon"
+                ><chat-square @click="goToChat(user.uid)" /></el-icon
+            ></el-col>
+          </el-row>
+        </el-card>
+      </el-scrollbar>
+    </el-col>
+    <el-col :span="7"></el-col>
+  </el-row>
 </template>
 
 <script>
@@ -28,10 +69,12 @@ import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import NavBar from "../../components/EmployerNav.vue";
+import { ChatSquare } from "@element-plus/icons-vue";
 
 export default {
   components: {
     NavBar,
+    ChatSquare,
   },
   data() {
     return {
@@ -67,21 +110,25 @@ export default {
       const name = docSnap1.data().Name;
       const jobsApplied = docSnap1.data().JobsApplied;
       var jbs = "";
-
+      const jobArray = [];
       for (var j = 0; j < jobsApplied.length; j++) {
         const curr = jobsApplied[j];
         const arr = curr.split(" - ");
         if (arr[0] == employerName) {
+          jobArray.push(arr[1]);
           jbs = jbs.concat(arr[1], ", ");
         }
       }
-
+      console.log(jobArray);
       jbs = jbs.slice(0, -2);
 
+      const imageURL = docSnap1.data().photoURL;
       this.chatArr.push({
         uid: currChat,
         nameid: name,
         jobsInSameCoy: jbs,
+        imageURL: imageURL,
+        jobsArray: jobArray,
       });
     }
     console.log(this.chatArr);
@@ -89,7 +136,49 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.box-card {
+  margin: 15px;
+}
+.chat-icon {
+  margin: 0 auto;
+  height: 100%;
+
+  cursor: pointer;
+}
+.job-tag {
+  margin-right: 10px;
+}
+.scrollbar-flex-content {
+  display: flex;
+}
+.avatar-img {
+  margin-right: 10px;
+}
+.tags-container {
+  font-family: "Poppins";
+  margin: 10px;
+  display: flex;
+}
+.card-body {
+  display: flex;
+  margin: 10px;
+  cursor: pointer;
+}
+.name-msg {
+  display: inline;
+  font-family: "Poppins";
+  font-size: 15px;
+  margin: auto 0;
+}
+.conversation-container {
+  height: 500px;
+  background-color: #fff;
+  border-radius: 15px;
+  /* overflow: scroll;   */
+  margin-bottom: 40px;
+}
+
 .bottom {
   margin-top: 13px;
   line-height: 12px;

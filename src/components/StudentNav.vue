@@ -43,6 +43,7 @@ export default {
 
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 #signButton {
   border-radius: 5px;
   margin-right: 2%;
@@ -50,6 +51,7 @@ export default {
   background-color: white;
   border-style: solid;
   border-color: #96c67f;
+  font-family: "Poppins", sans-serif;
 }
 
 #project {
