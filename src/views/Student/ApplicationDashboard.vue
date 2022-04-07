@@ -6,8 +6,8 @@
     <br />
 
     <el-row>
-      <el-col :span="4"></el-col>
-      <el-col :span="16">
+      <el-col :span="3"></el-col>
+      <el-col :span="18">
         <el-table
           :data="tableData"
           style="width: 100%"
@@ -55,6 +55,8 @@
           </el-table-column>
         </el-table>
       </el-col>
+      <el-col :span="3"></el-col>
+
     </el-row>
   </div>
 </template>

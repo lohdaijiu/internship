@@ -212,6 +212,7 @@ export default {
   transition: color 0.1s;
 
 }
+
 #viewbtn:hover {
   text-decoration: underline;
   color: #96c67f;

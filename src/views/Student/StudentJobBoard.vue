@@ -123,6 +123,8 @@
         :header-row-style="headerStyle"
         :row-style="dataStyle"
         :header-cell-style="headerCellStyle"
+        @row-click="viewListing"
+        highlight-current-row="true"
       >
         <!-- @row-click="viewListing(row)" -->
 
@@ -138,7 +140,7 @@
         <el-table-column prop="yos" label="Year of Study" min-width="190">
         </el-table-column>
         <el-table-column prop="range" label="Date Range" min-width="200" />
-        <el-table-column fixed="right" width="190">
+        <el-table-column fixed="right" width="110">
           <template #default="scope">
             <el-button
               size="small"
@@ -147,12 +149,12 @@
               v-if="showApply(scope.row)"
               >Apply</el-button
             >
-            <el-button
+            <!-- <el-button
               size="small"
               @click="viewListing(scope.row)"
               v-if="showApply(scope.row)"
               >Details</el-button
-            >
+            > -->
             <medium v-if="!showApply(scope.row)">Job applied!</medium>
           </template>
         </el-table-column>
@@ -628,19 +630,7 @@ export default {
 //     },
 </script>
 
-<style scoped>
-/* TODO */
-.search-container {
-  margin-top: 40px;
-}
-.search-btn-container {
-  margin-left: 30px;
-}
-.table-container {
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-</style>
+
 <style>
 #remoteSelect .el-select__tags {
   transform: translateY(-80%) !important;
@@ -652,6 +642,7 @@ h1 {
   font-family: "Poppins";
   text-align: center;
 }
+
 </style>
 <style>
 .el-table_1_column_7 .el-table__cell {
@@ -668,5 +659,32 @@ h1 {
 }
 .el-table .ascending .sort-caret.ascending {
   border-bottom-color: #1f1d2a !important;
+}
+
+</style>
+
+<style scoped>
+.search-container {
+  margin-top: 40px;
+}
+.search-btn-container {
+  margin-left: 30px;
+}
+.table-container {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+/* >>> .el-table {
+  border-collapse: collapse;
+}
+>>> .el-table tr {
+  background-color: #fafafa;
+} */
+>>> .el-table tr:hover {
+    text-decoration: underline;
+    /* background-color: #96c67f; */
+    color: #96c67f;
+    /* text-decoration-color: #96c67f; */
+
 }
 </style>
