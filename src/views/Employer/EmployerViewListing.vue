@@ -128,14 +128,14 @@ export default {
         });
     },
 
-    async deleteJob(x) {
+    async deleteJob() {
       const id = getAuth().currentUser.uid;
       const db = getFirestore(firebaseApp);
       const docRef = doc(db, "User", id);
       const docSnap = await getDoc(docRef);
       const employerName = docSnap.data().CompanyName;
       const currDeletion = docSnap.data().NumberOfDeletes;
-      const docName = employerName.concat(" - ", x.title);
+      const docName = employerName.concat(" - ", this.job_title);
 
       await updateDoc(docRef, {
         NumberOfDeletes: currDeletion + 1,
@@ -144,6 +144,11 @@ export default {
       await updateDoc(doc(db, "Job", docName), {
         Deleted: true,
       });
+
+      alertMsg("info", "Job Deleted");
+      this.$router.push("/viewapplicants");
+
+      // window.location.reload();      
     },
   },
 
