@@ -199,7 +199,7 @@ export default {
       const docName = employerName.concat(" - ", x.title);
 
       await updateDoc(docRef, {
-        NumberOfDeletion: currDeletion + 1,
+        NumberOfDeletes: currDeletion + 1,
       });
 
       await updateDoc(doc(db, "Job", docName), {
