@@ -184,6 +184,7 @@ export default {
             Status: "Pending",
             CompanyName: this.company_name,
             Writeup: this.textarea,
+            VideoCall: false
           };
 
           await setDoc(docRef, data);
