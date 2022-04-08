@@ -139,7 +139,7 @@ export default {
         return;
       }
 
-      if (this.isStrongEnough(this.form.password)) {
+      if (!this.isStrongEnough(this.form.password)) {
         alertMsg("error", "Please ensure that you have at least 8 characters and at least 1 capital letter, smaller case letter, number, special character in your password!");
         return;
       }
@@ -181,6 +181,7 @@ export default {
     },
     isStrongEnough(password) {
       const passwordArr = password.split("")
+      console.log(passwordArr)
       if (passwordArr.length < 8) {
         return false
       } else {
