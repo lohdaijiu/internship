@@ -268,8 +268,14 @@ export default {
         return false;
       }
     },
-    viewProfile(x) {
-      this.$router.push({ path: "/viewprofile", query: { id: x.uid } });
+    async viewProfile(x) {
+      const id = getAuth().currentUser.uid;
+      const db = getFirestore(firebaseApp);
+      const docRef = doc(db, "User", id);
+      const docSnap = await getDoc(docRef);
+      const employerName = docSnap.data().CompanyName;
+      const docName = employerName.concat(" - ", x.title, " - ", x.uid)
+      this.$router.push({ path: "/viewprofile", query: { id: docName } });
     },
   },
 
