@@ -195,7 +195,7 @@ export default {
       const docRef = doc(db, "User", id);
       const docSnap = await getDoc(docRef);
       const employerName = docSnap.data().CompanyName;
-      const currDeletion = docSnap.data().NumberOfDeletion;
+      const currDeletion = docSnap.data().NumberOfDeletes;
       const docName = employerName.concat(" - ", x.title);
 
       await updateDoc(docRef, {
