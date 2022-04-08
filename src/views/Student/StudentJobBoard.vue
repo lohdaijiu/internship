@@ -300,7 +300,7 @@ export default {
         value1,
       } = this;
 
-      console.log(value1)
+      console.log(value1);
       // console.log(jobData, value1[0].toString().slice(4, 15));
 
       // const searchStartDate = value1[0].toString().slice(4, 15).slice(4, 6);
@@ -332,12 +332,12 @@ export default {
           (workLocation.includes(worklocation) || workLocation.length == 0) &&
           (durationValue.includes(duration) || durationValue.length == 0) &&
           (companyValue.includes(companyname) || companyValue.length == 0) &&
-          (value1 == null ||
+          (value1.length === 0 ||
             this.dateCompare1(
               this.getSearchStartDate(value1),
               this.getStartDate(range)
             )) &&
-          (value1 == null ||
+          (value1.length === 0 ||
             this.dateCompare2(
               this.getSearchEndDate(value1),
               this.getEndDate(range)
@@ -447,6 +447,9 @@ export default {
     dateCompare1(x, y) {
       //returns true if x is earlier or same as y
       //convert month into number
+      if (x === null) {
+        return;
+      }
       const monthArr = [
         "Jan",
         "Feb",
@@ -488,6 +491,9 @@ export default {
     dateCompare2(x, y) {
       //returns true if x is later or same as y
       //convert month into number
+      if (x === null) {
+        return;
+      }
       const monthArr = [
         "Jan",
         "Feb",
@@ -547,10 +553,16 @@ export default {
     },
 
     getSearchStartDate(x) {
+      if (x.length === 0) {
+        return null;
+      }
       return x[0].toString().slice(4, 15);
     },
 
     getSearchEndDate(x) {
+      if (x.length === 0) {
+        return null;
+      }
       return x[1].toString().slice(4, 15);
     },
   },
@@ -630,7 +642,6 @@ export default {
 //     },
 </script>
 
-
 <style>
 #remoteSelect .el-select__tags {
   transform: translateY(-80%) !important;
@@ -642,7 +653,6 @@ h1 {
   font-family: "Poppins";
   text-align: center;
 }
-
 </style>
 <style>
 .el-table_1_column_7 .el-table__cell {
@@ -660,7 +670,6 @@ h1 {
 .el-table .ascending .sort-caret.ascending {
   border-bottom-color: #1f1d2a !important;
 }
-
 </style>
 
 <style scoped>
@@ -681,10 +690,9 @@ h1 {
   background-color: #fafafa;
 } */
 >>> .el-table tr:hover {
-    text-decoration: underline;
-    /* background-color: #96c67f; */
-    color: #96c67f;
-    text-decoration-color: #96c67f;
-
+  text-decoration: underline;
+  /* background-color: #96c67f; */
+  color: #96c67f;
+  text-decoration-color: #96c67f;
 }
 </style>
