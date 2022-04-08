@@ -1,31 +1,32 @@
 <template>
-  <EmployerNav/>
-  <EmployerHome/>
+  <EmployerNav />
+  <!-- <br /> -->
+  <!-- <div class="stats-container"> -->
+  <EmployerHome />
+  <!-- </div> -->
 </template>
 
 <script>
-import EmployerNav from "../../components/EmployerNav.vue"
-import EmployerHome from '../../components/EmployerHome.vue'
+import EmployerNav from "../../components/EmployerNav.vue";
+import EmployerHome from "../../components/EmployerHome.vue";
 
 export default {
-    name: 'App',
+  name: "App",
 
-    mounted() {
-       
-    },
+  mounted() {},
 
-    methods: {
+  methods: {},
 
-    },
-
-    components: {
-      EmployerNav,
-      EmployerHome
-    }
-}
+  components: {
+    EmployerNav,
+    EmployerHome,
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+.stats-container {
+  margin: 50px;
+}
 </style>
 

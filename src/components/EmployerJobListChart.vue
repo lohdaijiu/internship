@@ -1,41 +1,52 @@
 <template>
-
-  <bar-chart class="user" width=500px :data = "chartData"></bar-chart>
+  <bar-chart
+    class="user"
+    width="500px"
+    :data="chartData"
+    :colors="[
+      '#ffb626',
+      '#7c8fff',
+      '#ff542c',
+      '#bbffcb',
+      '#8c0000',
+      '#ffbff8',
+      '#212800',
+      '#61002f',
+      '#3e0300',
+    ]"
+  ></bar-chart>
   <!--
   <button @click= "updateMe()">Click to update the stats</button>
   -->
 </template>
  
 <script>
-import firebaseApp from '../main.js'
-import { getFirestore} from "firebase/firestore";
-import { doc , getDoc} from "firebase/firestore";
+import firebaseApp from "../main.js";
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-
-
 
 export default {
   name: "EmployerJobListChart",
   data() {
     return {
-      chartData: { },
+      chartData: {},
       numOfApplicants: [],
-      jobNameArr: []
-    }
+      jobNameArr: [],
+    };
   },
   async beforeMount() {
     const db = getFirestore(firebaseApp);
-    const auth = getAuth()
-    const id = auth.currentUser.uid
+    const auth = getAuth();
+    const id = auth.currentUser.uid;
     const docRef = doc(db, "User", id);
     const docSnap = await getDoc(docRef);
-  
+
     const jobArr = docSnap.data().Jobs;
     const companyName = docSnap.data().CompanyName;
     //console.log(jobArr);
     //console.log(companyName);
     for (var i = 0; i < jobArr.length; i++) {
-          
       let docName = companyName.concat(" - ", jobArr[i]);
       const docRef = doc(db, "Job", docName);
       const docSnap = await getDoc(docRef);
@@ -47,32 +58,28 @@ export default {
     }
     this.updateMe();
   },
-  methods:{
-    updateMe: function() {
-          
-          this.chartData = {}
-          //console.log(jobNameArr);
-          //console.log(numOfApplicants)
-          for (var i = 0; i < this.jobNameArr.length; i++){
-              // console.log(numOfApplicants[i])
-              this.chartData[this.jobNameArr[i]] = this.numOfApplicants[i];
-          }
-          
-          console.log(this.chartData);
-    }
-          
-          //console.log(this.chartData.Target);         
-    }
-           
+  methods: {
+    updateMe: function () {
+      this.chartData = {};
+      //console.log(jobNameArr);
+      //console.log(numOfApplicants)
+      for (var i = 0; i < this.jobNameArr.length; i++) {
+        // console.log(numOfApplicants[i])
+        this.chartData[this.jobNameArr[i]] = this.numOfApplicants[i];
+      }
 
-        }
+      console.log(this.chartData);
+    },
 
+    //console.log(this.chartData.Target);
+  },
+};
 </script>
 
 <style scoped>
-.user{
+.user {
   margin: auto;
   border: 3px solid white;
-  color: #A5A6F6;
+  color: #a5a6f6;
 }
 </style>
