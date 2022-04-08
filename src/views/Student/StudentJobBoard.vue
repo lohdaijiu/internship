@@ -116,7 +116,7 @@
       <el-table
         ref="tableRef"
         :data="queriedData"
-        :default-sort="{ prop: 'postdate', order: descending }"
+        :default-sort="{ prop: 'postdate', order: 'descending' }"
         style="width: 100%"
         max-height="550"
         :table-layout="auto"

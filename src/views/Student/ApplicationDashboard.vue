@@ -15,10 +15,17 @@
           :header-row-style="headerStyle"
           :row-style="dataStyle"
           :header-cell-style="headerCellStyle"
+          :default-sort="{ prop: 'date', order: 'descending' }"
+          
         >
           <el-table-column prop="companyname" label="Company" width="180" />
           <el-table-column prop="jobpos" label="Job Position" min-width="200" />
-          <el-table-column prop="date" label="Date Applied" min-width="130" />
+          <el-table-column 
+            prop="date" 
+            label="Date Applied" 
+            min-width="130" 
+            sortable
+            />
           <el-table-column prop="status" label="Progress" min-width="80" />
           <el-table-column
             prop="status"
