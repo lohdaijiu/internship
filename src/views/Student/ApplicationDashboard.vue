@@ -66,6 +66,8 @@ import NavBar from "../../components/StudentNav.vue";
 import { getDoc, getFirestore, doc, updateDoc } from "firebase/firestore";
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
+import { alertMsg } from "../../functions/alertMsg";
+
 
 var tableData = [];
 
@@ -116,8 +118,11 @@ export default {
       await updateDoc(doc(db, "Application", docName), {
         Status: "Accepted by Student",
       });
+      
+      alertMsg("success", "Offer Accepted");
 
-      alert("Offer Accepted");
+
+      // alert("Offer Accepted");
       window.location.reload();
     },
 
@@ -130,7 +135,10 @@ export default {
         Status: "Rejected by Student",
       });
 
-      alert("Offer Rejected");
+      alertMsg("info", "Offer Rejected");
+
+
+      // alert("Offer Rejected");
       window.location.reload();
     },
 
