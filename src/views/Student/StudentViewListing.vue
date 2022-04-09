@@ -6,10 +6,6 @@
 
     <el-row id="general_info">
       <el-col :span="6"></el-col> 
-      <!-- <el-col :span="10" id="name_col">
-           
-        <h2 onclick="seeEmployer()">{{ company_name }}</h2>
-      </el-col> -->
       <el-col :span="12" id="viewbtn_container">
         <el-button id="viewbtn" type="text" @click="seeEmployer()">{{ company_name }}</el-button>
       </el-col>      
@@ -46,7 +42,7 @@
     <div class="details" align="center">
       <div class="tabbable" align="left">
         <!-- Tabs -->
-        <el-tabs tab-position="top" stretch="true">
+        <el-tabs tab-position="top" stretch>
           <el-tab-pane label="Job Description">
             {{ job_descr }}
           </el-tab-pane>
@@ -66,9 +62,15 @@
 
     <!--  APPLY  -->
     <el-col :span="2" class="apply-btn-container">
-      <el-button id="applybtn" type="success" @click="apply()">Apply</el-button>
+      <el-button 
+        id="applybtn" 
+        type="success" 
+        @click="apply()"
+        v-if="showApply()"        
+        >Apply</el-button
+        >
+
     </el-col>
-      <!-- <el-col :span="2"></el-col> -->
     <el-col :span="2" class="apply-btn-container">
     <el-button id ='backbtn' type="info" @click='goBack'>Back</el-button>
     </el-col>
@@ -85,10 +87,16 @@ import StudentNav from "../../components/StudentNav.vue";
 import firebaseApp from "../../main.js";
 import { getFirestore } from "firebase/firestore";
 import { getDoc, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { alertMsg } from "../../functions/alertMsg";
+
+
 var listingName = "";
 var listingData = [];
 var tableData = [];
 var onlyListing = [];
+const applied = true;
+
 export default {
   name: "StudentViewListing",
   components: {
@@ -96,6 +104,7 @@ export default {
   },
   data() {
     return {
+      applied,
       listingData,
       listingName,
       tableData,
@@ -129,11 +138,39 @@ export default {
       this.$router.go(-1)
     },    
     async apply() {
-      this.$router.push({
-        path: "/applyjob",
-        query: { job: this.$route.query.jobId },
-      });
+      const notApplied = await this.appliedBoolean();
+      if (notApplied) {
+        this.$router.push({
+          path: "/applyjob",
+          query: { job: this.$route.query.jobId },
+        });
+
+      } else {
+        alertMsg("error", "Job already applied");
+      }
+      
+    },  
+
+    showApply() {
+      console.log(this.applied)
+      return this.applied;
     },
+
+    async appliedBoolean() {
+      const db = getFirestore(firebaseApp);
+      const id = getAuth().currentUser.uid;
+      // const applicationName = x.companyname.concat(" - ", x.jobpos, " - ", id);
+      const applicationName = this.$route.query.jobId.concat(" - ", id);
+      // console.log(applicationName);
+      const docRef = doc(db, "Application", applicationName);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return false;
+      } else {
+        return true;
+      }
+    },    
+
     seeEmployer() {
       this.$router.push({
         path: "/viewemployerprofile",
@@ -142,17 +179,14 @@ export default {
     }
   },
   async created() {
-    // console.log('Query: ', this.$route.query.jobId);
     listingName = this.$route.query.jobId;
     listingData = [];
-    console.log("getting listing");
     const db = getFirestore(firebaseApp);
     const docName = listingName;
-    console.log(docName);
     const docRef = doc(db, "Job", docName);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("exists");
+      // console.log("exists");
       try {
         this.companyuid = docSnap.data().Companyuid
         // console.log(docSnap.data().CompanyName)
@@ -176,13 +210,10 @@ export default {
           description: docSnap.data().JobDescription,
           competency: docSnap.data().PreferredCompetencies,
         });
-        console.log(listingData);
-        console.log(listingData[0]["competency"]);
         tableData = [];
         onlyListing = Object.entries(listingData[0]).map((e) => ({
           [e[0]]: e[1],
         }));
-        console.log(onlyListing);
         this.tableData.push({
           yos: onlyListing[4]["yos"],
           duration: onlyListing[3]["duration"],
@@ -190,8 +221,7 @@ export default {
           postdate: onlyListing[2]["postdate"],
           range: onlyListing[6]["range"],
         });
-        // console.log(tableData[0])
-        // return ListingData;
+
       } catch (error) {
         console.log(error);
       }
@@ -201,6 +231,12 @@ export default {
     this.tech_compet = listingData[0]["competency"];
     this.location = listingData[0]["worklocation"];
     this.company_name = listingData[0]["companyname"];
+
+    const applied = docSnap.data().Applicants;  
+    const id = getAuth().currentUser.uid;
+
+    // console.log(applied.includes(id))
+    this.applied = !applied.includes(id)
   },
 };
 </script>
@@ -261,11 +297,6 @@ export default {
   border-radius: 5px;
   text-align: center;
   size: large;
-  /* margin-right: 40px; */
-  /* font-weight: bold; */
-  /* border-style: solid; */
-  /* justify-content: flex-end;
-  float: right; */
 }
 
 /* .el-table { */

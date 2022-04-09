@@ -31,9 +31,15 @@
         </template>
       </div>
     </div>
-    <div>
-    <el-button id ='backbtn' type="success" plain @click='goBack'>Go Back</el-button>
-    </div>
+
+    <el-row>
+      <el-col :span="20"></el-col>  
+      <el-col :span="2" class="back-btn-container">
+      <el-button id ='backbtn' type="info" @click='goBack'>Back</el-button>
+      </el-col>
+        <el-col :span="2"></el-col>  
+    
+    </el-row>    
   </body>
 </template>
 
@@ -194,19 +200,19 @@ h2{
     
 }
 
-#backbtn {
-    border-radius: 5px;
-    margin-left: 80%;
+.back-btn-container {
+  justify-content: space-evenly;
+  /* margin-left: 73.5%; */
+  padding-right: 3%;
+  min-height: 200px;
+  float: right;
+  justify-content: flex-end;
+}
 
-    padding-left: 1.5%;
-    padding-right: 1.5%;
-    padding-top: 0.5%;
-    text-align: center;
-    padding-bottom: 0.5%;
-    margin-bottom: 5%;
-    font-weight: bold;
-    border-style: solid;
-    color:black;
+#backbtn {
+  border-radius: 5px;
+  text-align: center;
+  size: large;
 }
 /* 
 #editButton:hover {
