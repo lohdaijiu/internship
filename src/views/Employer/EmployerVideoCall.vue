@@ -19,7 +19,7 @@
   </div>
   <el-button type="success" class="firstbutton" @click="onJoin">Turn on Camera</el-button>
   <el-button type="warning"  @click="onLeave">Turn off Camera</el-button>
-  <el-button type="danger"  @click="leaveForStudent">Leave Room</el-button>
+  <el-button type="danger"  @click="leaveForEmployer">Leave Room</el-button>
 </template>
 
 <script>
