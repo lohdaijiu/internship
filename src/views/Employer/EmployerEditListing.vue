@@ -100,21 +100,6 @@
         </el-form>
       </el-card>
 
-      <!-- <div id="buttonContainer">
-        <el-row>
-          <el-col :span="10"></el-col>
-          <el-col :span="4">
-            <el-button
-              @click="updateJob()"
-              class="add-btn"
-              size="large"
-              color="#A5A6F6"
-              ><p class="btn-text">Create</p>
-            </el-button>
-          </el-col>
-          <el-col :span="10"></el-col>
-        </el-row>
-      </div> -->
     </el-col>
   </el-row>
   <el-col :span="2"></el-col>
@@ -249,21 +234,40 @@ export default {
         this.form.daterange= arrayData["DateRange"];
         this.originalTitle = this.form.internshipTitle
         this.originalApplicants = arrayData["Applicants"];
+        console.log(this.originalApplicants)
+
+
+// TESTING
+        const docRef1 = doc(db, "User", getAuth().currentUser.uid);
+
+        const companyName1 = await getDoc(docRef1);
+        // console.log("print 281", this.form.internshipTitle, companyName1);
+        const companyName = companyName1.data().CompanyName;
+        let docName = companyName.concat(" - ", this.form.internshipTitle);
 
         // console.log("title", this.originalTitle)
-
-        
         this.originalApplicants.forEach(async (id) => {
 
+          console.log(id)
+
+          // remove from student user JobApplied array
           const stuDocRef = doc(db, "User", id);
           const stuDocSnap = await getDoc(stuDocRef);
           const applied = stuDocSnap.data()["JobsApplied"];
-          console.log("print applied", applied)
+          console.log("applied", applied)
+          const applicationName = docName.concat(" - ", id)
+          // await updateDoc(stuDocRef, {
+          //     JobsApplied: arrayRemove(applicationName),
+          // });
 
-
-
-
-        })
+          // remove from application
+          const applyDocRef = doc(db, "Application", applicationName);
+          const applyDocSnap = await getDoc(applyDocRef);
+          const applicatns = applyDocSnap.data();
+          console.log("appl", applicatns)
+          // await deleteDoc(applyDocRef);
+        
+        })        
 
     },
 
@@ -278,19 +282,17 @@ export default {
         const docRef1 = doc(db, "User", getAuth().currentUser.uid);
 
         const companyName1 = await getDoc(docRef1);
-        console.log("print 281", this.form.internshipTitle, companyName1);
+        // console.log("print 281", this.form.internshipTitle, companyName1);
         const companyName = companyName1.data().CompanyName;
         let docName = companyName.concat(" - ", this.form.internshipTitle);
         const docRef = doc(db, "Job", docName);
         const id = getAuth().currentUser.uid;
 
         const listingName = this.$route.query.jobId;
-        // const jobDocRef = doc(db, "Job", listingName);
-        // const jobDocSnap = await getDoc(jobDocRef);
-        // const applicants = jobDocSnap.data()["Applicants"];    
-        // console.log(applicants)
 
         this.originalApplicants.forEach(async (id) => {
+
+          console.log(id)
 
           // remove from student user JobApplied array
           const stuDocRef = doc(db, "User", id);
@@ -303,11 +305,9 @@ export default {
           });
 
           // remove from application
-
-
-
-
-
+          const applyDocRef = doc(db, "Application", applicationName);
+          await deleteDoc(applyDocRef);
+        
         })
 
 
