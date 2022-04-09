@@ -4,6 +4,19 @@
     width="500px"
     style="--p: 60; --b: 10px; --c: purple"
     :data="chartData"
+    :colors="[
+      '#96c67f',
+      '#90EE90',
+      '#008000',
+      '#006400',
+      '#ff542c',
+      '#bbffcb',
+      '#8c0000',
+      '#ffbff8',
+      '#212800',
+      '#61002f',
+      '#3e0300',
+    ]"
   ></pie-chart>
   <!--
   <button @click= "updateMe()">Click to update the stats</button>

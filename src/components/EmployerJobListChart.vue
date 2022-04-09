@@ -4,15 +4,7 @@
     width="500px"
     :data="chartData"
     :colors="[
-      '#ffb626',
-      '#7c8fff',
-      '#ff542c',
-      '#bbffcb',
-      '#8c0000',
-      '#ffbff8',
-      '#212800',
-      '#61002f',
-      '#3e0300',
+     '#a5a6f6'
     ]"
   ></bar-chart>
   <!--
