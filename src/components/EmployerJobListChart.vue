@@ -68,7 +68,14 @@ export default {
         this.chartData[this.jobNameArr[i]] = this.numOfApplicants[i];
       }
 
-      console.log(this.chartData);
+      //console.log(this.chartData);
+      for (var k = 0; k < this.jobNameArr.length; k++) {
+        // console.log(numOfApplicants[i])
+        if (this.chartData[this.jobNameArr[k]] == 0) {
+          delete this.chartData[this.jobNameArr[k]];
+        }
+        
+      }
     },
 
     //console.log(this.chartData.Target);
