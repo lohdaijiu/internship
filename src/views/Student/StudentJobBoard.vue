@@ -124,7 +124,7 @@
         :row-style="dataStyle"
         :header-cell-style="headerCellStyle"
         @row-click="viewListing"
-        highlight-current-row="true"
+        highlightCurrentRow
       >
         <!-- @row-click="viewListing(row)" -->
 
