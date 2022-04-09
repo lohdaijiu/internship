@@ -57,7 +57,9 @@ export default {
       console.log("asdf : ", event);
     },
     async leaveForEmployer() {
+      if (!this.$refs.webrtc === null) {
       this.$refs.webrtc.leave();
+      }
       const db = getFirestore(firebaseApp);
       const docRef2 = doc(db, "Application", this.roomID);
       await updateDoc(docRef2, { VideoCall: false });

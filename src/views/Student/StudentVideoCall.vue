@@ -17,10 +17,12 @@
       @error="onError"
     />
   </div>
-  
-  <el-button type="success" class="firstbutton" @click="onJoin">Turn on Camera</el-button>
-  <el-button type="warning"  @click="onLeave">Turn off Camera</el-button>
-  <el-button type="danger"  @click="leaveForStudent">Leave Room</el-button>
+
+  <el-button type="success" class="firstbutton" @click="onJoin"
+    >Turn on Camera</el-button
+  >
+  <el-button type="warning" @click="onLeave">Turn off Camera</el-button>
+  <el-button type="danger" @click="leaveForStudent">Leave Room</el-button>
 </template>
 
 <script>
@@ -37,7 +39,7 @@ export default {
   data() {
     return {
       roomID: this.$route.query.id,
-      roomname: "Interview for ".concat(this.$route.query.id.split(" - ")[1])
+      roomname: "Interview for ".concat(this.$route.query.id.split(" - ")[1]),
     };
   },
   methods: {
@@ -57,8 +59,10 @@ export default {
       console.log("asdf : ", event);
     },
     leaveForStudent() {
-      this.$refs.webrtc.leave();
-      this.$router.push("/studenthome")
+      if (!this.$refs.webrtc === null) {
+        this.$refs.webrtc.leave();
+      }
+      this.$router.push("/studenthome");
     },
   },
 };
@@ -69,13 +73,13 @@ export default {
   margin-right: 8px;
 }
 .welcome {
-    text-align: center;
-    justify-content: space-between;
-    font-family: "Poppins", sans-serif;
-    color: #1f1d2a;
-    font-size: 20px;
+  text-align: center;
+  justify-content: space-between;
+  font-family: "Poppins", sans-serif;
+  color: #1f1d2a;
+  font-size: 20px;
 }
 .firstbutton {
-  margin-left: 40%
+  margin-left: 40%;
 }
 </style>
