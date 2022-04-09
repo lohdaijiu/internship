@@ -22,12 +22,12 @@ import { getFirestore} from "firebase/firestore";
 import { doc , getDoc} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-const compArr = [];
+var compArr = [];
 export default {
   name: "StudentCompDistributionChart",
   data() {
     return {
-      chartData: { }
+      chartData : {},
     }
   },
   async created() {
@@ -47,11 +47,13 @@ export default {
                 compArr.push(compName);
     }
     this.updateMe();
+    compArr = [];
   },
   methods:{
     updateMe: function() {
             //console.log(jobArr);
           this.chartData = {}
+          console.log(compArr.length)
           for (var i = 0; i < compArr.length; i++)
               if (compArr[i] in this.chartData){
                   const temp = this.chartData[compArr[i]];
@@ -60,11 +62,9 @@ export default {
                   this.chartData[compArr[i]] = 1;
                   //console.log(this.chartData[jobNameArr[i]]);
               }
-          console.log(this.chartData);  
+          //console.log(this.chartData);  
           //console.log(this.chartData.Target);         
-    }
-           
-
+    }    
         }
 
   }

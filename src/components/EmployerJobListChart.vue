@@ -27,7 +27,8 @@ export default {
       jobNameArr: [],
     };
   },
-  async beforeMount() {
+  async created() {
+    this.chartData = {}
     const db = getFirestore(firebaseApp);
     const auth = getAuth();
     const id = auth.currentUser.uid;
@@ -48,6 +49,7 @@ export default {
       this.numOfApplicants[i] = applicantsArr.length;
       this.jobNameArr.push(jobArr[i]);
     }
+    this.chartData = {};
     this.updateMe();
   },
   methods: {
