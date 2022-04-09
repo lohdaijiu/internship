@@ -1,6 +1,16 @@
 <template>
 
-  <pie-chart class="user" width=500px :data = "chartData"></pie-chart>
+  <pie-chart class="user" width=500px :data = "chartData"
+  :colors="[
+      '#96c67f',
+      '#90EE90',
+      '#008000',
+      '#006400',
+      '#556B2F',
+      '#228B22',
+      '#32CD32'
+    ]"
+  ></pie-chart>
   <!--
   <button @click= "updateMe()">Click to update the stats</button>
   -->
@@ -33,7 +43,7 @@ export default {
                 const jobInfo = document1.data();
                 //console.log(jobInfo);
                 const compName = jobInfo.CompanyName;
-                console.log(compName);
+                //console.log(compName);
                 compArr.push(compName);
     }
     this.updateMe();
