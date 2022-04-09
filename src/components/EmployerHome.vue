@@ -38,7 +38,7 @@ export default {
     EmployerJobListChart,
   },
   data() {
-    return { keyword: "", numOfListedRoles: " ", name: "" };
+    return { keyword: "", numOfListedRoles: 0, name: "" };
   },
   async created() {
     const db = getFirestore(firebaseApp);
@@ -46,10 +46,20 @@ export default {
     const id = auth.currentUser.uid;
     const docRef = doc(db, "User", "" + id);
     const docSnap = await getDoc(docRef);
+    //console.log(docSnap.data());
     this.name = docSnap.data().CompanyName;
     const jobArr = docSnap.data().Jobs;
+    for (var i = 0; i < jobArr.length; i++) {
+                const docRef1 = doc(db, "Job", this.name + " - " + jobArr[i]);
+                //console.log(docRef1);
+                const docSnap1 = await getDoc(docRef1);
+                console.log(docSnap1.data().Deleted);
+                if (docSnap1.data().Deleted == false){
+                  this.numOfListedRoles = this.numOfListedRoles + 1;
+                }
+    }
     //console.log(jobArr)
-    this.numOfListedRoles = jobArr.length;
+    //this.numOfListedRoles = jobArr.length;
   },
 
   methods: {},
