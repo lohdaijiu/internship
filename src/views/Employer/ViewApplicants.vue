@@ -175,7 +175,7 @@ export default {
       } else {
         const data = { created: true };
         await setDoc(docRef4, data);
-        console.log("asdf");
+        // console.log("asdf");
         const docRef5 = doc(db, "User", id);
         const docRef6 = doc(db, "User", x.uid);
         await updateDoc(docRef5, { Chats: arrayUnion(x.uid) });
@@ -292,11 +292,11 @@ export default {
         const jobArr = docSnap.data().Jobs;
         const companyName = docSnap.data().CompanyName;
 
-        console.log(jobArr);
+        // console.log(jobArr);
 
         for (var i = 0; i < jobArr.length; i++) {
           const currJob = companyName.concat(" - ", jobArr[i]);
-          console.log(currJob);
+          // console.log(currJob);
           const docRef1 = doc(db, "Job", currJob);
           const docSnap1 = await getDoc(docRef1);
           if (!docSnap1.exists()) {
@@ -323,7 +323,7 @@ export default {
                 " - ",
                 currApplicant
               );
-              console.log(docName);
+              // console.log(docName);
               const docRef3 = doc(db, "Application", docName);
               const docSnap3 = await getDoc(docRef3);
 
@@ -355,7 +355,7 @@ export default {
     await getData().then(() => {
       this.done = true;
     });
-    console.log(tableData);
+    // console.log(tableData);
   },
 };
 </script>

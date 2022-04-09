@@ -224,7 +224,8 @@ export default {
       daterange: "",
       rules,
       validStatus: false,
-      orginalTitle: "",
+      originalTitle: "",
+      originalApplicants: "",
     };
   },
 
@@ -246,7 +247,23 @@ export default {
         this.form.type= arrayData["Type"],
         this.form.renum= arrayData["Renumeration"],
         this.form.daterange= arrayData["DateRange"];
-        this.orginalTitle = this.form.internshipTitle
+        this.originalTitle = this.form.internshipTitle
+        this.originalApplicants = arrayData["Applicants"];
+
+        // console.log("title", this.originalTitle)
+
+        
+        this.originalApplicants.forEach(async (id) => {
+
+          const stuDocRef = doc(db, "User", id);
+          const stuDocSnap = await getDoc(stuDocRef);
+          const applied = stuDocSnap.data()["JobsApplied"];
+          console.log("print applied", applied)
+
+
+
+
+        })
 
     },
 
@@ -261,15 +278,40 @@ export default {
         const docRef1 = doc(db, "User", getAuth().currentUser.uid);
 
         const companyName1 = await getDoc(docRef1);
-        console.log(this.form.internshipTitle, companyName1);
+        console.log("print 281", this.form.internshipTitle, companyName1);
         const companyName = companyName1.data().CompanyName;
         let docName = companyName.concat(" - ", this.form.internshipTitle);
         const docRef = doc(db, "Job", docName);
         const id = getAuth().currentUser.uid;
-        var errorboolean = true;
 
         const listingName = this.$route.query.jobId;
+        // const jobDocRef = doc(db, "Job", listingName);
+        // const jobDocSnap = await getDoc(jobDocRef);
+        // const applicants = jobDocSnap.data()["Applicants"];    
+        // console.log(applicants)
 
+        this.originalApplicants.forEach(async (id) => {
+
+          // remove from student user JobApplied array
+          const stuDocRef = doc(db, "User", id);
+          // const stuDocSnap = await getDoc(stuDocRef);
+          // const applied = stuDocSnap.data()["JobsApplied"];
+          // console.log(applied)
+          const applicationName = docName.concat(" - ", id)
+          await updateDoc(stuDocRef, {
+              JobsApplied: arrayRemove(applicationName),
+          });
+
+          // remove from application
+
+
+
+
+
+        })
+
+
+        // delete listing from Job
         await deleteDoc(doc(db, "Job", listingName));
 
         const data = {
@@ -288,10 +330,15 @@ export default {
         };
         try {
           const docRef2 = doc(db, "User", id);
+          // insert new data into Job
           await setDoc(docRef, data);
+
+          // remove original title from company user's Jobs array
           await updateDoc(docRef2, {
-              Jobs: arrayRemove(this.orginalTitle),
+              Jobs: arrayRemove(this.originalTitle),
           });
+
+          // add new title into company user's Jobs array
           await updateDoc(docRef2, {
             Jobs: arrayUnion(this.form.internshipTitle),
           });
@@ -302,10 +349,6 @@ export default {
 
         } catch (error) {
           console.error(error);
-          errorboolean = false;
-        }
-        if (!errorboolean) {
-          //this.$router.push("/employerhome")
         }
         return;
     },      
@@ -314,10 +357,10 @@ export default {
       this.$refs.ruleFormRef
         .validate((valid) => {
           if (valid) {
-            console.log("submit!");
+            // console.log("submit!");
             this.updateJob();
           } else {
-            console.log("error submit!");
+            // console.log("error submit!");
             return false;
           }
         })
