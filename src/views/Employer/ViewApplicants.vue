@@ -64,7 +64,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="status" label="Status" />
-          <el-table-column fixed="right" width="180">
+          <el-table-column fixed="right" width="170">
             <template #default="scope">
               <el-button
                 size="small"
