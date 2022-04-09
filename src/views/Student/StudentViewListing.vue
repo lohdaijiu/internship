@@ -6,10 +6,6 @@
 
     <el-row id="general_info">
       <el-col :span="6"></el-col> 
-      <!-- <el-col :span="10" id="name_col">
-           
-        <h2 onclick="seeEmployer()">{{ company_name }}</h2>
-      </el-col> -->
       <el-col :span="12" id="viewbtn_container">
         <el-button id="viewbtn" type="text" @click="seeEmployer()">{{ company_name }}</el-button>
       </el-col>      
@@ -75,7 +71,6 @@
         >
 
     </el-col>
-      <!-- <el-col :span="2"></el-col> -->
     <el-col :span="2" class="apply-btn-container">
     <el-button id ='backbtn' type="info" @click='goBack'>Back</el-button>
     </el-col>
@@ -154,22 +149,7 @@ export default {
         alertMsg("error", "Job already applied");
       }
       
-    },
-
-    // async checkApply() {
-    //   console.log("LOOK HERE")
-
-    //   const db = getFirestore(firebaseApp);
-    //   const docRef = doc(db, "Job", this.$route.query.jobId);
-    //   const docSnap = await getDoc(docRef);
-    //   const applied = docSnap.data().Applicants;  
-    //   const id = getAuth().currentUser.uid;
-    //   // const jobid = this.$route.query.jobId;
-
-    //   console.log(applied.includes(id))
-    //   this.applied = !applied.includes(id)
-    //   // return !applied.includes(id);
-    // },    
+    },  
 
     showApply() {
       console.log(this.applied)
@@ -199,13 +179,10 @@ export default {
     }
   },
   async created() {
-    // console.log('Query: ', this.$route.query.jobId);
     listingName = this.$route.query.jobId;
     listingData = [];
-    // console.log("getting listing");
     const db = getFirestore(firebaseApp);
     const docName = listingName;
-    // console.log(docName);
     const docRef = doc(db, "Job", docName);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -233,13 +210,10 @@ export default {
           description: docSnap.data().JobDescription,
           competency: docSnap.data().PreferredCompetencies,
         });
-        // console.log(listingData);
-        // console.log(listingData[0]["competency"]);
         tableData = [];
         onlyListing = Object.entries(listingData[0]).map((e) => ({
           [e[0]]: e[1],
         }));
-        // console.log(onlyListing);
         this.tableData.push({
           yos: onlyListing[4]["yos"],
           duration: onlyListing[3]["duration"],
@@ -247,8 +221,7 @@ export default {
           postdate: onlyListing[2]["postdate"],
           range: onlyListing[6]["range"],
         });
-        // console.log(tableData[0])
-        // return ListingData;
+
       } catch (error) {
         console.log(error);
       }
@@ -261,9 +234,8 @@ export default {
 
     const applied = docSnap.data().Applicants;  
     const id = getAuth().currentUser.uid;
-    // const jobid = this.$route.query.jobId;
 
-    console.log(applied.includes(id))
+    // console.log(applied.includes(id))
     this.applied = !applied.includes(id)
   },
 };
@@ -325,11 +297,6 @@ export default {
   border-radius: 5px;
   text-align: center;
   size: large;
-  /* margin-right: 40px; */
-  /* font-weight: bold; */
-  /* border-style: solid; */
-  /* justify-content: flex-end;
-  float: right; */
 }
 
 /* .el-table { */
