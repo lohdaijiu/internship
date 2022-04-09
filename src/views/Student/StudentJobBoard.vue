@@ -2,17 +2,6 @@
   <StudentNav />
   <br />
   <h1>Find Internships</h1>
-  <!-- <div class="searchbar" style="width: 100%">
-    <input type="text" placeholder="Search for an internship..." v-model="searchQuery"/>
-    <i class="searchicon">
-        <el-button type="primary">
-          <el-icon style="vertical-align: middle">
-            <search />
-          </el-icon>
-          <span style="vertical-align: middle"> Search </span>
-        </el-button>
-    </i>
-  </div> -->
   <el-row class="search-container">
     <el-col :span="3"></el-col>
     <el-col :span="12">
@@ -149,12 +138,6 @@
               v-if="showApply(scope.row)"
               >Apply</el-button
             >
-            <!-- <el-button
-              size="small"
-              @click="viewListing(scope.row)"
-              v-if="showApply(scope.row)"
-              >Details</el-button
-            > -->
             <medium v-if="!showApply(scope.row)">Job applied!</medium>
           </template>
         </el-table-column>
@@ -169,11 +152,6 @@
 </template>
 
 <script>
-// import firebase from "firebase";
-// import { computed, onMounted, reactive, ref } from "vue";
-// import { computed, ref } from "vue";
-// import StudentViewListing from '@/views/Student/StudentViewListing.vue';
-
 import StudentNav from "../../components/StudentNav.vue";
 import { Search } from "@element-plus/icons-vue";
 import { ref } from "vue";
@@ -188,7 +166,6 @@ import {
 import firebaseApp from "../../main.js";
 import { getAuth } from "firebase/auth";
 const value1 = ref([]);
-//   // dummy values for frontend
 const options = [
   {
     value: "Option1",
@@ -300,32 +277,6 @@ export default {
         value1,
       } = this;
 
-      console.log(value1);
-      // console.log(jobData, value1[0].toString().slice(4, 15));
-
-      // const searchStartDate = value1[0].toString().slice(4, 15).slice(4, 6);
-      // const searchEndDate = value1[1].toString().slice(4, 15);
-      // console.log(searchStartDate, searchEndDate);
-
-      console.log(
-        jobData.filter(
-          ({ jobpos, worklocation, duration, range, companyname }) =>
-            jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
-            (workLocation.includes(worklocation) || workLocation.length == 0) &&
-            (durationValue.includes(duration) || durationValue.length == 0) &&
-            (companyValue.includes(companyname) || companyValue.length == 0) &&
-            (value1 == null ||
-              this.dateCompare1(
-                this.getSearchStartDate(value1),
-                this.getStartDate(range)
-              )) &&
-            (value1 == null ||
-              this.dateCompare2(
-                this.getSearchEndDate(value1),
-                this.getEndDate(range)
-              ))
-        )
-      );
       this.queriedData = jobData.filter(
         ({ jobpos, worklocation, duration, companyname, range }) =>
           jobpos.toLowerCase().includes(keyword.toLowerCase()) &&
@@ -344,20 +295,7 @@ export default {
             ))
       );
     },
-    // async getStudentName() {
-    //   const db = getFirestore(firebaseApp);
-    //   if (getAuth().currentUser == null) {
-    //     return null;
-    //   }
-    //   const docRef = doc(db, "User", getAuth().currentUser.uid);
-    //   const docSnap = await getDoc(docRef);
 
-    //   try {
-    //     return docSnap.data().Name;
-    //   } catch {
-    //     console.log("error")
-    //   }
-    // },
     async applyJob(x) {
       const notApplied = await this.appliedBoolean(x);
       if (notApplied) {
@@ -367,36 +305,7 @@ export default {
         alertMsg("error", "Job already applied");
       }
       // console.log(x);
-      //
-      // const docRef1 = doc(db, "Job", jobName);
-      // const docRef2 = doc(db, "User", id);
 
-      // if (docSnap.exists()) {
-      //   alert("You have already applied for this position");
-      // } else {
-      //   try {
-      //     //Add document into application db
-
-      //     const data = {
-      //       CreatedAt: serverTimestamp(),
-      //       Progress: "Pending",
-      //       Applicant: id,
-      //       Position: x.jobpos,
-      //       Status: "",
-      //       CompanyName: x.companyname,
-      //     };
-
-      //     await setDoc(docRef, data);
-      //     await updateDoc(docRef1, { Applicants: arrayUnion(id) });
-      //     await updateDoc(docRef2, {
-      //       JobsApplied: arrayUnion(applicationName),
-      //     });
-      //     alert("Job applied!");
-      //   } catch (error) {
-      //     alert("There was an error processing the application");
-      //     console.log(error);
-      //   }
-      // }
     },
 
     showApply(x) {
@@ -419,16 +328,11 @@ export default {
     },
 
     viewListing(x) {
-      // const data = this.getListing(x);
-      // console.log(row.innerHTML);
-      // this.$emit('viewListing');
+
       try {
         this.$router.push({
           path: "/viewjoblisting",
-          // name: "StudentViewListing",
-
-          // props: {listing: this.ListingData},
-
+ 
           query: { jobId: x.companyname.concat(" - ", x.jobpos) },
         });
       } catch (error) {
@@ -436,13 +340,6 @@ export default {
       }
     },
 
-    // handleSelectionChange(x) {
-    //   this.multipleSelection.value = x;
-    //   console.log(this.multipleSelection);
-    // },
-    // isDateSame(x, y) {
-    //   return x === y;
-    // },
 
     dateCompare1(x, y) {
       //returns true if x is earlier or same as y
@@ -611,35 +508,8 @@ export default {
     console.log(this.companyNameData);
   },
 
-  mounted() {
-    // const array1 = [1, 4, 9, 16];/
-    // pass a function to map
-    // const map1 = queriedData.map((x) => x  .duration);
-    // console.log(map1);
-    // console.log(nameArray );
-  },
 };
-// setup() {
 
-//   const searchQuery = ref("");
-
-//   computed: {
-//     searchResult() {
-//       const {jobData, keyword} = this;
-//       return jobData.filter(({companyname}) => companyname.includes(keyword));
-//     },
-//   },
-
-// const searchResult = computed(() => {
-//   return jobData.value.filter(
-//     (data) =>
-//       !searchQuery.value ||
-//       data.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-//     );
-//   });
-
-//       return {searchResult, searchQuery};
-//     },
 </script>
 
 <style>
@@ -683,12 +553,7 @@ h1 {
   margin-top: 40px;
   margin-bottom: 20px;
 }
-/* >>> .el-table {
-  border-collapse: collapse;
-}
->>> .el-table tr {
-  background-color: #fafafa;
-} */
+
 >>> .el-table tr:hover {
   text-decoration: underline;
   /* background-color: #96c67f; */

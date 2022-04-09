@@ -50,7 +50,7 @@
           <el-col :span="6" class="applycol"
             ><el-button
               id="applyButton"
-              @click="apply().then(window.location.reload())"
+              @click="apply()"
               color="#96C67F"
               ><p class="btn-text">Submit</p></el-button
             ></el-col

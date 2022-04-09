@@ -9,13 +9,9 @@
       '#90EE90',
       '#008000',
       '#006400',
-      '#ff542c',
-      '#bbffcb',
-      '#8c0000',
-      '#ffbff8',
-      '#212800',
-      '#61002f',
-      '#3e0300',
+      '#556B2F',
+      '#228B22',
+      '#32CD32'
     ]"
   ></pie-chart>
   <!--
@@ -29,13 +25,13 @@ import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 //var chartData = new Map();
-const jobNameArr = [];
+var jobNameArr = [];
 
 export default {
   name: "StudentJpbTypeChart",
   data() {
     return {
-      chartData: {},
+      chartData : {},
     };
   },
   async created() {
@@ -54,11 +50,12 @@ export default {
       jobNameArr.push(jobName);
     }
     this.updateMe();
+    jobNameArr = [];
   },
   methods: {
     updateMe: function () {
-      //console.log(jobArr);
-      this.chartData = {};
+      this.chartData = {}
+      console.log(jobNameArr.length)
       for (var i = 0; i < jobNameArr.length; i++)
         if (jobNameArr[i] in this.chartData) {
           const temp = this.chartData[jobNameArr[i]];
@@ -67,8 +64,6 @@ export default {
           this.chartData[jobNameArr[i]] = 1;
           //console.log(this.chartData[jobNameArr[i]]);
         }
-      //console.log(this.chartData);
-      //console.log(this.chartData.Target);
     },
   },
 };
